@@ -9,10 +9,16 @@ import Foundation
 import SwiftData
 
 @Model
-final class Item {
+final class Adventurer {
     var timestamp: Date
     
     init(timestamp: Date) {
         self.timestamp = timestamp
     }
+    
+    #if DEBUG
+    static let preview: Adventurer = {
+        Adventurer(timestamp: .now)
+    }()
+    #endif
 }

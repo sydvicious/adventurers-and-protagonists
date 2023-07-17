@@ -10,11 +10,10 @@ import SwiftData
 
 @main
 struct AdventurersApp: App {
-
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Browser()
         }
-        .modelContainer(for: Item.self)
+        .modelContainer(for: Adventurer.self)
     }
 }
