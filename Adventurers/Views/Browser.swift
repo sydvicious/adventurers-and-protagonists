@@ -43,9 +43,11 @@ struct Browser: View {
                     }
                 }
             }
+            .navigationTitle("Adventurers")
         } detail: {
             AdventurerView(selection: selection)
         }
+        .navigationSplitViewStyle(.balanced)
         .onAppear(perform: {
             let defaults = UserDefaults.standard
             welcomeScreenShowing = !defaults.bool(forKey: "WelcomeScreenShown")
@@ -66,10 +68,6 @@ struct Browser: View {
 
     private func addItem() {
         wizardShowing = true
-        withAnimation {
-            let newItem = Adventurer(name: "Pendecar")
-            modelContext.insert(newItem)
-        }
     }
 
     private func deleteItems(offsets: IndexSet) {

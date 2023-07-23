@@ -26,17 +26,12 @@ struct NewAdventurerWizard: View {
         
     var body: some View {
         VStack {
-            Text("New Character Wizard")
+            Text("New Advanturer Wizard")
             Spacer()
             Form {
                 Grid {
                     GridRow {
                         Text("Please provide a name for your new character:")
-                        Spacer()
-                        if nameValid {
-                            Text("✔️")
-                                .background(.red)
-                        }
                     }
                 }
                 TextField("<NAME>", text: $proto.name)
@@ -58,7 +53,7 @@ struct NewAdventurerWizard: View {
                             textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
                         }
                     }
-                    .textInputAutocapitalization(.never)
+                    .textInputAutocapitalization(.words)
                     .disableAutocorrection(true)
                     .border(.secondary)
             }
@@ -87,11 +82,11 @@ struct NewAdventurerWizard: View {
     private func done() {
         let adventurer = proto.adventurerFrom()
         if let adventurer {
-            wizardShowing = false
             withAnimation {
                 modelContext.insert(adventurer)
             }
             selection = adventurer
+            wizardShowing = false
         } else {
             updateDoneButton()
         }

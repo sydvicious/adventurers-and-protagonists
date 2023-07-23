@@ -12,7 +12,7 @@ class Proto {
     
     static func dummyProtoData() -> Proto {
         let protoData = Proto()
-        protoData.name = "New Adventuer " + String(Int.random(in: 0...32767))
+        protoData.name = ""
         return protoData
     }
     

@@ -87,12 +87,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6269860E2A54951A004391FC /* Views */ = {
+		623F2C652A6D849D00E405AB /* Wizard */ = {
+			isa = PBXGroup;
+			children = (
+				627D722E2A6CEF6A00C950C5 /* NewAdventurerWizard.swift */,
+			);
+			path = Wizard;
+			sourceTree = "<group>";
+		};
+		623F2C662A6D84C000E405AB /* Adventurer */ = {
 			isa = PBXGroup;
 			children = (
 				626986142A5499E6004391FC /* AdventurerView.swift */,
+			);
+			path = Adventurer;
+			sourceTree = "<group>";
+		};
+		6269860E2A54951A004391FC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				623F2C662A6D84C000E405AB /* Adventurer */,
+				623F2C652A6D849D00E405AB /* Wizard */,
 				629E8D802A548E5B002CDCAF /* Browser.swift */,
-				627D722E2A6CEF6A00C950C5 /* NewAdventurerWizard.swift */,
 				626986102A549542004391FC /* WelcomeScreen.swift */,
 			);
 			path = Views;
