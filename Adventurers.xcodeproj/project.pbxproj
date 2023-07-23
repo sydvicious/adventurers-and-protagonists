@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		626986112A549542004391FC /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986102A549542004391FC /* WelcomeScreen.swift */; };
-		626986152A5499E6004391FC /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986142A5499E6004391FC /* CharacterView.swift */; };
+		626986152A5499E6004391FC /* AdventurerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986142A5499E6004391FC /* AdventurerView.swift */; };
 		626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986522A566DCE004391FC /* PreviewModelContainer.swift */; };
+		627D722F2A6CEF6A00C950C5 /* NewAdventurerWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627D722E2A6CEF6A00C950C5 /* NewAdventurerWizard.swift */; };
+		627D72312A6CF30700C950C5 /* Proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627D72302A6CF30700C950C5 /* Proto.swift */; };
+		627D72342A6CFC5600C950C5 /* CaseInsensitiveComparitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627D72332A6CFC5600C950C5 /* CaseInsensitiveComparitor.swift */; };
 		629E8D7D2A548E5B002CDCAF /* AdventurersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629E8D7C2A548E5B002CDCAF /* AdventurersApp.swift */; };
 		629E8D7F2A548E5B002CDCAF /* Adventurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629E8D7E2A548E5B002CDCAF /* Adventurer.swift */; };
 		629E8D812A548E5B002CDCAF /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629E8D802A548E5B002CDCAF /* Browser.swift */; };
@@ -40,8 +43,11 @@
 
 /* Begin PBXFileReference section */
 		626986102A549542004391FC /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
-		626986142A5499E6004391FC /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
+		626986142A5499E6004391FC /* AdventurerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventurerView.swift; sourceTree = "<group>"; };
 		626986522A566DCE004391FC /* PreviewModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewModelContainer.swift; sourceTree = "<group>"; };
+		627D722E2A6CEF6A00C950C5 /* NewAdventurerWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAdventurerWizard.swift; sourceTree = "<group>"; };
+		627D72302A6CF30700C950C5 /* Proto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proto.swift; sourceTree = "<group>"; };
+		627D72332A6CFC5600C950C5 /* CaseInsensitiveComparitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseInsensitiveComparitor.swift; sourceTree = "<group>"; };
 		629E8D792A548E5B002CDCAF /* Adventurers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adventurers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		629E8D7C2A548E5B002CDCAF /* AdventurersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventurersApp.swift; sourceTree = "<group>"; };
 		629E8D7E2A548E5B002CDCAF /* Adventurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adventurer.swift; sourceTree = "<group>"; };
@@ -86,9 +92,10 @@
 		6269860E2A54951A004391FC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				626986142A5499E6004391FC /* AdventurerView.swift */,
 				629E8D802A548E5B002CDCAF /* Browser.swift */,
+				627D722E2A6CEF6A00C950C5 /* NewAdventurerWizard.swift */,
 				626986102A549542004391FC /* WelcomeScreen.swift */,
-				626986142A5499E6004391FC /* CharacterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -97,8 +104,17 @@
 			isa = PBXGroup;
 			children = (
 				629E8D7E2A548E5B002CDCAF /* Adventurer.swift */,
+				627D72302A6CF30700C950C5 /* Proto.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		627D72322A6CFC2D00C950C5 /* Miscellaneous */ = {
+			isa = PBXGroup;
+			children = (
+				627D72332A6CFC5600C950C5 /* CaseInsensitiveComparitor.swift */,
+			);
+			path = Miscellaneous;
 			sourceTree = "<group>";
 		};
 		629E8D702A548E5B002CDCAF = {
@@ -124,10 +140,11 @@
 		629E8D7B2A548E5B002CDCAF /* Adventurers */ = {
 			isa = PBXGroup;
 			children = (
-				62E5C04B2A5682F20007FD7D /* Preview */,
-				6269860F2A549528004391FC /* Models */,
-				629E8D7C2A548E5B002CDCAF /* AdventurersApp.swift */,
 				6269860E2A54951A004391FC /* Views */,
+				6269860F2A549528004391FC /* Models */,
+				627D72322A6CFC2D00C950C5 /* Miscellaneous */,
+				62E5C04B2A5682F20007FD7D /* Preview */,
+				629E8D7C2A548E5B002CDCAF /* AdventurersApp.swift */,
 				629E8D822A548E5C002CDCAF /* Assets.xcassets */,
 				629E8D842A548E5C002CDCAF /* Adventurers.entitlements */,
 				629E8D882A548E5C002CDCAF /* Info.plist */,
@@ -302,11 +319,14 @@
 			files = (
 				629E8D7F2A548E5B002CDCAF /* Adventurer.swift in Sources */,
 				62E5C04D2A5683690007FD7D /* SampleData.swift in Sources */,
+				627D72312A6CF30700C950C5 /* Proto.swift in Sources */,
 				629E8D7D2A548E5B002CDCAF /* AdventurersApp.swift in Sources */,
 				626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */,
-				626986152A5499E6004391FC /* CharacterView.swift in Sources */,
+				626986152A5499E6004391FC /* AdventurerView.swift in Sources */,
 				626986112A549542004391FC /* WelcomeScreen.swift in Sources */,
+				627D72342A6CFC5600C950C5 /* CaseInsensitiveComparitor.swift in Sources */,
 				629E8D812A548E5B002CDCAF /* Browser.swift in Sources */,
+				627D722F2A6CEF6A00C950C5 /* NewAdventurerWizard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

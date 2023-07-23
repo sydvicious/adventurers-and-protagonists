@@ -1,5 +1,5 @@
 //
-//  CharacterView.swift
+//  AdventurerView.swift
 //  Adventurers
 //
 //  Created by Syd Polk on 7/4/23.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct CharacterView: View {
+struct AdventurerView: View {
     @Observable var selection: Adventurer?
     
     var body: some View {
@@ -18,7 +18,7 @@ struct CharacterView: View {
 
 #Preview {
     return MainActor.assumeIsolated {
-        CharacterView(selection: .preview)
+        AdventurerView(selection: .preview)
             .modelContainer(previewContainer)
     }
 }

@@ -11,19 +11,22 @@ import SwiftData
 struct Browser: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    @Query private var adventurers: [Adventurer]
+    @Query(sort: \.name) private var adventurers: [Adventurer]
     
     @State private var selection: Adventurer?
+    
+    // Sheets
     @State private var welcomeScreenShowing = false
+    @State private var wizardShowing = false
     
     var body: some View {
         NavigationSplitView {
             List {
                 ForEach(adventurers) { item in
                     NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                        Text("\(item.name)")
                     } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                        Text(item.name)
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -41,7 +44,7 @@ struct Browser: View {
                 }
             }
         } detail: {
-            CharacterView(selection: selection)
+            AdventurerView(selection: selection)
         }
         .onAppear(perform: {
             let defaults = UserDefaults.standard
@@ -56,11 +59,15 @@ struct Browser: View {
         .sheet(isPresented: $welcomeScreenShowing, content:{
             WelcomeScreen(welcomeScreenShowing: $welcomeScreenShowing)
         })
+        .sheet(isPresented: $wizardShowing, content:{
+            NewAdventurerWizard(wizardShowing: $wizardShowing, selection: $selection)
+        })
     }
 
     private func addItem() {
+        wizardShowing = true
         withAnimation {
-            let newItem = Adventurer(timestamp: Date())
+            let newItem = Adventurer(name: "Pendecar")
             modelContext.insert(newItem)
         }
     }

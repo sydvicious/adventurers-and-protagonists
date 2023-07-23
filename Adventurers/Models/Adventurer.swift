@@ -11,14 +11,18 @@ import SwiftData
 @Model
 final class Adventurer {
     var timestamp: Date
+    var uid: UUID
+    var name: String
     
-    init(timestamp: Date) {
-        self.timestamp = timestamp
+    init(name: String) {
+        self.timestamp = Date()
+        self.uid = UUID()
+        self.name = name
     }
     
     #if DEBUG
     static let preview: Adventurer = {
-        Adventurer(timestamp: .now)
+        Adventurer(name: "Pendecar")
     }()
     #endif
 }
