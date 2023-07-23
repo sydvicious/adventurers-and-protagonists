@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+enum WizardFocus: Hashable {
+    case name
+}
+
 struct NewAdventurerWizard: View {
     @Environment(\.modelContext) private var modelContext
 
@@ -18,6 +22,8 @@ struct NewAdventurerWizard: View {
     @State private var doneDisabled = true
     @State private var nameValid = false
     
+    @FocusState private var wizardFocus: WizardFocus?
+        
     var body: some View {
         VStack {
             Text("New Character Wizard")
@@ -34,11 +40,23 @@ struct NewAdventurerWizard: View {
                     }
                 }
                 TextField("<NAME>", text: $proto.name)
+                    .onChange(of: proto.name) {
+                        updateDoneButton()
+                    }
                     .onSubmit {
                         updateDoneButton()
                     }
+                    .focused($wizardFocus, equals: .name)
                     .onAppear {
-                        updateDoneButton()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                            updateDoneButton()
+                            self.wizardFocus = .name
+                        }
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)) { obj in
+                        if let textField = obj.object as? UITextField {
+                            textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                        }
                     }
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
@@ -67,15 +85,16 @@ struct NewAdventurerWizard: View {
     }
     
     private func done() {
-        wizardShowing = false
-        
         let adventurer = proto.adventurerFrom()
         if let adventurer {
+            wizardShowing = false
             withAnimation {
                 modelContext.insert(adventurer)
             }
+            selection = adventurer
+        } else {
+            updateDoneButton()
         }
-        selection = adventurer
     }
 }
 
