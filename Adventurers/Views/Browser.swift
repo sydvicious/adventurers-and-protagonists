@@ -11,7 +11,7 @@ import SwiftData
 struct Browser: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    @Query(sort: \.name) private var adventurers: [Adventurer]
+    @Query(sort: [SortDescriptor(\.name, comparator: .localized)]) private var adventurers: [Adventurer]
     
     @State private var selection: Adventurer?
     
