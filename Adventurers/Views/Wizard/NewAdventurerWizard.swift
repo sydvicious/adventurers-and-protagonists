@@ -11,6 +11,21 @@ enum WizardFocus: Hashable {
     case name
 }
 
+enum WizardSectionNames: String {
+    case name = "Name"
+    /*
+    case abilities = "Abilities"
+    case race = "Race"
+    case classes = "Classes"
+    case skills = "Skills"
+    case feats = "Feats"
+    case equipment = "Equipment"
+    case combat = "Combat"
+    case spells = "Spells"
+    case notes = "Notes"
+     */
+}
+
 struct NewAdventurerWizard: View {
     @Environment(\.modelContext) private var modelContext
 
@@ -20,42 +35,32 @@ struct NewAdventurerWizard: View {
     @State private var proto = Proto.dummyProtoData()
     
     @State private var doneDisabled = true
-    @State private var nameValid = false
-    
+    @State private var sectionsComplete: [WizardSectionNames:Bool] = [
+        .name: false
+    ]
+    @State private var sectionSelected: WizardSectionNames? = .name
+    @State private var sectionsColumnVisibility = NavigationSplitViewVisibility.doubleColumn
+
     @FocusState private var wizardFocus: WizardFocus?
-        
+
     var body: some View {
         VStack {
-            Text("New Advanturer Wizard")
-            Spacer()
-            Form {
-                Grid {
-                    GridRow {
-                        Text("Please provide a name for your new character:")
+            NavigationSplitView(columnVisibility: $sectionsColumnVisibility) {
+                List(selection: $sectionSelected) {
+                    HStack {
+                        Text("Name")
+                        Spacer()
+                        Text(proto.name).multilineTextAlignment(.trailing)
+                        Text(sectionsComplete[.name] ?? false ? "✔️" : "❌").multilineTextAlignment(.trailing)
                     }
                 }
-                TextField("<NAME>", text: $proto.name)
-                    .onChange(of: proto.name) {
-                        updateDoneButton()
+            } detail: {
+                if let sectionSelected {
+                    switch sectionSelected {
+                    case .name:
+                        WizardNameView(proto: $proto, sectionsComplete: $sectionsComplete)
                     }
-                    .onSubmit {
-                        updateDoneButton()
-                    }
-                    .focused($wizardFocus, equals: .name)
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-                            updateDoneButton()
-                            self.wizardFocus = .name
-                        }
-                    }
-                    .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)) { obj in
-                        if let textField = obj.object as? UITextField {
-                            textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
-                        }
-                    }
-                    .textInputAutocapitalization(.words)
-                    .disableAutocorrection(true)
-                    .border(.secondary)
+                }
             }
             HStack {
                 Button("Cancel", action: cancel)
@@ -67,12 +72,12 @@ struct NewAdventurerWizard: View {
         
     private func validateName() {
         let trimmedName = proto.name.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        nameValid = trimmedName != ""
+        sectionsComplete[.name] = trimmedName != ""
     }
 
     private func updateDoneButton() {
         validateName()
-        doneDisabled = !(nameValid)
+        doneDisabled = !(sectionsComplete[.name] ?? false)
     }
     
     private func cancel() {

@@ -14,13 +14,15 @@ struct Browser: View {
     @Query(sort: [SortDescriptor(\.name, comparator: .localized)]) private var adventurers: [Adventurer]
     
     @State private var selection: Adventurer?
-    
+    @State private var columnVisibility =
+        NavigationSplitViewVisibility.doubleColumn
+
     // Sheets
     @State private var welcomeScreenShowing = false
     @State private var wizardShowing = false
     
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             List {
                 ForEach(adventurers) { item in
                     NavigationLink {
