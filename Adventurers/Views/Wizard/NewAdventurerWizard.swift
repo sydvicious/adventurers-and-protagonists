@@ -54,17 +54,7 @@ struct NewAdventurerWizard: View {
                             .textInputAutocapitalization(.words)
                             .disableAutocorrection(true)
                             .border(.secondary)
-
-                        if nameValid {
-                            Image(systemName: "checkmark")
-                                .font(.caption)
-                                .imageScale(.medium)
-                        } else {
-                            Image(systemName: "circle.slash")
-                                .font(.caption)
-                                .imageScale(.medium)
-                                .foregroundColor(.red)
-                        }
+                        ValidField(valid: nameValid)
                     }
                 }
             }

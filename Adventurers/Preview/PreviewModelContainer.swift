@@ -14,7 +14,7 @@ let previewContainer: ModelContainer = {
         let container = try ModelContainer(for: Adventurer.self, ModelConfiguration(inMemory: true))
                 
         for adventurer in SampleData.adventurers {
-            container.mainContext.insert(object: adventurer)
+            container.mainContext.insert(adventurer)
         }
         return container
     } catch {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6226CECE2A74A0880089E252 /* ValidField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6226CECD2A74A0880089E252 /* ValidField.swift */; };
 		626986112A549542004391FC /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986102A549542004391FC /* WelcomeScreen.swift */; };
 		626986152A5499E6004391FC /* AdventurerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986142A5499E6004391FC /* AdventurerView.swift */; };
 		626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986522A566DCE004391FC /* PreviewModelContainer.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6226CECD2A74A0880089E252 /* ValidField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidField.swift; sourceTree = "<group>"; };
 		626986102A549542004391FC /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
 		626986142A5499E6004391FC /* AdventurerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventurerView.swift; sourceTree = "<group>"; };
 		626986522A566DCE004391FC /* PreviewModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewModelContainer.swift; sourceTree = "<group>"; };
@@ -87,6 +89,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6226CECC2A74A0650089E252 /* Utility Views */ = {
+			isa = PBXGroup;
+			children = (
+				6226CECD2A74A0880089E252 /* ValidField.swift */,
+			);
+			path = "Utility Views";
+			sourceTree = "<group>";
+		};
 		623F2C652A6D849D00E405AB /* Wizard */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +120,7 @@
 				623F2C652A6D849D00E405AB /* Wizard */,
 				629E8D802A548E5B002CDCAF /* Browser.swift */,
 				626986102A549542004391FC /* WelcomeScreen.swift */,
+				6226CECC2A74A0650089E252 /* Utility Views */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -333,6 +344,7 @@
 				629E8D7F2A548E5B002CDCAF /* Adventurer.swift in Sources */,
 				62E5C04D2A5683690007FD7D /* SampleData.swift in Sources */,
 				627D72312A6CF30700C950C5 /* Proto.swift in Sources */,
+				6226CECE2A74A0880089E252 /* ValidField.swift in Sources */,
 				629E8D7D2A548E5B002CDCAF /* AdventurersApp.swift in Sources */,
 				626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */,
 				626986152A5499E6004391FC /* AdventurerView.swift in Sources */,
