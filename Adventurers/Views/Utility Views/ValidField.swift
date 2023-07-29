@@ -18,11 +18,11 @@ struct ValidField: View {
         if valid {
             Image(systemName: "checkmark")
                 .font(.caption)
-                .imageScale(.medium)
+                .imageScale(.large)
         } else {
             Image(systemName: "circle.slash")
                 .font(.caption)
-                .imageScale(.medium)
+                .imageScale(.large)
                 .foregroundColor(.red)
         }
     }
