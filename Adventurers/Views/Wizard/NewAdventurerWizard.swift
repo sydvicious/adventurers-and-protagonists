@@ -13,6 +13,7 @@ enum WizardFocus: Hashable {
 
 struct NewAdventurerWizard: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     @Binding var wizardShowing: Bool
     @Binding var selection: Adventurer?
@@ -29,33 +30,43 @@ struct NewAdventurerWizard: View {
             Text("New Advanturer Wizard")
             Spacer()
             Form {
-                Grid {
-                    GridRow {
-                        Text("Please provide a name for your new character:")
+                Section(header: Text("Name")) {
+                    HStack{
+                        TextField("<NAME>", text: $proto.name)
+                            .onChange(of: proto.name) {
+                                updateDoneButton()
+                            }
+                            .onSubmit {
+                                updateDoneButton()
+                            }
+                            .focused($wizardFocus, equals: .name)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                                    updateDoneButton()
+                                    self.wizardFocus = .name
+                                }
+                            }
+                            .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)) { obj in
+                                if let textField = obj.object as? UITextField {
+                                    textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                                }
+                            }
+                            .textInputAutocapitalization(.words)
+                            .disableAutocorrection(true)
+                            .border(.secondary)
+
+                        if nameValid {
+                            Image(systemName: "checkmark")
+                                .font(.caption)
+                                .imageScale(.medium)
+                        } else {
+                            Image(systemName: "circle.slash")
+                                .font(.caption)
+                                .imageScale(.medium)
+                                .foregroundColor(.red)
+                        }
                     }
                 }
-                TextField("<NAME>", text: $proto.name)
-                    .onChange(of: proto.name) {
-                        updateDoneButton()
-                    }
-                    .onSubmit {
-                        updateDoneButton()
-                    }
-                    .focused($wizardFocus, equals: .name)
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-                            updateDoneButton()
-                            self.wizardFocus = .name
-                        }
-                    }
-                    .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)) { obj in
-                        if let textField = obj.object as? UITextField {
-                            textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
-                        }
-                    }
-                    .textInputAutocapitalization(.words)
-                    .disableAutocorrection(true)
-                    .border(.secondary)
             }
             HStack {
                 Button("Cancel", action: cancel)
@@ -78,7 +89,11 @@ struct NewAdventurerWizard: View {
     private func cancel() {
         wizardShowing = false
     }
-    
+
+    private func setName() {
+
+    }
+
     private func done() {
         let adventurer = proto.adventurerFrom()
         if let adventurer {
