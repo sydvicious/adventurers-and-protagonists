@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct AdventurerView: View {
-    @Observable var selection: Adventurer?
+    @State var selection: Adventurer?
     
     var body: some View {
         if let selection {

@@ -30,7 +30,7 @@ struct NewAdventurerWizard: View {
             Text("New Advanturer Wizard")
             Spacer()
             Form {
-                Section(header: Text("Name")) {
+                Section(header: Text("NAME")) {
                     HStack{
                         TextField("<NAME>", text: $proto.name)
                             .onChange(of: proto.name) {
@@ -56,6 +56,9 @@ struct NewAdventurerWizard: View {
                             .border(.secondary)
                         ValidField(valid: nameValid)
                     }
+                }
+                Section(header: Text("ABILITIES")) {
+                    
                 }
             }
             HStack {
@@ -85,7 +88,7 @@ struct NewAdventurerWizard: View {
     }
 
     private func done() {
-        let adventurer = proto.adventurerFrom()
+        let adventurer = proto.adventurerFrom(usePoints: false)
         if let adventurer {
             withAnimation {
                 modelContext.insert(adventurer)
