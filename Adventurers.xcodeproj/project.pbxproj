@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6226CECE2A74A0880089E252 /* ValidField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6226CECD2A74A0880089E252 /* ValidField.swift */; };
+		623491982A74AC6B00A38880 /* Ability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623491972A74AC6B00A38880 /* Ability.swift */; };
 		626986112A549542004391FC /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986102A549542004391FC /* WelcomeScreen.swift */; };
 		626986152A5499E6004391FC /* AdventurerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986142A5499E6004391FC /* AdventurerView.swift */; };
 		626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986522A566DCE004391FC /* PreviewModelContainer.swift */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		6226CECD2A74A0880089E252 /* ValidField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidField.swift; sourceTree = "<group>"; };
+		623491972A74AC6B00A38880 /* Ability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ability.swift; sourceTree = "<group>"; };
 		626986102A549542004391FC /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
 		626986142A5499E6004391FC /* AdventurerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventurerView.swift; sourceTree = "<group>"; };
 		626986522A566DCE004391FC /* PreviewModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewModelContainer.swift; sourceTree = "<group>"; };
@@ -97,6 +99,13 @@
 			path = "Utility Views";
 			sourceTree = "<group>";
 		};
+		623491892A74A7BF00A38880 /* Attributes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Attributes;
+			sourceTree = "<group>";
+		};
 		623F2C652A6D849D00E405AB /* Wizard */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +137,7 @@
 		6269860F2A549528004391FC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				623491972A74AC6B00A38880 /* Ability.swift */,
 				629E8D7E2A548E5B002CDCAF /* Adventurer.swift */,
 				627D72302A6CF30700C950C5 /* Proto.swift */,
 			);
@@ -164,6 +174,7 @@
 		629E8D7B2A548E5B002CDCAF /* Adventurers */ = {
 			isa = PBXGroup;
 			children = (
+				623491892A74A7BF00A38880 /* Attributes */,
 				6269860E2A54951A004391FC /* Views */,
 				6269860F2A549528004391FC /* Models */,
 				627D72322A6CFC2D00C950C5 /* Miscellaneous */,
@@ -349,6 +360,7 @@
 				626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */,
 				626986152A5499E6004391FC /* AdventurerView.swift in Sources */,
 				626986112A549542004391FC /* WelcomeScreen.swift in Sources */,
+				623491982A74AC6B00A38880 /* Ability.swift in Sources */,
 				629E8D812A548E5B002CDCAF /* Browser.swift in Sources */,
 				627D722F2A6CEF6A00C950C5 /* NewAdventurerWizard.swift in Sources */,
 			);

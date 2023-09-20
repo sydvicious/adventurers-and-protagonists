@@ -10,9 +10,14 @@ import SwiftData
 
 @MainActor
 let previewContainer: ModelContainer = {
+    let schema = Schema([
+        Adventurer.self,
+        Ability.self,
+    ])
+    let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
     do {
-        let container = try ModelContainer(for: Adventurer.self, ModelConfiguration(inMemory: true))
-                
+        let container = try ModelContainer(for: schema, configurations: [modelConfiguration])
+
         for adventurer in SampleData.adventurers {
             container.mainContext.insert(adventurer)
         }
