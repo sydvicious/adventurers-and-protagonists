@@ -68,7 +68,7 @@ import Foundation
     }
 
     static func protoFromProto(oldProto: Proto) -> Proto {
-        var proto = Proto(campaignType: oldProto.campaignType)
+        let proto = Proto(campaignType: oldProto.campaignType)
         proto.name = oldProto.name
         proto.abilities = oldProto.abilities
         return proto
