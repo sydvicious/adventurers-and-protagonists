@@ -10,6 +10,6 @@ import Foundation
 extension StringProtocol {
     public func isTrimmedStringEmpty() -> Bool {
         let trimmedName = self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        return !trimmedName.isEmpty
+        return trimmedName.isEmpty
     }
 }

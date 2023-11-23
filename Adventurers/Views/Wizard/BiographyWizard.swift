@@ -8,41 +8,49 @@
 import SwiftUI
 
 struct BiographyWizard: View {
+    @Environment(\.dismiss) var dismiss
     @Binding var proto: Proto
-    @Binding var nameValid: Bool
+    @State var nameWizardShowing = false
+    @State var newName = ""
 
     var body: some View {
-        viewPicker()
+        ScrollView {
+            Text("\(proto.name)")
+                .bold()
+        }
+        .onAppear {
+            self.nameWizardShowing = proto.name.isTrimmedStringEmpty()
+        }
+        .sheet(isPresented: $nameWizardShowing,
+               onDismiss: nameWizardDismissed,
+               content: {
+            EditName(name: $newName, nameWizardShowing: $nameWizardShowing)
+        })
     }
 
-    @ViewBuilder
-    private func viewPicker() -> some View {
-        if !nameValid {
-            Button("Edit Name", action: {
-
-            })
+    private func nameWizardDismissed() {
+        if proto.name.isEmpty && newName.isTrimmedStringEmpty() {
+            dismiss()
         } else {
-            Text(proto.name)
+            proto = Proto.protoFromProto(oldProto: proto)
+            proto.name = newName
         }
     }
+
 }
 
 
 #Preview {
     @State var proto = Proto.dummyProtoData()
-    @State var nameValid = proto.name.isTrimmedStringEmpty()
     return MainActor.assumeIsolated {
-        BiographyWizard(proto: $proto,
-                        nameValid: $nameValid)
+        BiographyWizard(proto: $proto)
     }
 }
 
 #Preview {
     @State var proto = Proto.dummyProtoData()
     proto.name = "Pendecar"
-    @State var nameValid = proto.name.isTrimmedStringEmpty()
     return MainActor.assumeIsolated {
-        BiographyWizard(proto: $proto,
-                        nameValid: $nameValid)
+        BiographyWizard(proto: $proto)
     }
 }

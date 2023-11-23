@@ -16,7 +16,6 @@ struct EditName: View {
     @Binding var nameWizardShowing: Bool
 
     @State var newName: String = ""
-    @State var nameValid: Bool = false
     @State private var doneDisabled: Bool = true
 
     @FocusState private var focus: NameFocus?
@@ -34,8 +33,6 @@ struct EditName: View {
                     .focused($focus, equals: .name)
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            newName = name
-                            updateDoneButton()
                             self.focus = .name
                         }
                     }
@@ -47,7 +44,7 @@ struct EditName: View {
                     .textInputAutocapitalization(.words)
                     .disableAutocorrection(true)
                     .border(.secondary)
-                ValidField(valid: nameValid)
+                ValidField(valid: !newName.isTrimmedStringEmpty())
             }
             HStack {
                 Button("Cancel", action: cancel)
@@ -55,18 +52,18 @@ struct EditName: View {
                     .disabled(doneDisabled)
             }
         }
+        .onAppear {
+            newName = name
+            updateDoneButton()
+        }
     }
 
     private func updateDoneButton() {
-        validateName()
-        doneDisabled = !(nameValid)
+        doneDisabled = newName.isTrimmedStringEmpty()
     }
-
-    private func validateName() {
-        nameValid = newName.isTrimmedStringEmpty()
-    }
-
+    
     private func cancel() {
+        name = ""
         nameWizardShowing = false
     }
 
