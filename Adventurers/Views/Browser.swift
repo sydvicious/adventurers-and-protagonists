@@ -62,7 +62,7 @@ struct Browser: View {
             WelcomeScreen(welcomeScreenShowing: $welcomeScreenShowing)
         })
         .sheet(isPresented: $wizardShowing, content:{
-            NewAdventurerWizard(wizardShowing: $wizardShowing, selection: $selection)
+            AdventurerWizard(wizardShowing: $wizardShowing, selection: $selection)
         })
     }
 

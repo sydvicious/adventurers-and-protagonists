@@ -7,12 +7,17 @@
 
 import Foundation
 
-class Proto {
-    var name = ""
+@Observable class Proto : Identifiable, Equatable {
+    static func == (lhs: Proto, rhs: Proto) -> Bool {
+        return lhs.name == rhs.name
+    }
+
+    var name : String
     var abilities = [ProtoAbility]()
     let campaignType: CampaignTypes
 
-    public init(campaignType: CampaignTypes) {
+    public init(from adventurer: Adventurer? = nil, campaignType: CampaignTypes = .standardFantasy) {
+        self.name = adventurer?.name ?? ""
         self.campaignType = campaignType
     }
 
@@ -25,14 +30,6 @@ class Proto {
         abilities.append(ProtoAbility(label: AbilityLabels.wis.rawValue))
         abilities.append(ProtoAbility(label: AbilityLabels.cha.rawValue))
         return abilities
-    }
-
-    public func nameValid() -> Bool {
-        let proposedName = name.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        if "" == proposedName {
-            return false
-        }
-        return true
     }
 
     public func abilitiesReady(usePoints: Bool) -> Bool {
@@ -52,7 +49,7 @@ class Proto {
     public func isReady(usePoints: Bool) -> Bool {
 
         // check the name
-        if !nameValid() {
+        if name.isTrimmedStringEmpty() {
             return false
         }
 
@@ -70,6 +67,12 @@ class Proto {
         return Adventurer(name: self.name, abilities: abilites)
     }
 
+    static func protoFromProto(oldProto: Proto) -> Proto {
+        var proto = Proto(campaignType: oldProto.campaignType)
+        proto.name = oldProto.name
+        proto.abilities = oldProto.abilities
+        return proto
+    }
     static func dummyProtoData() -> Proto {
         let protoData = Proto(campaignType: .epicFantasy)
         protoData.name = ""

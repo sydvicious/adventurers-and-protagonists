@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CreateAdventurerWizard: View {
+struct AdventurerWizard: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
@@ -17,16 +17,17 @@ struct CreateAdventurerWizard: View {
     @State private var proto = Proto.dummyProtoData()
 
     @State private var doneDisabled = true
-    @State private var nameValid = false
 
     var body: some View {
         ScrollView {
             VStack {
-                Text("Create a new adventurer")
+                Text(selection == nil ? "Create a new adventurer" : "Edit Character")
                     .font(.title)
                 Spacer()
-                BiographyWizard(proto: $proto,
-                                nameValid: $nameValid)
+                BiographyWizard(proto: $proto)
+                    .onChange(of: proto) {
+                        updateDoneButton()
+                    }
             }
         }
         .defaultScrollAnchor(.top)
@@ -35,11 +36,16 @@ struct CreateAdventurerWizard: View {
             Button("Done", action: done)
                 .disabled(doneDisabled)
         }
+        .onAppear {
+            if let selection = selection {
+                proto = Proto(from: selection)
+            }
+            updateDoneButton()
+        }
     }
 
-
     private func updateDoneButton() {
-        doneDisabled = !(nameValid)
+        doneDisabled = proto.name.isTrimmedStringEmpty()
     }
 
     private func cancel() {
@@ -70,7 +76,17 @@ struct CreateAdventurerWizard: View {
     @State var selection: Adventurer? = nil
 
     return MainActor.assumeIsolated {
-        CreateAdventurerWizard(wizardShowing: $wizardShowing, selection: $selection)
+        AdventurerWizard(wizardShowing: $wizardShowing, selection: $selection)
+            .modelContainer(previewContainer)
+    }
+}
+
+#Preview {
+    @State var wizardShowing = true
+    @State var selection: Adventurer? = SampleData.adventurers[0]
+
+    return MainActor.assumeIsolated {
+        AdventurerWizard(wizardShowing: $wizardShowing, selection: $selection)
             .modelContainer(previewContainer)
     }
 }
