@@ -12,6 +12,7 @@ struct BiographyWizard: View {
     @Binding var proto: Proto
     @State var nameWizardShowing = false
     @State var newName = ""
+    @State var detentHeight: CGFloat = 0
 
     var body: some View {
         ScrollView {
@@ -25,7 +26,16 @@ struct BiographyWizard: View {
                onDismiss: nameWizardDismissed,
                content: {
             EditName(name: $newName, nameWizardShowing: $nameWizardShowing)
+                .readHeight()
+                .onPreferenceChange(HeightPreferenceKey.self) { height in
+                    if let height {
+                        self.detentHeight = height
+                    }
+                }
+                .presentationDetents([.height(self.detentHeight)])
+                .padding(.top)
         })
+        .defaultScrollAnchor(.center)
     }
 
     private func nameWizardDismissed() {

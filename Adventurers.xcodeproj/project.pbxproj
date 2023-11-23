@@ -26,6 +26,7 @@
 		62DA2B152B0F256000F05457 /* BiographyWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DA2B142B0F256000F05457 /* BiographyWizard.swift */; };
 		62DA2B172B0FA1D800F05457 /* EditName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DA2B162B0FA1D800F05457 /* EditName.swift */; };
 		62DA2B192B0FA67800F05457 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DA2B182B0FA67800F05457 /* StringUtils.swift */; };
+		62DA2B1B2B0FEED300F05457 /* ViewHeightModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DA2B1A2B0FEED300F05457 /* ViewHeightModifier.swift */; };
 		62E5C04D2A5683690007FD7D /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E5C04C2A5683690007FD7D /* SampleData.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 		62DA2B142B0F256000F05457 /* BiographyWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiographyWizard.swift; sourceTree = "<group>"; };
 		62DA2B162B0FA1D800F05457 /* EditName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditName.swift; sourceTree = "<group>"; };
 		62DA2B182B0FA67800F05457 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
+		62DA2B1A2B0FEED300F05457 /* ViewHeightModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHeightModifier.swift; sourceTree = "<group>"; };
 		62E5C04C2A5683690007FD7D /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				6226CECD2A74A0880089E252 /* ValidField.swift */,
+				62DA2B1A2B0FEED300F05457 /* ViewHeightModifier.swift */,
 			);
 			path = "Utility Views";
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				62E5C04D2A5683690007FD7D /* SampleData.swift in Sources */,
 				627D72312A6CF30700C950C5 /* Proto.swift in Sources */,
 				6226CECE2A74A0880089E252 /* ValidField.swift in Sources */,
+				62DA2B1B2B0FEED300F05457 /* ViewHeightModifier.swift in Sources */,
 				62DA2B192B0FA67800F05457 /* StringUtils.swift in Sources */,
 				629E8D7D2A548E5B002CDCAF /* AdventurersApp.swift in Sources */,
 				626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */,
