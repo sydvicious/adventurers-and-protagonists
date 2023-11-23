@@ -27,7 +27,7 @@ struct NewAdventurerWizard: View {
         
     var body: some View {
         VStack {
-            Text("New Advanturer Wizard")
+            Text("New Adventurer Wizard")
             Spacer()
             Form {
                 Section(header: Text("NAME")) {
