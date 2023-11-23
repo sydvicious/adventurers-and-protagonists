@@ -25,22 +25,24 @@ struct BiographyWizard: View {
             Text(proto.name)
         }
     }
-
-    static func validateName(proto: Proto) -> Bool {
-        let trimmedName = proto.name.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        return trimmedName != ""
-    }
-
 }
-
 
 
 #Preview {
     @State var proto = Proto.dummyProtoData()
-    @State var nameValid = BiographyWizard.validateName(proto: proto)
+    @State var nameValid = proto.name.isTrimmedStringEmpty()
     return MainActor.assumeIsolated {
         BiographyWizard(proto: $proto,
                         nameValid: $nameValid)
     }
 }
 
+#Preview {
+    @State var proto = Proto.dummyProtoData()
+    proto.name = "Pendecar"
+    @State var nameValid = proto.name.isTrimmedStringEmpty()
+    return MainActor.assumeIsolated {
+        BiographyWizard(proto: $proto,
+                        nameValid: $nameValid)
+    }
+}

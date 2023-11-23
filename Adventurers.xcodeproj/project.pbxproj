@@ -24,6 +24,8 @@
 		629E8D9E2A548E5C002CDCAF /* AdventurersUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629E8D9D2A548E5C002CDCAF /* AdventurersUITestsLaunchTests.swift */; };
 		62DA2B132B0F250800F05457 /* CreateAdventurerWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DA2B122B0F250800F05457 /* CreateAdventurerWizard.swift */; };
 		62DA2B152B0F256000F05457 /* BiographyWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DA2B142B0F256000F05457 /* BiographyWizard.swift */; };
+		62DA2B172B0FA1D800F05457 /* EditName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DA2B162B0FA1D800F05457 /* EditName.swift */; };
+		62DA2B192B0FA67800F05457 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DA2B182B0FA67800F05457 /* StringUtils.swift */; };
 		62E5C04D2A5683690007FD7D /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E5C04C2A5683690007FD7D /* SampleData.swift */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +69,8 @@
 		629E8D9D2A548E5C002CDCAF /* AdventurersUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventurersUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		62DA2B122B0F250800F05457 /* CreateAdventurerWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAdventurerWizard.swift; sourceTree = "<group>"; };
 		62DA2B142B0F256000F05457 /* BiographyWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiographyWizard.swift; sourceTree = "<group>"; };
+		62DA2B162B0FA1D800F05457 /* EditName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditName.swift; sourceTree = "<group>"; };
+		62DA2B182B0FA67800F05457 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
 		62E5C04C2A5683690007FD7D /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,6 +120,7 @@
 				627D722E2A6CEF6A00C950C5 /* NewAdventurerWizard.swift */,
 				62DA2B122B0F250800F05457 /* CreateAdventurerWizard.swift */,
 				62DA2B142B0F256000F05457 /* BiographyWizard.swift */,
+				62DA2B162B0FA1D800F05457 /* EditName.swift */,
 			);
 			path = Wizard;
 			sourceTree = "<group>";
@@ -153,6 +158,7 @@
 		627D72322A6CFC2D00C950C5 /* Miscellaneous */ = {
 			isa = PBXGroup;
 			children = (
+				62DA2B182B0FA67800F05457 /* StringUtils.swift */,
 			);
 			path = Miscellaneous;
 			sourceTree = "<group>";
@@ -364,10 +370,12 @@
 				62E5C04D2A5683690007FD7D /* SampleData.swift in Sources */,
 				627D72312A6CF30700C950C5 /* Proto.swift in Sources */,
 				6226CECE2A74A0880089E252 /* ValidField.swift in Sources */,
+				62DA2B192B0FA67800F05457 /* StringUtils.swift in Sources */,
 				629E8D7D2A548E5B002CDCAF /* AdventurersApp.swift in Sources */,
 				626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */,
 				626986152A5499E6004391FC /* AdventurerView.swift in Sources */,
 				626986112A549542004391FC /* WelcomeScreen.swift in Sources */,
+				62DA2B172B0FA1D800F05457 /* EditName.swift in Sources */,
 				623491982A74AC6B00A38880 /* Ability.swift in Sources */,
 				629E8D812A548E5B002CDCAF /* Browser.swift in Sources */,
 				627D722F2A6CEF6A00C950C5 /* NewAdventurerWizard.swift in Sources */,
