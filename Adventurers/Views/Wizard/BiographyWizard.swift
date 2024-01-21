@@ -7,10 +7,11 @@
 
 import SwiftUI
 
-struct BiographyWizard: View {
+struct BiographyWizard: WizardProtocol, View {
     @Environment(\.dismiss) var dismiss
     @Binding var proto: Proto
-    @State var nameWizardShowing = false
+    @Binding var isReady: Bool
+    @State var wizardShowing = false
     @State var newName = ""
     @State var detentHeight: CGFloat = 0
 
@@ -20,12 +21,13 @@ struct BiographyWizard: View {
                 .bold()
         }
         .onAppear {
-            self.nameWizardShowing = proto.name.isTrimmedStringEmpty()
+            self.wizardShowing = proto.name.isTrimmedStringEmpty()
+            self.isReady = self.wizardShowing
         }
-        .sheet(isPresented: $nameWizardShowing,
+        .sheet(isPresented: $wizardShowing,
                onDismiss: nameWizardDismissed,
                content: {
-            EditName(name: $newName, nameWizardShowing: $nameWizardShowing)
+            EditName(name: $newName, nameWizardShowing: $wizardShowing)
                 .readHeight()
                 .onPreferenceChange(HeightPreferenceKey.self) { height in
                     if let height {
@@ -35,15 +37,16 @@ struct BiographyWizard: View {
                 .presentationDetents([.height(self.detentHeight)])
                 .padding(.top)
         })
-        .defaultScrollAnchor(.center)
+        .defaultScrollAnchor(.top)
     }
 
     private func nameWizardDismissed() {
-        if proto.name.isEmpty && newName.isTrimmedStringEmpty() {
+        if proto.name.isEmpty || newName.isTrimmedStringEmpty() {
             dismiss()
         } else {
             proto = Proto.protoFromProto(oldProto: proto)
             proto.name = newName
+            isReady = true
         }
     }
 
@@ -52,15 +55,19 @@ struct BiographyWizard: View {
 
 #Preview {
     @State var proto = Proto.dummyProtoData()
+    @State var isReady = false
+
     return MainActor.assumeIsolated {
-        BiographyWizard(proto: $proto)
+        BiographyWizard(proto: $proto, isReady: $isReady)
     }
 }
 
 #Preview {
     @State var proto = Proto.dummyProtoData()
+    @State var isReady = true
+
     proto.name = "Pendecar"
     return MainActor.assumeIsolated {
-        BiographyWizard(proto: $proto)
+        BiographyWizard(proto: $proto, isReady: $isReady)
     }
 }

@@ -11,7 +11,7 @@ enum WizardFocus: Hashable {
     case name
 }
 
-struct NewAdventurerWizard: View {
+struct WizardNewName: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
@@ -27,7 +27,7 @@ struct NewAdventurerWizard: View {
         
     var body: some View {
         VStack {
-            Text("New Adventurer Wizard")
+            Text("Name your character")
             Spacer()
             Form {
                 Section(header: Text("NAME")) {
@@ -106,7 +106,7 @@ struct NewAdventurerWizard: View {
     @State var selection: Adventurer? = nil
     
     return MainActor.assumeIsolated {
-        NewAdventurerWizard(wizardShowing: $wizardShowing, selection: $selection)
+        WizardNewName(wizardShowing: $wizardShowing, selection: $selection)
             .modelContainer(previewContainer)
     }
 }

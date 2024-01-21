@@ -18,7 +18,8 @@ struct Browser: View {
     // Sheets
     @State private var welcomeScreenShowing = false
     @State private var wizardShowing = false
-    
+    @State private var creatingNewCharacter = false
+
     var body: some View {
         NavigationSplitView {
             List {
@@ -55,18 +56,20 @@ struct Browser: View {
                 self.selection = self.adventurers[0]
             }
             if self.adventurers.count == 0 {
+                creatingNewCharacter = true
                 welcomeScreenShowing = true
             }
         })
         .sheet(isPresented: $welcomeScreenShowing, content:{
             WelcomeScreen(welcomeScreenShowing: $welcomeScreenShowing)
         })
-        .sheet(isPresented: $wizardShowing, content:{
-            AdventurerWizard(wizardShowing: $wizardShowing, selection: $selection)
-        })
+        .fullScreenCover(isPresented: $wizardShowing) {
+            AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: $selection)
+        }
     }
 
     private func addItem() {
+        creatingNewCharacter = true
         wizardShowing = true
     }
 
@@ -76,6 +79,7 @@ struct Browser: View {
                 modelContext.delete(adventurers[index])
             }
         }
+        self.selection = Optional.none
     }
 }
 

@@ -22,6 +22,8 @@ struct EditName: View {
 
     var body: some View {
         VStack {
+            Text("Choose a new name for your character")
+                .multilineTextAlignment(.center)
             HStack{
                 TextField("<NAME>", text: $newName)
                     .onChange(of: newName) {
@@ -52,6 +54,7 @@ struct EditName: View {
                     .disabled(doneDisabled)
             }
         }
+        .padding()
         .onAppear {
             newName = name
             updateDoneButton()
@@ -70,6 +73,7 @@ struct EditName: View {
     private func done() {
         name = newName
         nameWizardShowing = false
+        newName = ""
     }
 }
 
