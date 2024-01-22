@@ -1,5 +1,5 @@
 //
-//  EditName.swift
+//  NameEditor.swift
 //  Adventurers
 //
 //  Created by Syd Polk on 11/23/23.
@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-enum NameFocus: Hashable {
+enum NameEditorFocus: Hashable {
     case name
 }
 
-struct EditName: View {
+struct NameEditor: View {
+    @Binding var isReady: Bool
+    @Binding var isNewCharacter: Bool
+    @Binding var isShowing: Bool
     @Binding var name: String
-    @Binding var nameWizardShowing: Bool
 
+    @FocusState private var focus: NameEditorFocus?
     @State var newName: String = ""
-    @State private var doneDisabled: Bool = true
-
-    @FocusState private var focus: NameFocus?
 
     var body: some View {
         VStack {
@@ -27,10 +27,10 @@ struct EditName: View {
             HStack{
                 TextField("<NAME>", text: $newName)
                     .onChange(of: newName) {
-                        updateDoneButton()
+                        updateIsReady()
                     }
                     .onSubmit {
-                        updateDoneButton()
+                        updateIsReady()
                     }
                     .focused($focus, equals: .name)
                     .onAppear {
@@ -46,49 +46,54 @@ struct EditName: View {
                     .textInputAutocapitalization(.words)
                     .disableAutocorrection(true)
                     .border(.secondary)
-                ValidField(valid: !newName.isTrimmedStringEmpty())
+                ValidField(valid: newName.isTrimmedStringEmpty())
             }
             HStack {
                 Button("Cancel", action: cancel)
                 Button("Done", action: done)
-                    .disabled(doneDisabled)
+                    .disabled(doneDisabled())
             }
         }
-        .padding()
         .onAppear {
             newName = name
-            updateDoneButton()
+            updateIsReady()
         }
+        .padding()
     }
 
-    private func updateDoneButton() {
-        doneDisabled = newName.isTrimmedStringEmpty()
-    }
-    
-    private func cancel() {
-        name = ""
-        nameWizardShowing = false
+    func cancel() {
+        isShowing = false
     }
 
-    private func done() {
-        name = newName
-        nameWizardShowing = false
-        newName = ""
+    func done() {
+        name = newName.trimmingCharacters(in: .whitespacesAndNewlines)
+        isShowing = false
+    }
+
+    func doneDisabled() -> Bool {
+        return !isReady
+    }
+
+    private func updateIsReady() {
+        print("new name = \(newName)")
+        isReady = !newName.isTrimmedStringEmpty()
     }
 }
 
 #Preview {
-    @State var name: String = ""
-    @State var nameWizardShowing = true
-    
-    return EditName(name: $name, nameWizardShowing: $nameWizardShowing)
+    @State var isReady = false
+    @State var isShowing = true
+    @State var isNewCharacter = true
+    @State var newName = ""
+
+    return NameEditor(isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing, name: $newName)
 }
 
 #Preview {
-    @State var name: String = "Pendecar"
-    @State var nameWizardShowing = true
+    @State var isReady = true
+    @State var isShowing = false
+    @State var isNewCharacter = false
+    @State var newName = "Pendecar"
 
-    return EditName(name: $name, nameWizardShowing: $nameWizardShowing)
+    return NameEditor(isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing, name: $newName)
 }
-
-

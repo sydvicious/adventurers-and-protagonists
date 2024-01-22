@@ -21,7 +21,62 @@ final class Adventurer {
         self.name = name
         self.abilities = abilities
     }
-    
+
+    func updateFromProto(_ proto: Proto) {
+        updateName(proto)
+        updateAbilities(proto)
+    }
+
+    private func updateName(_ proto: Proto) {
+        if self.name != proto.name {
+            self.name = proto.name
+        }
+    }
+
+    private func updateAbilities (_ proto: Proto) {
+        struct Scores {
+            var stored: Int?
+            var proto: Int?
+        }
+        var scores: [String: Scores] = [:]
+        var newAbilities: [Ability] = []
+
+        AbilityLabels.allCases.forEach {
+            let score = Scores(stored: nil, proto: nil)
+            scores[$0.rawValue] = score
+        }
+
+        proto.abilities.forEach {
+            let label = $0.label
+            let protoScore = $0.score
+            var comparedScore = scores[label]
+            comparedScore?.proto = protoScore
+            scores[label] = comparedScore
+        }
+
+        self.abilities.forEach {
+            let label = $0.label
+            let storedScore = $0.score
+            var comparedScore = scores[label]
+            comparedScore?.stored = storedScore
+            scores[label] = comparedScore
+        }
+
+        var writeAbilities = false
+        scores.forEach { label, comparedScore in
+            if let protoScore = comparedScore.proto {
+                if let _ = comparedScore.stored {
+                    writeAbilities = true
+                }
+                newAbilities.append(Ability(label: label, score: protoScore))
+            }
+        }
+
+        if writeAbilities {
+            self.abilities = newAbilities
+        }
+    }
+
     #if DEBUG
     static let preview: Adventurer = {
         var abilities = [Ability]()

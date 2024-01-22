@@ -22,10 +22,10 @@ struct Browser: View {
 
     var body: some View {
         NavigationSplitView {
-            List {
+            List(selection: $selection) {
                 ForEach(adventurers) { item in
                     NavigationLink {
-                        Text("\(item.name)")
+                        AdventurerView(selection: item)
                     } label: {
                         Text(item.name)
                     }
@@ -46,7 +46,7 @@ struct Browser: View {
             }
             .navigationTitle("Adventurers")
         } detail: {
-            AdventurerView(selection: selection)
+            Text("Please select an adventurer from the list or hit the + button to add a new one.")
         }
         .navigationSplitViewStyle(.balanced)
         .onAppear(perform: {

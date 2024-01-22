@@ -23,21 +23,19 @@ import Foundation
 
     private static func baseAbilities() -> [ProtoAbility] {
         var abilities = [ProtoAbility]()
-        abilities.append(ProtoAbility(label: AbilityLabels.str.rawValue))
-        abilities.append(ProtoAbility(label: AbilityLabels.con.rawValue))
-        abilities.append(ProtoAbility(label: AbilityLabels.dex.rawValue))
-        abilities.append(ProtoAbility(label: AbilityLabels.int.rawValue))
-        abilities.append(ProtoAbility(label: AbilityLabels.wis.rawValue))
-        abilities.append(ProtoAbility(label: AbilityLabels.cha.rawValue))
+        abilities.append(ProtoAbility(label: AbilityLabels.str.rawValue, score: 10))
+        abilities.append(ProtoAbility(label: AbilityLabels.con.rawValue, score: 10))
+        abilities.append(ProtoAbility(label: AbilityLabels.dex.rawValue, score: 10))
+        abilities.append(ProtoAbility(label: AbilityLabels.int.rawValue, score: 10))
+        abilities.append(ProtoAbility(label: AbilityLabels.wis.rawValue, score: 10))
+        abilities.append(ProtoAbility(label: AbilityLabels.cha.rawValue, score: 10))
         return abilities
     }
 
     public func abilitiesReady(usePoints: Bool) -> Bool {
         var points = 0
         for ability in abilities {
-            guard let score = ability.score else {
-                return false
-            }
+            let score = ability.score
             points += score
         }
         if usePoints && points > self.campaignType.rawValue {
@@ -63,7 +61,7 @@ import Foundation
         guard isReady(usePoints: usePoints) else {
             return nil
         }
-        let abilites: [Ability] = self.abilities.map { Ability(label: $0.label, score: $0.score!) }
+        let abilites: [Ability] = self.abilities.map { Ability(label: $0.label, score: $0.score) }
         return Adventurer(name: self.name, abilities: abilites)
     }
 
@@ -83,10 +81,11 @@ import Foundation
 
 class ProtoAbility {
     var label: String;
-    var score: Int? = nil
+    var score: Int;
 
-    init(label: String) {
+    init(label: String, score: Int) {
         self.label = label
+        self.score = score
     }
 }
 

@@ -18,31 +18,61 @@ struct AdventurerWizard: View {
     @State private var proto = Proto.dummyProtoData()
 
     @State private var doneDisabled = true
+    @State private var isReady = false
+
+    // biography wizard
+    @State private var biographyWizardShowing = false
     @State private var biographyReady = false
+    @State private var newName = ""
 
     var body: some View {
         ScrollView {
             VStack {
-                Text(creatingNewCharacter ? "Create a new adventurer" : "Edit Character")
-                    .font(.title)
+                HStack {
+                    Text(proto.name.isTrimmedStringEmpty() ? "Unnamed" : "\(newName)")
+                    Spacer()
+                    HStack {
+                        Button(action: {
+                            biographyWizardShowing = true
+                        }, label: {
+                            Image(systemName: "pencil")
+                                .font(.caption)
+                                .imageScale(.large)
+                        })
+                        ValidField(valid: isReady)
+                    }
+
+                }
+            }
+            .sheet(isPresented: $biographyWizardShowing, content: {
+                NameEditor(isReady: $isReady, isNewCharacter: $creatingNewCharacter, isShowing: $biographyWizardShowing, name: $newName)
+            })
+            HStack {
+                Button("Cancel", action: cancel)
+                Button("Done", action: done)
+                    .disabled(doneDisabled)
             }
         }
+        .padding()
         .defaultScrollAnchor(.top)
-        HStack {
-            Button("Cancel", action: cancel)
-            Button("Done", action: done)
-                .disabled(doneDisabled)
-        }
+        .navigationTitle(creatingNewCharacter ? "Create a new adventurer" : "Edit Character")
         .onAppear {
             if !creatingNewCharacter, let selection = selection {
                 proto = Proto(from: selection)
+                newName = proto.name
+            } else {
+                biographyWizardShowing = true
             }
+            updateDoneButton()
+        }
+        .onChange(of: newName) {
+            proto.name = newName
             updateDoneButton()
         }
     }
 
     private func updateDoneButton() {
-        doneDisabled = proto.name.isTrimmedStringEmpty()
+        doneDisabled = newName.isTrimmedStringEmpty()
     }
 
     private func cancel() {
@@ -50,24 +80,21 @@ struct AdventurerWizard: View {
         creatingNewCharacter = false
     }
 
-    private func setName() {
-
-    }
-
     private func done() {
-        let adventurer = proto.adventurerFrom(usePoints: false)
-        if let adventurer {
-            withAnimation {
-                modelContext.insert(adventurer)
+        if creatingNewCharacter {
+            let adventurer = proto.adventurerFrom(usePoints: false)
+            if let adventurer {
+                withAnimation {
+                    modelContext.insert(adventurer)
+                }
+                selection = adventurer
             }
-            selection = adventurer
-            wizardShowing = false
             creatingNewCharacter = false
         } else {
-            updateDoneButton()
+            selection?.updateFromProto(proto)
         }
+        wizardShowing = false
     }
-
 }
 
 #Preview {
