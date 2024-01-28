@@ -76,7 +76,6 @@ struct NameEditor: View {
     }
 
     private func updateIsReady() {
-        print("new name = \(newName)")
         isReady = !newName.isTrimmedStringEmpty()
     }
 }
