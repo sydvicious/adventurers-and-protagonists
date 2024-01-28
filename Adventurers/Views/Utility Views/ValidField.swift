@@ -8,11 +8,7 @@
 import SwiftUI
 
 struct ValidField: View {
-    var valid: Bool
-
-    init(valid: Bool) {
-        self.valid = valid
-    }
+    @Binding var valid: Bool
 
     var body: some View {
         if valid {
@@ -29,9 +25,12 @@ struct ValidField: View {
 }
 
 #Preview {
-    return ValidField(valid: false)
+    @State var isValid: Bool = false
+    return ValidField(valid: $isValid)
 }
 
 #Preview {
-    return ValidField(valid: true)
+    @State var isValid: Bool = false
+
+    return ValidField(valid: $isValid)
 }

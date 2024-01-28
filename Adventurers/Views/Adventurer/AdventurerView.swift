@@ -9,16 +9,11 @@ import SwiftUI
 import SwiftData
 
 struct AdventurerView: View {
-    @State var selection: Adventurer?
-
+    var selection: Adventurer
     @State private var creatingNewCharacter = false
-    @State private var showParentIfWizardCancelled = true
-
     @State private var biographyWizardShowing =  false
-    @State private var proto: Proto = Proto.dummyProtoData()
 
     var body: some View {
-        if let selection {
             GeometryReader { geometry in
                 ScrollView(.vertical) {
                     VStack {
@@ -39,9 +34,8 @@ struct AdventurerView: View {
             .fullScreenCover(isPresented: $biographyWizardShowing) {
                 AdventurerWizard(wizardShowing: $biographyWizardShowing,
                                  creatingNewCharacter: $creatingNewCharacter,
-                                 selection: $selection)
+                                 selection: selection)
             }
-        }
     }
 
     func edit() {

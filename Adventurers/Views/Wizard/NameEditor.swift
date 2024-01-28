@@ -22,7 +22,7 @@ struct NameEditor: View {
 
     var body: some View {
         VStack {
-            Text("Choose a new name for your character")
+            Text("Enter your character's name")
                 .multilineTextAlignment(.center)
             HStack{
                 TextField("<NAME>", text: $newName)
@@ -46,8 +46,9 @@ struct NameEditor: View {
                     .textInputAutocapitalization(.words)
                     .disableAutocorrection(true)
                     .border(.secondary)
-                ValidField(valid: newName.isTrimmedStringEmpty())
+                ValidField(valid: $isReady)
             }
+            Spacer()
             HStack {
                 Button("Cancel", action: cancel)
                 Button("Done", action: done)

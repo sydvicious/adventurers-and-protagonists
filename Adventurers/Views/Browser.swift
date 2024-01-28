@@ -13,21 +13,24 @@ struct Browser: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Query(sort: [SortDescriptor(\Adventurer.name, comparator: .localized)]) var adventurers: [Adventurer]
     
+    @State private var columnVisibility =
+        NavigationSplitViewVisibility.all
     @State private var selection: Adventurer?
-    
+
     // Sheets
     @State private var welcomeScreenShowing = false
     @State private var wizardShowing = false
     @State private var creatingNewCharacter = false
 
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             List(selection: $selection) {
                 ForEach(adventurers) { item in
                     NavigationLink {
                         AdventurerView(selection: item)
-                    } label: {
-                        Text(item.name)
+                    }
+                    label: {
+                        Text("\(item.name)")
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -45,16 +48,23 @@ struct Browser: View {
                 }
             }
             .navigationTitle("Adventurers")
+            .onAppear {
+                if self.horizontalSizeClass == .regular && self.selection == nil && self.adventurers.count > 0 {
+                    self.selection = self.adventurers[0]
+                }
+            }
+
         } detail: {
-            Text("Please select an adventurer from the list or hit the + button to add a new one.")
+            if let selection {
+                AdventurerView(selection: selection)
+            } else {
+                Text("Please select an adventurer from the list or hit the + button to add a new one.")
+            }
         }
         .navigationSplitViewStyle(.balanced)
         .onAppear(perform: {
             let defaults = UserDefaults.standard
             welcomeScreenShowing = !defaults.bool(forKey: "WelcomeScreenShown")
-            if self.horizontalSizeClass == .regular && self.selection == nil && self.adventurers.count > 0 {
-                self.selection = self.adventurers[0]
-            }
             if self.adventurers.count == 0 {
                 creatingNewCharacter = true
                 welcomeScreenShowing = true
@@ -64,7 +74,7 @@ struct Browser: View {
             WelcomeScreen(welcomeScreenShowing: $welcomeScreenShowing)
         })
         .fullScreenCover(isPresented: $wizardShowing) {
-            AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: $selection)
+            AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: selection)
         }
     }
 
@@ -79,7 +89,6 @@ struct Browser: View {
                 modelContext.delete(adventurers[index])
             }
         }
-        self.selection = Optional.none
     }
 }
 
