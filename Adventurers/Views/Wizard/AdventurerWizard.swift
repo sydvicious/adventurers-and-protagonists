@@ -116,22 +116,20 @@ struct AdventurerWizard: View {
 
 #Preview {
     @State var wizardShowing = true
-    let selection: Adventurer? = SampleData.adventurers[0]
     @State var creatingNewCharacter = false
 
     return MainActor.assumeIsolated {
-        AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: selection)
+        AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: SampleData.adventurers[0])
             .modelContainer(previewContainer)
     }
 }
 
 #Preview {
     @State var wizardShowing = false
-    let selection: Adventurer? = SampleData.adventurers[0]
     @State var creatingNewCharacter = false
 
     return MainActor.assumeIsolated {
-        AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: selection)
+        AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: SampleData.adventurers[0])
             .modelContainer(previewContainer)
     }
 }
