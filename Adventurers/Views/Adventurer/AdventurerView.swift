@@ -9,15 +9,25 @@ import SwiftUI
 import SwiftData
 
 struct AdventurerView: View {
-    var selection: Adventurer
+    @State var selection: Adventurer
     @State private var creatingNewCharacter = false
     @State private var biographyWizardShowing =  false
+    @State private var isReady = true
+    @State private var isNewCharacter = false
+    @State private var isShowing = true
 
     var body: some View {
             GeometryReader { geometry in
                 ScrollView(.vertical) {
                     VStack {
                         Text(selection.name)
+                            .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+
+                        AbilitiesView(isReady: $isReady,
+                                      isNewCharacter: $isNewCharacter,
+                                      isShowing: $isShowing,
+                                      abilities: $selection.abilities)
+                        Spacer()
                     }
                     .padding()
                     .frame(width: geometry.size.width)

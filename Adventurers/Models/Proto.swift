@@ -21,7 +21,7 @@ import Foundation
         self.campaignType = campaignType
     }
 
-    private static func baseAbilities() -> [ProtoAbility] {
+    public static func baseAbilities() -> [ProtoAbility] {
         var abilities = [ProtoAbility]()
         abilities.append(ProtoAbility(label: AbilityLabels.str.rawValue, score: 10))
         abilities.append(ProtoAbility(label: AbilityLabels.con.rawValue, score: 10))
@@ -33,6 +33,9 @@ import Foundation
     }
 
     public func abilitiesReady(usePoints: Bool) -> Bool {
+        guard abilities.count == 6  else {
+            return false
+        }
         var points = 0
         for ability in abilities {
             let score = ability.score
@@ -79,13 +82,16 @@ import Foundation
 
 }
 
-class ProtoAbility {
+struct ProtoAbility: Identifiable {
+    var id: String
+
     var label: String;
     var score: Int;
 
     init(label: String, score: Int) {
         self.label = label
         self.score = score
+        self.id = label
     }
 }
 

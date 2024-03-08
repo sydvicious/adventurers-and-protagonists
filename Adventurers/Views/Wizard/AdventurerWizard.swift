@@ -42,7 +42,6 @@ struct AdventurerWizard: View {
                         })
                         ValidField(valid: $isReady)
                     }
-
                 }
             }
             .sheet(isPresented: $biographyWizardShowing, onDismiss: {
@@ -80,7 +79,8 @@ struct AdventurerWizard: View {
     }
 
     private func updateDoneButton() {
-        doneDisabled = newName.isTrimmedStringEmpty()
+        isReady = proto.isReady(usePoints: false)
+        doneDisabled = !isReady
     }
 
     private func cancel() {

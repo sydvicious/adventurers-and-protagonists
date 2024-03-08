@@ -13,7 +13,7 @@ struct WelcomeScreen: View {
     var body: some View {
         VStack {
             Spacer()
-            Text("Welcome to the Gallery of Adventurs and Other Creatures.").multilineTextAlignment(.center)
+            Text("Welcome to the Gallery of Adventurers and Other Creatures.").multilineTextAlignment(.center)
             Spacer()
             
             Button(action: {

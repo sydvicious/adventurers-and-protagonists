@@ -14,6 +14,7 @@ final class Adventurer {
     var uid: UUID
     var name: String
     var abilities: [Ability]
+    @Transient var abilitiesMap: [AbilityLabels:Ability] = [:]
 
     init(name: String, abilities: [Ability]) {
         self.timestamp = Date()

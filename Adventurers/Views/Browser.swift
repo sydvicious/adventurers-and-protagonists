@@ -73,9 +73,11 @@ struct Browser: View {
         .sheet(isPresented: $welcomeScreenShowing, content:{
             WelcomeScreen(welcomeScreenShowing: $welcomeScreenShowing)
         })
+        #if os(iOS)
         .fullScreenCover(isPresented: $wizardShowing) {
             AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: selection)
         }
+        #endif
     }
 
     private func addItem() {

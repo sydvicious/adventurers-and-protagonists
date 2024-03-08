@@ -25,6 +25,7 @@ struct NameEditor: View {
             Text("Enter your character's name")
                 .multilineTextAlignment(.center)
             HStack{
+#if os(iOS)
                 TextField("<NAME>", text: $newName)
                     .onChange(of: newName) {
                         updateIsReady()
@@ -46,6 +47,21 @@ struct NameEditor: View {
                     .textInputAutocapitalization(.words)
                     .disableAutocorrection(true)
                     .border(.secondary)
+#else
+                TextField("<NAME>", text: $newName)
+                    .onChange(of: newName) {
+                        updateIsReady()
+                    }
+                    .onSubmit {
+                        updateIsReady()
+                    }
+                    .focused($focus, equals: .name)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            self.focus = .name
+                        }
+                    }
+#endif
                 ValidField(valid: $isReady)
             }
             Spacer()
