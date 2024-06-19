@@ -10,7 +10,6 @@ import SwiftUI
 struct AbilitiesView: View {
     @Binding var isReady: Bool
     @Binding var isNewCharacter: Bool
-    @Binding var isShowing: Bool
     @Binding var abilities: [Ability]
 
     var body: some View {
@@ -28,7 +27,6 @@ struct AbilitiesView: View {
 
 #Preview {
     @State var isReady = false
-    @State var isShowing = true
     @State var isNewCharacter = true
 
     let protoAbilities = Proto.baseAbilities()
@@ -45,6 +43,6 @@ struct AbilitiesView: View {
             return Text("no calculated abilities, protoAbilities.count = \(protoAbilities.count) \(debuggingText)")
         }
         @State var abilities : [Ability] = stagingAbilities
-        return AbilitiesView(isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing, abilities: $abilities)
+        return AbilitiesView(isReady: $isReady, isNewCharacter: $isNewCharacter, abilities: $abilities)
     }
 }

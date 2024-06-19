@@ -14,38 +14,34 @@ struct AdventurerView: View {
     @State private var biographyWizardShowing =  false
     @State private var isReady = true
     @State private var isNewCharacter = false
-    @State private var isShowing = true
 
     var body: some View {
-            GeometryReader { geometry in
-                ScrollView(.vertical) {
-                    VStack {
-                        Text(selection.name)
-                            .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+        ScrollView(.vertical) {
+            VStack(alignment: .leading) {
+                Text(selection.name)
+                    .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                    .border(.black)
 
-                        AbilitiesView(isReady: $isReady,
-                                      isNewCharacter: $isNewCharacter,
-                                      isShowing: $isShowing,
-                                      abilities: $selection.abilities)
-                        Spacer()
-                    }
-                    .padding()
-                    .frame(width: geometry.size.width)
-                    .frame(height: geometry.size.height)
+                AbilitiesView(isReady: $isReady,
+                              isNewCharacter: $isNewCharacter,
+                              abilities: $selection.abilities)
+                .border(.black)
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+        }
+        .toolbar {
+            ToolbarItem {
+                Button(action: edit) {
+                    Label("Edit", systemImage: "pencil")
                 }
             }
-            .toolbar {
-                ToolbarItem {
-                    Button(action: edit) {
-                        Label("Edit", systemImage: "pencil")
-                    }
-                }
-            }
-            .fullScreenCover(isPresented: $biographyWizardShowing) {
-                AdventurerWizard(wizardShowing: $biographyWizardShowing,
-                                 creatingNewCharacter: $creatingNewCharacter,
-                                 selection: selection)
-            }
+        }
+        .fullScreenCover(isPresented: $biographyWizardShowing) {
+            AdventurerWizard(wizardShowing: $biographyWizardShowing,
+                             creatingNewCharacter: $creatingNewCharacter,
+                             selection: selection)
+        }
     }
 
     func edit() {

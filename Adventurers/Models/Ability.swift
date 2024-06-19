@@ -13,7 +13,7 @@ enum AbilityLabels: String, CaseIterable {
     case con = "Constitution"
     case dex = "Dexterity"
     case int = "Intelligence"
-    case wis = "Wisdown"
+    case wis = "Wisdom"
     case cha = "Charisma"
 }
 
