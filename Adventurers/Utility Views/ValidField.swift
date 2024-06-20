@@ -25,12 +25,12 @@ struct ValidField: View {
 }
 
 #Preview {
-    @State var isValid: Bool = false
+    @Previewable @State var isValid: Bool = false
     return ValidField(valid: $isValid)
 }
 
 #Preview {
-    @State var isValid: Bool = false
+    @Previewable @State var isValid: Bool = true
 
     return ValidField(valid: $isValid)
 }

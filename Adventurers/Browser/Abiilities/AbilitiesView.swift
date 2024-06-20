@@ -25,14 +25,9 @@ struct AbilitiesView: View {
 }
 
 #Preview {
-    let viewModel = AbilitiesViewModel(isReady: true, abilities: [])
-    AbilitiesView(viewModel: viewModel)
-}
-
-#Preview {
     var debuggingText = "abilties accumulater: "
     var stagingAbilities: [Ability] = []
-    var protoAbilities = Proto.baseAbilities()
+    let protoAbilities = Proto.baseAbilities()
 
     protoAbilities.forEach{protoAbility in
         debuggingText += "\(protoAbility.label): - \(protoAbility.score) "
@@ -41,3 +36,9 @@ struct AbilitiesView: View {
     let viewModel = AbilitiesViewModel(abilities: stagingAbilities)
     return AbilitiesView(viewModel: viewModel)
 }
+
+#Preview {
+    let viewModel = AbilitiesViewModel(isReady: true, abilities: [])
+    AbilitiesView(viewModel: viewModel)
+}
+
