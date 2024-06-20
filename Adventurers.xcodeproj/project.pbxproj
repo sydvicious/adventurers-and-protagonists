@@ -78,9 +78,11 @@
 		62D0C3442C2290260059CF23 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				AbilitiesView.swift,
-				AbilityGridRowView.swift,
-				AdventurerView.swift,
+				Abiilities/AbilitiesView.swift,
+				Abiilities/AbilitiesViewModel.swift,
+				Abiilities/AbilityGridRowView.swift,
+				Adventurer/AdventurerView.swift,
+				Adventurer/AdventurerViewModel.swift,
 				Browser.swift,
 			);
 			target = 629E8D782A548E5B002CDCAF /* Adventurers */;

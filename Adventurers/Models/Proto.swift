@@ -93,6 +93,11 @@ struct ProtoAbility: Identifiable {
         self.score = score
         self.id = label
     }
+
+    func ability() -> Ability {
+        let ability = Ability(label: self.label, score: self.score)
+        return ability
+    }
 }
 
 
