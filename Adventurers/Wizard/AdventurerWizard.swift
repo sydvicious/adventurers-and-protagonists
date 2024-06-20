@@ -105,8 +105,8 @@ struct AdventurerWizard: View {
 }
 
 #Preview {
-    @State var wizardShowing = true
-    @State var creatingNewCharacter = true
+    @Previewable @State var wizardShowing = true
+    @Previewable @State var creatingNewCharacter = true
 
     return MainActor.assumeIsolated {
         AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: nil)
@@ -115,8 +115,8 @@ struct AdventurerWizard: View {
 }
 
 #Preview {
-    @State var wizardShowing = true
-    @State var creatingNewCharacter = false
+    @Previewable @State var wizardShowing = true
+    @Previewable @State var creatingNewCharacter = false
 
     return MainActor.assumeIsolated {
         AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: SampleData.adventurers[0])
@@ -125,8 +125,8 @@ struct AdventurerWizard: View {
 }
 
 #Preview {
-    @State var wizardShowing = false
-    @State var creatingNewCharacter = false
+    @Previewable @State var wizardShowing = false
+    @Previewable @State var creatingNewCharacter = false
 
     return MainActor.assumeIsolated {
         AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: SampleData.adventurers[0])

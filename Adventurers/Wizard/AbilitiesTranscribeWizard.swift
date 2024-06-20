@@ -23,10 +23,10 @@ struct AbilitiesTranscribeWizard: View {
 }
 
 #Preview {
-    @State var isReady = false
-    @State var isShowing = true
-    @State var isNewCharacter = true
-    @State var abilities: [ProtoAbility] = Proto.baseAbilities()
+    @Previewable @State var isReady = false
+    @Previewable @State var isShowing = true
+    @Previewable @State var isNewCharacter = true
+    @Previewable @State var abilities: [ProtoAbility] = Proto.baseAbilities()
 
     return AbilitiesTranscribeWizard(isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing, abilities: $abilities)
 }

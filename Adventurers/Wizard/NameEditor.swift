@@ -97,19 +97,19 @@ struct NameEditor: View {
 }
 
 #Preview {
-    @State var isReady = false
-    @State var isShowing = true
-    @State var isNewCharacter = true
-    @State var newName = ""
+    @Previewable @State var isReady = false
+    @Previewable @State var isShowing = true
+    @Previewable @State var isNewCharacter = true
+    @Previewable @State var newName = ""
 
     return NameEditor(isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing, name: $newName)
 }
 
 #Preview {
-    @State var isReady = true
-    @State var isShowing = false
-    @State var isNewCharacter = false
-    @State var newName = "Pendecar"
+    @Previewable @State var isReady = true
+    @Previewable @State var isShowing = false
+    @Previewable @State var isNewCharacter = false
+    @Previewable @State var newName = "Pendecar"
 
     return NameEditor(isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing, name: $newName)
 }
