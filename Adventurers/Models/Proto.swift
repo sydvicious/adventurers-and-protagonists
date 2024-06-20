@@ -74,6 +74,7 @@ import Foundation
         proto.abilities = oldProto.abilities
         return proto
     }
+
     static func dummyProtoData() -> Proto {
         let protoData = Proto(campaignType: .epicFantasy)
         protoData.name = ""

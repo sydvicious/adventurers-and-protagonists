@@ -22,7 +22,6 @@ struct AdventurerWizard: View {
     // biography wizard
     @State private var biographyWizardShowing = false
     @State private var biographyReady = false
-    @State private var newName = ""
 
     var selection: Adventurer?
 
@@ -30,7 +29,7 @@ struct AdventurerWizard: View {
         ScrollView {
             VStack {
                 HStack {
-                    Text(proto.name.isTrimmedStringEmpty() ? "Unnamed" : "\(newName)")
+                    Text(proto.name.isTrimmedStringEmpty() ? "Unnamed" : "\(proto.name)")
                     Spacer()
                     HStack {
                         Button(action: {
@@ -46,11 +45,11 @@ struct AdventurerWizard: View {
             }
             .sheet(isPresented: $biographyWizardShowing, onDismiss: {
                 biographyWizardShowing = false
-                if creatingNewCharacter && newName.isTrimmedStringEmpty() {
+                if creatingNewCharacter && proto.name.isTrimmedStringEmpty() {
                     wizardShowing = false
                 }
             }, content: {
-                NameEditor(isReady: $isReady, isNewCharacter: $creatingNewCharacter, isShowing: $biographyWizardShowing, name: $newName)
+                NameEditor(proto: $proto, isReady: $isReady, isNewCharacter: $creatingNewCharacter, isShowing: $biographyWizardShowing)
                     .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
             })
@@ -66,14 +65,12 @@ struct AdventurerWizard: View {
         .onAppear {
             if !creatingNewCharacter, let selection = selection {
                 proto = Proto(from: selection)
-                newName = proto.name
             } else {
                 biographyWizardShowing = true
             }
             updateDoneButton()
         }
-        .onChange(of: newName) {
-            proto.name = newName
+        .onChange(of: proto.name) {
             updateDoneButton()
         }
     }

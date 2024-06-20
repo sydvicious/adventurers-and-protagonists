@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6226CECE2A74A0880089E252 /* ValidField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6226CECD2A74A0880089E252 /* ValidField.swift */; };
 		623491982A74AC6B00A38880 /* Ability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623491972A74AC6B00A38880 /* Ability.swift */; };
 		626986112A549542004391FC /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986102A549542004391FC /* WelcomeScreen.swift */; };
 		626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986522A566DCE004391FC /* PreviewModelContainer.swift */; };
@@ -20,7 +19,6 @@
 		629E8D9C2A548E5C002CDCAF /* AdventurersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629E8D9B2A548E5C002CDCAF /* AdventurersUITests.swift */; };
 		629E8D9E2A548E5C002CDCAF /* AdventurersUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629E8D9D2A548E5C002CDCAF /* AdventurersUITestsLaunchTests.swift */; };
 		62DA2B192B0FA67800F05457 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DA2B182B0FA67800F05457 /* StringUtils.swift */; };
-		62DA2B1B2B0FEED300F05457 /* ViewHeightModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DA2B1A2B0FEED300F05457 /* ViewHeightModifier.swift */; };
 		62E5C04D2A5683690007FD7D /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E5C04C2A5683690007FD7D /* SampleData.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +40,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6226CECD2A74A0880089E252 /* ValidField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidField.swift; sourceTree = "<group>"; };
 		623491972A74AC6B00A38880 /* Ability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ability.swift; sourceTree = "<group>"; };
 		626986102A549542004391FC /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
 		626986522A566DCE004391FC /* PreviewModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewModelContainer.swift; sourceTree = "<group>"; };
@@ -60,38 +57,32 @@
 		629E8D9B2A548E5C002CDCAF /* AdventurersUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventurersUITests.swift; sourceTree = "<group>"; };
 		629E8D9D2A548E5C002CDCAF /* AdventurersUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventurersUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		62DA2B182B0FA67800F05457 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
-		62DA2B1A2B0FEED300F05457 /* ViewHeightModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHeightModifier.swift; sourceTree = "<group>"; };
 		62E5C04C2A5683690007FD7D /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		62D0C3432C22900C0059CF23 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		621C14352C2472A500A66C21 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				AbilitiesTranscribeWizard.swift,
-				AdventurerWizard.swift,
-				NameEditor.swift,
-				WizardProtocol.swift,
-			);
-			target = 629E8D782A548E5B002CDCAF /* Adventurers */;
-		};
-		62D0C3442C2290260059CF23 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Abiilities/AbilitiesView.swift,
-				Abiilities/AbilitiesViewModel.swift,
-				Abiilities/AbilityGridRowView.swift,
-				Adventurer/AdventurerView.swift,
-				Adventurer/AdventurerViewModel.swift,
-				Browser.swift,
+				Browser/Abiilities/AbilitiesView.swift,
+				Browser/Abiilities/AbilitiesViewModel.swift,
+				Browser/Abiilities/AbilityGridRowView.swift,
+				Browser/Adventurer/AdventurerView.swift,
+				Browser/Adventurer/AdventurerViewModel.swift,
+				Browser/Browser.swift,
+				"Utility Views/ValidField.swift",
+				"Utility Views/ViewHeightModifier.swift",
+				Wizard/Abilities/AbilitiesTranscribeWizard.swift,
+				Wizard/AdventurerWizard.swift,
+				Wizard/Biography/NameEditor.swift,
+				Wizard/WizardProtocol.swift,
 			);
 			target = 629E8D782A548E5B002CDCAF /* Adventurers */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		62D0C3412C228FD70059CF23 /* Wizard */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (62D0C3432C22900C0059CF23 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Wizard; sourceTree = "<group>"; };
-		62D0C3422C228FE80059CF23 /* Browser */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (62D0C3442C2290260059CF23 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Browser; sourceTree = "<group>"; };
+		621C14172C24729A00A66C21 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (621C14352C2472A500A66C21 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,15 +110,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6226CECC2A74A0650089E252 /* Utility Views */ = {
-			isa = PBXGroup;
-			children = (
-				6226CECD2A74A0880089E252 /* ValidField.swift */,
-				62DA2B1A2B0FEED300F05457 /* ViewHeightModifier.swift */,
-			);
-			path = "Utility Views";
-			sourceTree = "<group>";
-		};
 		6269860F2A549528004391FC /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,11 +151,9 @@
 		629E8D7B2A548E5B002CDCAF /* Adventurers */ = {
 			isa = PBXGroup;
 			children = (
-				62D0C3422C228FE80059CF23 /* Browser */,
+				621C14172C24729A00A66C21 /* Views */,
 				627D72322A6CFC2D00C950C5 /* Miscellaneous */,
 				6269860F2A549528004391FC /* Models */,
-				6226CECC2A74A0650089E252 /* Utility Views */,
-				62D0C3412C228FD70059CF23 /* Wizard */,
 				629E8D7C2A548E5B002CDCAF /* AdventurersApp.swift */,
 				626986102A549542004391FC /* WelcomeScreen.swift */,
 				629E8D822A548E5C002CDCAF /* Assets.xcassets */,
@@ -275,7 +255,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					629E8D782A548E5B002CDCAF = {
 						CreatedOnToolsVersion = 15.0;
@@ -344,8 +324,6 @@
 				629E8D7F2A548E5B002CDCAF /* Adventurer.swift in Sources */,
 				62E5C04D2A5683690007FD7D /* SampleData.swift in Sources */,
 				627D72312A6CF30700C950C5 /* Proto.swift in Sources */,
-				6226CECE2A74A0880089E252 /* ValidField.swift in Sources */,
-				62DA2B1B2B0FEED300F05457 /* ViewHeightModifier.swift in Sources */,
 				62DA2B192B0FA67800F05457 /* StringUtils.swift in Sources */,
 				629E8D7D2A548E5B002CDCAF /* AdventurersApp.swift in Sources */,
 				626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */,
@@ -590,7 +568,6 @@
 		629E8DA52A548E5C002CDCAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -614,7 +591,6 @@
 		629E8DA62A548E5C002CDCAF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -638,7 +614,6 @@
 		629E8DA82A548E5C002CDCAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -661,7 +636,6 @@
 		629E8DA92A548E5C002CDCAF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;

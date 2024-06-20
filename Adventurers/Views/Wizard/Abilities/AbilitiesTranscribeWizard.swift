@@ -7,17 +7,21 @@
 
 import SwiftUI
 
-struct AbilitiesTranscribeWizard: View {
+struct AbilitiesTranscribeWizard: View, WizardProtocol {
+    @Binding var proto: Proto
+
     @Binding var isReady: Bool
     @Binding var isNewCharacter: Bool
     @Binding var isShowing: Bool
-    @Binding var abilities: [ProtoAbility]
 
     var body: some View {
         Grid {
-            ForEach(abilities) {ability in
+            ForEach(proto.abilities) {ability in
                 AbilityGridRowView(name: ability.label, score: ability.score)
             }
+        }
+        .onAppear() {
+            isReady = true
         }
     }
 }
@@ -26,7 +30,8 @@ struct AbilitiesTranscribeWizard: View {
     @Previewable @State var isReady = false
     @Previewable @State var isShowing = true
     @Previewable @State var isNewCharacter = true
-    @Previewable @State var abilities: [ProtoAbility] = Proto.baseAbilities()
+    @Previewable @State var proto = Proto()
+    proto.abilities = Proto.baseAbilities()
 
-    return AbilitiesTranscribeWizard(isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing, abilities: $abilities)
+    return AbilitiesTranscribeWizard(proto: $proto, isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing)
 }

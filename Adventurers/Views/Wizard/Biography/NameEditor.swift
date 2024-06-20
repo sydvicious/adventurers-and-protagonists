@@ -11,14 +11,15 @@ enum NameEditorFocus: Hashable {
     case name
 }
 
-struct NameEditor: View {
+struct NameEditor: View, WizardProtocol {
+    @Binding var proto: Proto
+
     @Binding var isReady: Bool
     @Binding var isNewCharacter: Bool
     @Binding var isShowing: Bool
-    @Binding var name: String
 
     @FocusState private var focus: NameEditorFocus?
-    @State var newName: String = ""
+    @State private var newName: String = ""
 
     var body: some View {
         VStack {
@@ -72,7 +73,7 @@ struct NameEditor: View {
             }
         }
         .onAppear {
-            newName = name
+            newName = proto.name
             updateIsReady()
         }
         .padding()
@@ -83,7 +84,7 @@ struct NameEditor: View {
     }
 
     func done() {
-        name = newName.trimmingCharacters(in: .whitespacesAndNewlines)
+        proto.name = newName.trimmingCharacters(in: .whitespacesAndNewlines)
         isShowing = false
     }
 
@@ -100,16 +101,18 @@ struct NameEditor: View {
     @Previewable @State var isReady = false
     @Previewable @State var isShowing = true
     @Previewable @State var isNewCharacter = true
-    @Previewable @State var newName = ""
+    @Previewable @State var proto = Proto()
+    proto.name = ""
 
-    return NameEditor(isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing, name: $newName)
+    return NameEditor(proto: $proto, isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing)
 }
 
 #Preview {
     @Previewable @State var isReady = true
     @Previewable @State var isShowing = false
     @Previewable @State var isNewCharacter = false
-    @Previewable @State var newName = "Pendecar"
+    @Previewable @State var proto = Proto()
+    proto.name = "Pendecar"
 
-    return NameEditor(isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing, name: $newName)
+    return NameEditor(proto: $proto, isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing)
 }
