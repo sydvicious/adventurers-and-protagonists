@@ -10,11 +10,7 @@ import SwiftUI
 @MainActor
 extension AbilitiesChooser {
     @ViewBuilder func Transcribe() -> some View {
-        Grid {
-            ForEach(viewModel.proto.abilities) {ability in
-                AbilityGridRowView(name: ability.label, score: ability.score)
-            }
-        }
+        AbilitiesView(viewModel: AbilitiesViewModel(proto: self.proto))
         .onAppear() {
             self.isReady = true
         }

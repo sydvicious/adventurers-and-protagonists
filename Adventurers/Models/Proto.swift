@@ -13,12 +13,18 @@ import Foundation
     }
 
     var name : String
-    var abilities = [ProtoAbility]()
+    var abilities : [ProtoAbility]
     let campaignType: CampaignTypes
 
     public init(from adventurer: Adventurer? = nil, campaignType: CampaignTypes = .standardFantasy) {
-        self.name = adventurer?.name ?? ""
         self.campaignType = campaignType
+        if let adventurer {
+            self.name = adventurer.name
+            self.abilities = Proto.protoAbilities(from: adventurer)
+        } else {
+            self.name = ""
+            self.abilities = []
+        }
     }
 
     public static func baseAbilities() -> [ProtoAbility] {
@@ -87,6 +93,11 @@ import Foundation
         let protoData = Proto(campaignType: .epicFantasy)
         protoData.name = ""
         return protoData
+    }
+
+    static func protoAbilities(from adventurer: Adventurer) -> [ProtoAbility] {
+        let protoAbilities: [ProtoAbility] = adventurer.abilities.map { ProtoAbility(label: $0.label, score: $0.score)}
+        return protoAbilities
     }
 
 }

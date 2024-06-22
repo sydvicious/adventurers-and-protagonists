@@ -46,7 +46,17 @@ struct AdventurerWizard: View {
                         ValidField(valid: $isReady)
                     }
                 }
-                AbilitiesView(viewModel: AbilitiesViewModel(proto: proto))
+                if creatingNewCharacter {
+                    Button("Setup Abilities", action: {
+                        abilitiesWizardShowing = true
+                    })
+                } else {
+                    AbilitiesView(viewModel: AbilitiesViewModel(proto: proto))
+                    Button("Edit Abilities", action: {
+                        abilitiesWizardShowing = true
+                    })
+                }
+
             }
             .sheet(isPresented: $biographyWizardShowing, onDismiss: {
                 biographyWizardShowing = false
@@ -133,12 +143,3 @@ struct AdventurerWizard: View {
     }
 }
 
-#Preview {
-    @Previewable @State var wizardShowing = false
-    @Previewable @State var creatingNewCharacter = false
-
-    return MainActor.assumeIsolated {
-        AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: SampleData.adventurers[0])
-            .modelContainer(previewContainer)
-    }
-}
