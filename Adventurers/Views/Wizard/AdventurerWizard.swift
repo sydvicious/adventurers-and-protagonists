@@ -23,6 +23,10 @@ struct AdventurerWizard: View {
     @State private var biographyWizardShowing = false
     @State private var biographyReady = false
 
+    // abilities wizard
+    @State private var abilitiesWizardShowing = false
+    @State private var abilitiesReady = false
+
     var selection: Adventurer?
 
     var body: some View {
@@ -42,17 +46,28 @@ struct AdventurerWizard: View {
                         ValidField(valid: $isReady)
                     }
                 }
+                AbilitiesView(viewModel: AbilitiesViewModel(proto: proto))
             }
             .sheet(isPresented: $biographyWizardShowing, onDismiss: {
                 biographyWizardShowing = false
                 if creatingNewCharacter && proto.name.isTrimmedStringEmpty() {
                     wizardShowing = false
                 }
+                updateDoneButton()
             }, content: {
                 NameEditor(proto: $proto, isReady: $isReady, isNewCharacter: $creatingNewCharacter, isShowing: $biographyWizardShowing)
                     .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
             })
+            .sheet(isPresented: $abilitiesWizardShowing, onDismiss: {
+                abilitiesWizardShowing = false
+                updateDoneButton()
+            }, content: {
+                AbilitiesChooser(isShowing: $abilitiesWizardShowing, isReady: $abilitiesReady, proto: $proto, creatingNewCharacter: creatingNewCharacter)
+            })
+        }
+        .onChange(of: abilitiesWizardShowing) {
+            updateDoneButton()
         }
         .padding()
         Spacer()
@@ -68,9 +83,6 @@ struct AdventurerWizard: View {
             } else {
                 biographyWizardShowing = true
             }
-            updateDoneButton()
-        }
-        .onChange(of: proto.name) {
             updateDoneButton()
         }
     }

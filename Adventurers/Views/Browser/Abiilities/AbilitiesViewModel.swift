@@ -12,16 +12,25 @@ protocol AbilitiesViewModelProtocol {
 }
 
 class AbilitiesViewModel: AbilitiesViewModelProtocol, ObservableObject {
-    @Published @MainActor var isReady: Bool = false
     @Published @MainActor var abilities: [Ability] = []
 
     private var isNewCharacter: Bool = true
 
-    init(isReady: Bool = false, isNewCharacter: Bool = true, abilities: [Ability] = []) {
+    init(abilities: [Ability] = []) {
         Task {@MainActor in
-            self.isReady = isReady
-            self.isNewCharacter = isNewCharacter
             self.abilities = abilities
+        }
+    }
+
+    init(adventurer: Adventurer) {
+        Task {@MainActor in
+            self.abilities = adventurer.abilities
+        }
+    }
+
+    init(proto: Proto) {
+        Task {@MainActor in
+            self.abilities = proto.abilitiesFrom() ?? []
         }
     }
 

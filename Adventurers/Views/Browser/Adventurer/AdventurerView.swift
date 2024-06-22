@@ -32,9 +32,7 @@ struct AdventurerView: View {
                     .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                     .border(.black)
 
-                let abilitiesViewModel = AbilitiesViewModel(isNewCharacter: self.creatingNewCharacter, abilities: selection.abilities)
-
-                AbilitiesView(viewModel: abilitiesViewModel)
+                AbilitiesView(viewModel: AbilitiesViewModel(adventurer: selection))
                 .border(.black)
             }
             .padding()

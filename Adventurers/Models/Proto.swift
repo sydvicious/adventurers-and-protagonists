@@ -32,7 +32,7 @@ import Foundation
         return abilities
     }
 
-    public func abilitiesReady(usePoints: Bool) -> Bool {
+    public func abilitiesReady(usePoints: Bool = false) -> Bool {
         guard abilities.count == 6  else {
             return false
         }
@@ -58,6 +58,14 @@ import Foundation
             return false
         }
         return true
+    }
+
+    public func abilitiesFrom() -> [Ability]? {
+        if !abilitiesReady() {
+            return nil
+        }
+        let abilities: [Ability] = self.abilities.map { Ability(label: $0.label, score: $0.score) }
+        return abilities
     }
 
     public func adventurerFrom(usePoints: Bool) -> Adventurer? {

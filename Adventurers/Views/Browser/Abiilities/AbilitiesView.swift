@@ -38,7 +38,7 @@ struct AbilitiesView: View {
 }
 
 #Preview {
-    let viewModel = AbilitiesViewModel(isReady: true, abilities: [])
+    let viewModel = AbilitiesViewModel(abilities: [])
     AbilitiesView(viewModel: viewModel)
 }
 
