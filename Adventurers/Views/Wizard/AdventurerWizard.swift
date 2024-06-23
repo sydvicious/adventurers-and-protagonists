@@ -14,7 +14,7 @@ struct AdventurerWizard: View {
     @Binding var wizardShowing: Bool
     @Binding var creatingNewCharacter: Bool // need to set this to false when returning.
 
-    @State private var proto = Proto.dummyProtoData()
+    @State private var proto = Proto()
 
     @State private var doneDisabled = true
     @State private var isReady = false

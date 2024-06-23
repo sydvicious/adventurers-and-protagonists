@@ -10,10 +10,8 @@ import SwiftUI
 @MainActor
 extension AbilitiesChooser {
     @ViewBuilder func Transcribe() -> some View {
-        AbilitiesView(viewModel: AbilitiesViewModel(proto: self.proto))
-        .onAppear() {
-            self.isReady = true
-        }
+        let abilites = Proto.abilities(from: self.proto.abilities)
+        AbilitiesView(viewModel: AbilitiesViewModel(abilities: abilites))
     }
 }
 
@@ -22,19 +20,13 @@ extension AbilitiesChooser {
     @Previewable @State var isReady = false
     @Previewable @State var proto = Proto()
 
-    proto.abilities = Proto.baseAbilities()
-    proto.name = "Pendecar"
-
     return AbilitiesChooser(isShowing: $wizardShowing, isReady: $isReady, proto: $proto, creatingNewCharacter: true, chooserType: .transcribe)
 }
 
 #Preview {
     @Previewable @State var wizardShowing = true
     @Previewable @State var isReady = false
-    @Previewable @State var proto = Proto()
-
-    proto.abilities = Proto.baseAbilities()
-    proto.name = "Pendecar"
+    @Previewable @State var proto = Proto.dummyProtoData()
 
     return AbilitiesChooser(isShowing: $wizardShowing, isReady: $isReady, proto: $proto, creatingNewCharacter: false, chooserType: .transcribe)
 }

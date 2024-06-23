@@ -30,7 +30,7 @@ class AbilitiesViewModel: AbilitiesViewModelProtocol, ObservableObject {
 
     init(proto: Proto) {
         Task {@MainActor in
-            self.abilities = proto.abilitiesFrom() ?? []
+            self.abilities = Proto.abilities(from: proto.abilities)
         }
     }
 

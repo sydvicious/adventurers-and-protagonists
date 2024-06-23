@@ -5,6 +5,7 @@
 //  Created by Syd Polk on 7/4/23.
 //
 
+@testable import Adventurers
 import XCTest
 
 final class AdventurersTests: XCTestCase {
@@ -18,6 +19,10 @@ final class AdventurersTests: XCTestCase {
     }
 
     func testExample() throws {
+        let adventure = SampleData.adventurers[0]
+        let proto = Proto(from: adventure)
+        XCTAssertEqual(proto.abilities.count, 6)
+
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         // Any test you write for XCTest can be annotated as throws and async.

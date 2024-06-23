@@ -76,9 +76,9 @@
 				"Wizard/Abilities/AbilitiesChooser+Intro.swift",
 				"Wizard/Abilities/AbilitiesChooser+Points.swift",
 				"Wizard/Abilities/AbilitiesChooser+Roll4d6Best3.swift",
+				"Wizard/Abilities/AbilitiesChooser+Test.swift",
 				"Wizard/Abilities/AbilitiesChooser+Transcribe.swift",
 				Wizard/Abilities/AbilitiesChooserViewModel.swift,
-				Wizard/Abilities/AbilitiesTranscribeWizard.swift,
 				Wizard/AdventurerWizard.swift,
 				Wizard/Biography/NameEditor.swift,
 				Wizard/WizardProtocol.swift,
@@ -580,7 +580,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = R5PQPZARC5;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MACOSX_DEPLOYMENT_TARGET = 13.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.AdventurersTests;
@@ -603,7 +603,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = R5PQPZARC5;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MACOSX_DEPLOYMENT_TARGET = 13.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.AdventurersTests;
@@ -625,7 +625,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = R5PQPZARC5;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MACOSX_DEPLOYMENT_TARGET = 13.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.AdventurersUITests;
@@ -647,7 +647,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = R5PQPZARC5;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MACOSX_DEPLOYMENT_TARGET = 13.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.AdventurersUITests;

@@ -38,20 +38,6 @@ import Foundation
         return abilities
     }
 
-    public func abilitiesReady(usePoints: Bool = false) -> Bool {
-        guard abilities.count == 6  else {
-            return false
-        }
-        var points = 0
-        for ability in abilities {
-            let score = ability.score
-            points += score
-        }
-        if usePoints && points > self.campaignType.rawValue {
-            return false
-        }
-        return true
-    }
 
     public func isReady(usePoints: Bool) -> Bool {
 
@@ -60,18 +46,10 @@ import Foundation
             return false
         }
 
-        if !abilitiesReady(usePoints: usePoints) {
+        if Self.abilitiesReady(abilities: self.abilities, usePoints: usePoints, campaignType: self.campaignType) {
             return false
         }
         return true
-    }
-
-    public func abilitiesFrom() -> [Ability]? {
-        if !abilitiesReady() {
-            return nil
-        }
-        let abilities: [Ability] = self.abilities.map { Ability(label: $0.label, score: $0.score) }
-        return abilities
     }
 
     public func adventurerFrom(usePoints: Bool) -> Adventurer? {
@@ -92,12 +70,35 @@ import Foundation
     static func dummyProtoData() -> Proto {
         let protoData = Proto(campaignType: .epicFantasy)
         protoData.name = ""
+        protoData.abilities = Self.baseAbilities()
         return protoData
     }
 
     static func protoAbilities(from adventurer: Adventurer) -> [ProtoAbility] {
         let protoAbilities: [ProtoAbility] = adventurer.abilities.map { ProtoAbility(label: $0.label, score: $0.score)}
         return protoAbilities
+    }
+
+    static public func abilitiesReady(abilities: [ProtoAbility], usePoints: Bool = false, campaignType: CampaignTypes = .epicFantasy) -> Bool {
+        guard abilities.count == 6  else {
+            return false
+        }
+        if usePoints {
+            var points = 0
+            for ability in abilities {
+                let score = ability.score
+                points += score
+            }
+            if points > campaignType.rawValue {
+                return false
+            }
+        }
+        return true
+    }
+
+    static public func abilities(from protoAbilities: [ProtoAbility]) -> [Ability] {
+        let abilities: [Ability] = protoAbilities.map { Ability(label: $0.label, score: $0.score) }
+        return abilities
     }
 
 }

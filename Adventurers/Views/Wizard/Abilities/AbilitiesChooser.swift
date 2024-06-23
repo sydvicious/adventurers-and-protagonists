@@ -12,10 +12,9 @@ struct AbilitiesChooser: View, WizardProtocol {
     @Binding @MainActor var isReady: Bool
     @Binding @MainActor var proto: Proto
 
-    @ObservedObject var viewModel: AbilitiesChooserViewModel = AbilitiesChooserViewModel()
+    @ObservedObject var viewModel: AbilitiesChooserViewModel
 
-    var doneDisabled: Bool
-    var creatingNewCharacter: Bool
+    @State var doneDisabled: Bool
 
     init(isShowing: Binding<Bool>, 
          isReady: Binding<Bool>,
@@ -25,8 +24,7 @@ struct AbilitiesChooser: View, WizardProtocol {
         self._isShowing = isShowing
         self._isReady = isReady
         self._proto = proto
-        self.viewModel = AbilitiesChooserViewModel(chooserType: chooserType, proto: proto.wrappedValue)
-        self.creatingNewCharacter = creatingNewCharacter
+        self.viewModel = AbilitiesChooserViewModel(chooserType: chooserType, abilities: proto.wrappedValue.abilities, creatingNewCharacter: creatingNewCharacter)
         self.doneDisabled = true
     }
 
@@ -42,9 +40,11 @@ struct AbilitiesChooser: View, WizardProtocol {
                     Roll4d6Best3().disabled(true)
                 case .points:
                     Points().disabled(true)
+                case .test:
+                    Test()
                 }
             }
-            .navigationTitle(creatingNewCharacter ? "Set your adventurer's abilities" : "Edit your anventurer's abilities")
+            .navigationTitle(self.viewModel.creatingNewCharacter ? "Set your adventurer's abilities" : "Edit your anventurer's abilities")
         }
         Spacer()
         HStack {
@@ -54,8 +54,8 @@ struct AbilitiesChooser: View, WizardProtocol {
         }
     }
 
-    mutating func checkDoneDisabled() {
-        self.doneDisabled = viewModel.proto.abilitiesReady()
+    func checkDoneDisabled() {
+        self.doneDisabled = !Proto.abilitiesReady(abilities: viewModel.abilities)
     }
 
     func cancel() {
@@ -63,7 +63,8 @@ struct AbilitiesChooser: View, WizardProtocol {
     }
 
     func done() {
-        self.proto = Proto.protoFromProto(oldProto: viewModel.proto)
+        self.proto.abilities = self.viewModel.abilities
+        self.isReady = true
         self.isShowing = false
     }
 }
@@ -73,19 +74,13 @@ struct AbilitiesChooser: View, WizardProtocol {
     @Previewable @State var isReady = false
     @Previewable @State var proto = Proto()
 
-    proto.abilities = Proto.baseAbilities()
-    proto.name = "Pendecar"
-
     return AbilitiesChooser(isShowing: $wizardShowing, isReady: $isReady, proto: $proto, creatingNewCharacter: true, chooserType: .intro)
 }
 
 #Preview {
     @Previewable @State var wizardShowing = true
     @Previewable @State var isReady = false
-    @Previewable @State var proto = Proto()
-
-    proto.abilities = Proto.baseAbilities()
-    proto.name = "Pendecar"
+    @Previewable @State var proto = Proto(from: SampleData.adventurers[0])
 
     return AbilitiesChooser(isShowing: $wizardShowing, isReady: $isReady, proto: $proto, creatingNewCharacter: false)
 }

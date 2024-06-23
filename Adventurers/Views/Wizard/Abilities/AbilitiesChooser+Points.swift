@@ -17,10 +17,7 @@ extension AbilitiesChooser {
 #Preview {
     @Previewable @State var wizardShowing = true
     @Previewable @State var isReady = false
-    @Previewable @State var proto = Proto()
-
-    proto.abilities = Proto.baseAbilities()
-    proto.name = "Pendecar"
+    @Previewable @State var proto = Proto.dummyProtoData()
 
     return AbilitiesChooser(isShowing: $wizardShowing, isReady: $isReady, proto: $proto, creatingNewCharacter: true, chooserType: .points)
 }
@@ -28,10 +25,7 @@ extension AbilitiesChooser {
 #Preview {
     @Previewable @State var wizardShowing = true
     @Previewable @State var isReady = false
-    @Previewable @State var proto = Proto()
-
-    proto.abilities = Proto.baseAbilities()
-    proto.name = "Pendecar"
+    @Previewable @State var proto = Proto.dummyProtoData()
 
     return AbilitiesChooser(isShowing: $wizardShowing, isReady: $isReady, proto: $proto, creatingNewCharacter: false, chooserType: .points)
 }
