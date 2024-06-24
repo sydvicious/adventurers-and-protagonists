@@ -79,7 +79,9 @@ import Foundation
         return protoAbilities
     }
 
-    static public func abilitiesReady(abilities: [ProtoAbility], usePoints: Bool = false, campaignType: CampaignTypes = .epicFantasy) -> Bool {
+    static public func abilitiesReady(abilities: [ProtoAbility], 
+                                      usePoints: Bool = false,
+                                      campaignType: CampaignTypes = .epicFantasy) -> Bool {
         guard abilities.count == 6  else {
             return false
         }

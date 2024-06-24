@@ -41,5 +41,4 @@ final class Ability {
         }
         return "+" + String(modifier)
     }
-
 }

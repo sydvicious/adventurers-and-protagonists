@@ -33,7 +33,7 @@ struct AdventurerView: View {
                     .border(.black)
 
                 AbilitiesView(viewModel: AbilitiesViewModel(adventurer: selection))
-                .border(.black)
+                    .border(.black)
             }
             .padding()
             .frame(maxWidth: .infinity)
@@ -45,11 +45,19 @@ struct AdventurerView: View {
                 }
             }
         }
+#if os(iOS)
         .fullScreenCover(isPresented: $biographyWizardShowing) {
             AdventurerWizard(wizardShowing: $biographyWizardShowing,
                              creatingNewCharacter: $creatingNewCharacter,
                              selection: selection)
         }
+#else
+        .sheet(isPresented: $biographyWizardShowing) {
+            AdventurerWizard(wizardShowing: $biographyWizardShowing,
+                             creatingNewCharacter: $creatingNewCharacter,
+                             selection: selection)
+        }
+#endif
     }
 
     func edit() {
