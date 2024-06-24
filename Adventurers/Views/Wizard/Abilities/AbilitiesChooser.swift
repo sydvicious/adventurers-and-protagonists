@@ -16,7 +16,19 @@ struct AbilitiesChooser: View, WizardProtocol {
 
     @State var doneDisabled: Bool
 
-    init(isShowing: Binding<Bool>, 
+    init(isShowing: Binding<Bool>,
+         isReady: Binding<Bool>,
+         proto: Binding<Proto>,
+         creatingNewCharacter: Bool) {
+        self._isShowing = isShowing
+        self._isReady = isReady
+        self._proto = proto
+        self.viewModel = AbilitiesChooserViewModel(abilities: proto.wrappedValue.abilities, creatingNewCharacter: creatingNewCharacter)
+        self.doneDisabled = true
+    }
+
+#if DEBUG
+    init(isShowing: Binding<Bool>,
          isReady: Binding<Bool>,
          proto: Binding<Proto>,
          creatingNewCharacter: Bool,
@@ -27,12 +39,17 @@ struct AbilitiesChooser: View, WizardProtocol {
         self.viewModel = AbilitiesChooserViewModel(chooserType: chooserType, abilities: proto.wrappedValue.abilities, creatingNewCharacter: creatingNewCharacter)
         self.doneDisabled = true
     }
+#endif
+
 
     var body: some View {
         ScrollView {
             VStack {
                 switch viewModel.chooserType {
                 case .intro:
+                    if self.viewModel.creatingNewCharacter {
+                        Text("Choose your method for generating your character.")
+                    }
                     Intro()
                 case .transcribe:
                     Transcribe()
@@ -44,6 +61,7 @@ struct AbilitiesChooser: View, WizardProtocol {
                     Test()
                 }
             }
+            .padding()
             .navigationTitle(self.viewModel.creatingNewCharacter ? "Set your adventurer's abilities" : "Edit your anventurer's abilities")
         }
         Spacer()

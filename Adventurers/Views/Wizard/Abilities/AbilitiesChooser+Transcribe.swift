@@ -26,7 +26,7 @@ extension AbilitiesChooser {
 #Preview {
     @Previewable @State var wizardShowing = true
     @Previewable @State var isReady = false
-    @Previewable @State var proto = Proto.dummyProtoData()
+    @Previewable @State var proto = Proto(from: SampleData.adventurers[0])
 
     return AbilitiesChooser(isShowing: $wizardShowing, isReady: $isReady, proto: $proto, creatingNewCharacter: false, chooserType: .transcribe)
 }
