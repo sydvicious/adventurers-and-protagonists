@@ -76,7 +76,6 @@
 				"Wizard/Abilities/AbilitiesChooser+Intro.swift",
 				"Wizard/Abilities/AbilitiesChooser+Points.swift",
 				"Wizard/Abilities/AbilitiesChooser+Roll4d6Best3.swift",
-				"Wizard/Abilities/AbilitiesChooser+Test.swift",
 				"Wizard/Abilities/AbilitiesChooser+Transcribe.swift",
 				Wizard/Abilities/AbilitiesChooserViewModel.swift,
 				Wizard/AdventurerWizard.swift,

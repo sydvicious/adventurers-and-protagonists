@@ -15,7 +15,6 @@ struct NameEditor: View, WizardProtocol {
     @Binding var proto: Proto
 
     @Binding var isReady: Bool
-    @Binding var isNewCharacter: Bool
     @Binding var isShowing: Bool
 
     @FocusState private var focus: NameEditorFocus?
@@ -100,19 +99,17 @@ struct NameEditor: View, WizardProtocol {
 #Preview {
     @Previewable @State var isReady = false
     @Previewable @State var isShowing = true
-    @Previewable @State var isNewCharacter = true
     @Previewable @State var proto = Proto()
     proto.name = ""
 
-    return NameEditor(proto: $proto, isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing)
+    return NameEditor(proto: $proto, isReady: $isReady, isShowing: $isShowing)
 }
 
 #Preview {
     @Previewable @State var isReady = true
     @Previewable @State var isShowing = false
-    @Previewable @State var isNewCharacter = false
     @Previewable @State var proto = Proto()
     proto.name = "Pendecar"
 
-    return NameEditor(proto: $proto, isReady: $isReady, isNewCharacter: $isNewCharacter, isShowing: $isShowing)
+    return NameEditor(proto: $proto, isReady: $isReady, isShowing: $isShowing)
 }

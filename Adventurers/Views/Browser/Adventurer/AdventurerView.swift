@@ -30,10 +30,8 @@ struct AdventurerView: View {
             VStack(alignment: .leading) {
                 Text(selection.name)
                     .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
-                    .border(.black)
 
                 AbilitiesView(viewModel: AbilitiesViewModel(adventurer: selection))
-                    .border(.black)
             }
             .padding()
             .frame(maxWidth: .infinity)
@@ -47,14 +45,12 @@ struct AdventurerView: View {
         }
 #if os(iOS)
         .fullScreenCover(isPresented: $biographyWizardShowing) {
-            AdventurerWizard(wizardShowing: $biographyWizardShowing,
-                             creatingNewCharacter: $creatingNewCharacter,
+            AdventurerWizard(wizardShowing: $biographyWizardShowing, 
                              selection: selection)
         }
 #else
         .sheet(isPresented: $biographyWizardShowing) {
             AdventurerWizard(wizardShowing: $biographyWizardShowing,
-                             creatingNewCharacter: $creatingNewCharacter,
                              selection: selection)
         }
 #endif

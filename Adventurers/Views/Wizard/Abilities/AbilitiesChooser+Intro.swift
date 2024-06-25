@@ -12,9 +12,7 @@ extension AbilitiesChooser {
     @ViewBuilder func Intro() -> some View {
         VStack {
             Button(action: {
-                if viewModel.creatingNewCharacter {
-                    viewModel.abilities = Proto.baseAbilities()
-                }
+                viewModel.abilities = Proto.baseAbilities()
                 viewModel.chooserType = .transcribe
             }, label: {
                 Text("Transcribe existing character")
@@ -34,15 +32,6 @@ extension AbilitiesChooser {
                 Text("Use the point-based system")
             })
             .padding()
-
-            Button(action: {
-                viewModel.abilities = Proto.baseAbilities()
-                viewModel.chooserType = .test
-            }, label: {
-                Text("Used only for testing")
-            })
-            .padding()
-
         }
     }
 }
@@ -54,5 +43,8 @@ extension AbilitiesChooser {
 
     proto.name = "Pendecar"
 
-    return AbilitiesChooser(isShowing: $wizardShowing, isReady: $isReady, proto: $proto, creatingNewCharacter: true, chooserType: .intro)
+    return AbilitiesChooser(isShowing: $wizardShowing, 
+                            isReady: $isReady,
+                            proto: $proto,
+                            chooserType: .intro)
 }

@@ -12,9 +12,8 @@ struct AdventurerWizard: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     @Binding var wizardShowing: Bool
-    @Binding var creatingNewCharacter: Bool // need to set this to false when returning.
 
-    @State private var proto = Proto()
+    @State var proto = Proto()
 
     @State private var doneDisabled = true
     @State private var isReady = false
@@ -46,26 +45,18 @@ struct AdventurerWizard: View {
                         ValidField(valid: $isReady)
                     }
                 }
-                if creatingNewCharacter {
-                    Button("Setup Abilities", action: {
-                        abilitiesWizardShowing = true
-                    })
-                } else {
-                    AbilitiesView(viewModel: AbilitiesViewModel(proto: proto))
-                    Button("Edit Abilities", action: {
-                        abilitiesWizardShowing = true
-                    })
-                }
-
+                Button("Setup Abilities", action: {
+                    abilitiesWizardShowing = true
+                })
             }
             .sheet(isPresented: $biographyWizardShowing, onDismiss: {
                 biographyWizardShowing = false
-                if creatingNewCharacter && proto.name.isTrimmedStringEmpty() {
+                if proto.name.isTrimmedStringEmpty() {
                     wizardShowing = false
                 }
                 updateDoneButton()
             }, content: {
-                NameEditor(proto: $proto, isReady: $isReady, isNewCharacter: $creatingNewCharacter, isShowing: $biographyWizardShowing)
+                NameEditor(proto: $proto, isReady: $isReady, isShowing: $biographyWizardShowing)
                     .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
             })
@@ -73,7 +64,7 @@ struct AdventurerWizard: View {
                 abilitiesWizardShowing = false
                 updateDoneButton()
             }, content: {
-                AbilitiesChooser(isShowing: $abilitiesWizardShowing, isReady: $abilitiesReady, proto: $proto, creatingNewCharacter: creatingNewCharacter)
+                AbilitiesChooser(isShowing: $abilitiesWizardShowing, isReady: $abilitiesReady, proto: $proto)
             })
         }
         .onChange(of: abilitiesWizardShowing) {
@@ -86,11 +77,9 @@ struct AdventurerWizard: View {
             Button("Done", action: done)
                 .disabled(doneDisabled)
         }
-        .navigationTitle(creatingNewCharacter ? "Create a new adventurer" : "Edit Character")
+        .navigationTitle("Create a new adventurer")
         .onAppear {
-            if !creatingNewCharacter, let selection = selection {
-                proto = Proto(from: selection)
-            } else {
+            if proto.name.isEmpty {
                 biographyWizardShowing = true
             }
             updateDoneButton()
@@ -104,20 +93,14 @@ struct AdventurerWizard: View {
 
     private func cancel() {
         wizardShowing = false
-        creatingNewCharacter = false
     }
 
     private func done() {
-        if creatingNewCharacter {
-            let adventurer = proto.adventurerFrom(usePoints: false)
-            if let adventurer {
-                withAnimation {
-                    modelContext.insert(adventurer)
-                }
+        let adventurer = proto.adventurerFrom(usePoints: false)
+        if let adventurer {
+            withAnimation {
+                modelContext.insert(adventurer)
             }
-            creatingNewCharacter = false
-        } else {
-            selection?.updateFromProto(proto)
         }
         wizardShowing = false
     }
@@ -125,21 +108,23 @@ struct AdventurerWizard: View {
 
 #Preview {
     @Previewable @State var wizardShowing = true
-    @Previewable @State var creatingNewCharacter = true
 
-    return MainActor.assumeIsolated {
-        AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: nil)
+    MainActor.assumeIsolated {
+        AdventurerWizard(wizardShowing: $wizardShowing, selection: nil)
             .modelContainer(previewContainer)
     }
 }
 
 #Preview {
-    @Previewable @State var wizardShowing = true
-    @Previewable @State var creatingNewCharacter = false
+    @Previewable @State var wizardShowing = false
+
+    let proto = Proto()
+    proto.name = "Pendecar"
 
     return MainActor.assumeIsolated {
-        AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: SampleData.adventurers[0])
+        AdventurerWizard(wizardShowing: $wizardShowing, proto: proto, selection: nil)
             .modelContainer(previewContainer)
     }
 }
+
 

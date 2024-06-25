@@ -18,12 +18,11 @@ struct AbilitiesChooser: View, WizardProtocol {
 
     init(isShowing: Binding<Bool>,
          isReady: Binding<Bool>,
-         proto: Binding<Proto>,
-         creatingNewCharacter: Bool) {
+         proto: Binding<Proto>) {
         self._isShowing = isShowing
         self._isReady = isReady
         self._proto = proto
-        self.viewModel = AbilitiesChooserViewModel(abilities: proto.wrappedValue.abilities, creatingNewCharacter: creatingNewCharacter)
+        self.viewModel = AbilitiesChooserViewModel(abilities: proto.wrappedValue.abilities)
         self.doneDisabled = true
     }
 
@@ -31,12 +30,11 @@ struct AbilitiesChooser: View, WizardProtocol {
     init(isShowing: Binding<Bool>,
          isReady: Binding<Bool>,
          proto: Binding<Proto>,
-         creatingNewCharacter: Bool,
          chooserType: AbilityChooserTypes = .intro) {
         self._isShowing = isShowing
         self._isReady = isReady
         self._proto = proto
-        self.viewModel = AbilitiesChooserViewModel(chooserType: chooserType, abilities: proto.wrappedValue.abilities, creatingNewCharacter: creatingNewCharacter)
+        self.viewModel = AbilitiesChooserViewModel(chooserType: chooserType, abilities: proto.wrappedValue.abilities)
         self.doneDisabled = true
     }
 #endif
@@ -47,9 +45,7 @@ struct AbilitiesChooser: View, WizardProtocol {
             VStack {
                 switch viewModel.chooserType {
                 case .intro:
-                    if self.viewModel.creatingNewCharacter {
-                        Text("Choose your method for generating your character.")
-                    }
+                    Text("Choose your method for generating your character.")
                     Intro()
                 case .transcribe:
                     Transcribe()
@@ -57,12 +53,10 @@ struct AbilitiesChooser: View, WizardProtocol {
                     Roll4d6Best3().disabled(true)
                 case .points:
                     Points().disabled(true)
-                case .test:
-                    Test()
                 }
             }
             .padding()
-            .navigationTitle(self.viewModel.creatingNewCharacter ? "Set your adventurer's abilities" : "Edit your anventurer's abilities")
+            .navigationTitle("Set your adventurer's abilities")
         }
         Spacer()
         HStack {
@@ -92,13 +86,8 @@ struct AbilitiesChooser: View, WizardProtocol {
     @Previewable @State var isReady = false
     @Previewable @State var proto = Proto()
 
-    return AbilitiesChooser(isShowing: $wizardShowing, isReady: $isReady, proto: $proto, creatingNewCharacter: true, chooserType: .intro)
-}
-
-#Preview {
-    @Previewable @State var wizardShowing = true
-    @Previewable @State var isReady = false
-    @Previewable @State var proto = Proto(from: SampleData.adventurers[0])
-
-    return AbilitiesChooser(isShowing: $wizardShowing, isReady: $isReady, proto: $proto, creatingNewCharacter: false)
+    return AbilitiesChooser(isShowing: $wizardShowing,
+                            isReady: $isReady,
+                            proto: $proto,
+                            chooserType: .intro)
 }

@@ -75,7 +75,8 @@ struct Browser: View {
         })
         #if os(iOS)
         .fullScreenCover(isPresented: $wizardShowing) {
-            AdventurerWizard(wizardShowing: $wizardShowing, creatingNewCharacter: $creatingNewCharacter, selection: selection)
+            AdventurerWizard(wizardShowing: $wizardShowing,
+                             selection: selection)
         }
         #endif
     }

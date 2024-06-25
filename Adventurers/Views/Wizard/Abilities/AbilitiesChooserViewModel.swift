@@ -12,32 +12,26 @@ enum AbilityChooserTypes: String, CaseIterable {
     case transcribe
     case roll4d6Best3
     case points
-    case test
 }
 
 class AbilitiesChooserViewModel: ObservableObject {
 
     @Published @MainActor var chooserType: AbilityChooserTypes = .intro
     @Published @MainActor var abilities: [ProtoAbility]
-    @Published @MainActor var creatingNewCharacter: Bool
 
 #if DEBUG
     @MainActor
     init(chooserType: AbilityChooserTypes,
-         abilities: [ProtoAbility] = [],
-         creatingNewCharacter: Bool) {
+         abilities: [ProtoAbility] = []) {
         self.chooserType = chooserType
         self.abilities = abilities
-        self.creatingNewCharacter = creatingNewCharacter
     }
 #endif
 
     @MainActor
-    init(abilities: [ProtoAbility] = [],
-         creatingNewCharacter: Bool) {
-        self.chooserType = creatingNewCharacter ? .intro : .transcribe
+    init(abilities: [ProtoAbility] = []) {
+        self.chooserType = .intro
         self.abilities = abilities
-        self.creatingNewCharacter = creatingNewCharacter
     }
 
 }
