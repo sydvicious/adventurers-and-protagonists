@@ -18,17 +18,6 @@ struct AbilitiesChooser: View, WizardProtocol {
 
     init(isShowing: Binding<Bool>,
          isReady: Binding<Bool>,
-         proto: Binding<Proto>) {
-        self._isShowing = isShowing
-        self._isReady = isReady
-        self._proto = proto
-        self.viewModel = AbilitiesChooserViewModel(abilities: proto.wrappedValue.abilities)
-        self.doneDisabled = true
-    }
-
-#if DEBUG
-    init(isShowing: Binding<Bool>,
-         isReady: Binding<Bool>,
          proto: Binding<Proto>,
          chooserType: AbilityChooserTypes = .intro) {
         self._isShowing = isShowing
@@ -37,7 +26,6 @@ struct AbilitiesChooser: View, WizardProtocol {
         self.viewModel = AbilitiesChooserViewModel(chooserType: chooserType, abilities: proto.wrappedValue.abilities)
         self.doneDisabled = true
     }
-#endif
 
 
     var body: some View {
@@ -82,9 +70,9 @@ struct AbilitiesChooser: View, WizardProtocol {
 }
 
 #Preview {
-    @Previewable @State var wizardShowing = true
-    @Previewable @State var isReady = false
-    @Previewable @State var proto = Proto()
+    @State var wizardShowing = true
+    @State var isReady = false
+    @State var proto = Proto()
 
     return AbilitiesChooser(isShowing: $wizardShowing,
                             isReady: $isReady,

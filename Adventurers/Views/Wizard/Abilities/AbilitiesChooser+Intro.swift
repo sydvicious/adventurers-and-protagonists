@@ -37,9 +37,9 @@ extension AbilitiesChooser {
 }
 
 #Preview {
-    @Previewable @State var wizardShowing = true
-    @Previewable @State var isReady = false
-    @Previewable @State var proto = Proto()
+    @State var wizardShowing = true
+    @State var isReady = false
+    @State var proto = Proto()
 
     proto.name = "Pendecar"
 

@@ -32,7 +32,7 @@ struct WelcomeScreen: View {
 }
 
 #Preview {
-    @Previewable @State var welcomeScreenShowing = true
+    @State var welcomeScreenShowing = true
 
     return WelcomeScreen(welcomeScreenShowing: $welcomeScreenShowing)
 }

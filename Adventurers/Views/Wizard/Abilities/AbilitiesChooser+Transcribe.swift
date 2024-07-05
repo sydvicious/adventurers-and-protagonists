@@ -10,15 +10,22 @@ import SwiftUI
 @MainActor
 extension AbilitiesChooser {
     @ViewBuilder func Transcribe() -> some View {
-        let abilites = Proto.abilities(from: self.proto.abilities)
-        AbilitiesView(viewModel: AbilitiesViewModel(abilities: abilites))
+        Grid {
+            ForEach(0..<6) { index in
+                AbilitiesChooserEditScoreRow(name: self.viewModel.abilities[index].label, score: $viewModel.abilities[index].score)
+            }
+        }
+        .onAppear {
+            self.viewModel.abilities = Proto.baseAbilities()
+            self.checkDoneDisabled()
+        }
     }
 }
 
 #Preview {
-    @Previewable @State var wizardShowing = true
-    @Previewable @State var isReady = false
-    @Previewable @State var proto = Proto()
+    @State var wizardShowing = true
+    @State var isReady = false
+    @State var proto = Proto()
 
     proto.abilities = Proto.baseAbilities()
 

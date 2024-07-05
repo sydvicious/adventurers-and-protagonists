@@ -45,7 +45,11 @@ struct AdventurerWizard: View {
                         ValidField(valid: $isReady)
                     }
                 }
-                Button("Setup Abilities", action: {
+                if Proto.abilitiesReady(abilities: proto.abilities) {
+                    let abilites = Proto.abilities(from: self.proto.abilities)
+                    AbilitiesView(viewModel: AbilitiesViewModel(abilities: abilites))
+                }
+                Button(Proto.abilitiesReady(abilities: proto.abilities) ? "Edit Abilities" : "Setup Abilities", action: {
                     abilitiesWizardShowing = true
                 })
             }
@@ -64,7 +68,10 @@ struct AdventurerWizard: View {
                 abilitiesWizardShowing = false
                 updateDoneButton()
             }, content: {
-                AbilitiesChooser(isShowing: $abilitiesWizardShowing, isReady: $abilitiesReady, proto: $proto)
+                AbilitiesChooser(isShowing: $abilitiesWizardShowing,
+                                 isReady: $abilitiesReady,
+                                 proto: $proto,
+                                 chooserType: Proto.abilitiesReady(abilities: proto.abilities) ? .transcribe : .intro)
             })
         }
         .onChange(of: abilitiesWizardShowing) {
@@ -107,7 +114,7 @@ struct AdventurerWizard: View {
 }
 
 #Preview {
-    @Previewable @State var wizardShowing = true
+    @State var wizardShowing = true
 
     MainActor.assumeIsolated {
         AdventurerWizard(wizardShowing: $wizardShowing, selection: nil)
@@ -116,10 +123,23 @@ struct AdventurerWizard: View {
 }
 
 #Preview {
-    @Previewable @State var wizardShowing = false
+    @State var wizardShowing = false
 
     let proto = Proto()
     proto.name = "Pendecar"
+
+    return MainActor.assumeIsolated {
+        AdventurerWizard(wizardShowing: $wizardShowing, proto: proto, selection: nil)
+            .modelContainer(previewContainer)
+    }
+}
+
+#Preview {
+    @State var wizardShowing = false
+
+    let proto = Proto()
+    proto.name = "Pendecar"
+    proto.abilities = Proto.baseAbilities()
 
     return MainActor.assumeIsolated {
         AdventurerWizard(wizardShowing: $wizardShowing, proto: proto, selection: nil)

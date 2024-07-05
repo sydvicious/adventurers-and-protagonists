@@ -46,7 +46,7 @@ import Foundation
             return false
         }
 
-        if Self.abilitiesReady(abilities: self.abilities, usePoints: usePoints, campaignType: self.campaignType) {
+        if !Self.abilitiesReady(abilities: self.abilities, usePoints: usePoints, campaignType: self.campaignType) {
             return false
         }
         return true
