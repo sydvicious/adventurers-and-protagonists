@@ -16,10 +16,10 @@ struct AbilitiesChooser: View, WizardProtocol {
 
     @State var doneDisabled: Bool
 
-    init(isShowing: Binding<Bool>,
-         isReady: Binding<Bool>,
-         proto: Binding<Proto>,
-         chooserType: AbilityChooserTypes = .intro) {
+        init(isShowing: Binding<Bool>,
+             isReady: Binding<Bool>,
+             proto: Binding<Proto>,
+             chooserType: AbilityChooserTypes = .intro) {
         self._isShowing = isShowing
         self._isReady = isReady
         self._proto = proto
@@ -70,9 +70,9 @@ struct AbilitiesChooser: View, WizardProtocol {
 }
 
 #Preview {
-    @State var wizardShowing = true
-    @State var isReady = false
-    @State var proto = Proto()
+    @Previewable @State var wizardShowing = true
+    @Previewable @State var isReady = false
+    @Previewable @State var proto = Proto()
 
     return AbilitiesChooser(isShowing: $wizardShowing,
                             isReady: $isReady,

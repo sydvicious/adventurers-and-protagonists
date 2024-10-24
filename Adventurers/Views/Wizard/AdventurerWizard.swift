@@ -114,7 +114,7 @@ struct AdventurerWizard: View {
 }
 
 #Preview {
-    @State var wizardShowing = true
+    @Previewable @State var wizardShowing = true
 
     MainActor.assumeIsolated {
         AdventurerWizard(wizardShowing: $wizardShowing, selection: nil)
@@ -123,7 +123,7 @@ struct AdventurerWizard: View {
 }
 
 #Preview {
-    @State var wizardShowing = false
+    @Previewable @State var wizardShowing = false
 
     let proto = Proto()
     proto.name = "Pendecar"
@@ -135,7 +135,7 @@ struct AdventurerWizard: View {
 }
 
 #Preview {
-    @State var wizardShowing = false
+    @Previewable @State var wizardShowing = false
 
     let proto = Proto()
     proto.name = "Pendecar"

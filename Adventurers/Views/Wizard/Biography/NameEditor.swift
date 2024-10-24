@@ -97,18 +97,18 @@ struct NameEditor: View, WizardProtocol {
 }
 
 #Preview {
-    @State var isReady = false
-    @State var isShowing = true
-    @State var proto = Proto()
+    @Previewable @State var isReady = false
+    @Previewable @State var isShowing = true
+    @Previewable @State var proto = Proto()
     proto.name = ""
 
     return NameEditor(proto: $proto, isReady: $isReady, isShowing: $isShowing)
 }
 
 #Preview {
-    @State var isReady = true
-    @State var isShowing = false
-    @State var proto = Proto()
+    @Previewable @State var isReady = true
+    @Previewable @State var isShowing = false
+    @Previewable @State var proto = Proto()
     proto.name = "Pendecar"
 
     return NameEditor(proto: $proto, isReady: $isReady, isShowing: $isShowing)

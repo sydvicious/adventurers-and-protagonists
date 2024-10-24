@@ -54,7 +54,7 @@ struct AbilitiesChooserEditScoreRow: View {
 }
 
 #Preview {
-    @State var score: Int = 18
+    @Previewable @State var score: Int = 18
     Grid {
         AbilitiesChooserEditScoreRow(name: "Strength", score: $score)
     }
