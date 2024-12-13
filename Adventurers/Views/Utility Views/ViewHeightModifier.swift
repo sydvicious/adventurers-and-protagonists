@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct HeightPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat?
+@MainActor
+struct HeightPreferenceKey: @preconcurrency PreferenceKey {
+    @MainActor static var defaultValue: CGFloat?
 
     static func reduce(value: inout CGFloat?, nextValue: () -> CGFloat?) {
         guard let nextValue = nextValue() else { return }
@@ -16,6 +17,7 @@ struct HeightPreferenceKey: PreferenceKey {
     }
 }
 
+@MainActor
 private struct ReadHeightModifier: ViewModifier {
     private var sizeView: some View {
         GeometryReader { geometry in
@@ -28,6 +30,7 @@ private struct ReadHeightModifier: ViewModifier {
     }
 }
 
+@MainActor
 extension View {
     func readHeight() -> some View {
         self

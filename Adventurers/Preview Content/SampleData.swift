@@ -8,7 +8,7 @@
 import Foundation
 
 struct SampleData {
-    static var adventurers: [Adventurer] = [
+    @MainActor static var adventurers: [Adventurer] = [
         .preview
     ]
 }

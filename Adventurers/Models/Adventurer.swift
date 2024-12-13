@@ -79,7 +79,7 @@ final class Adventurer {
     }
 
     #if DEBUG
-    static let preview: Adventurer = {
+    @MainActor static let preview: Adventurer = {
         var abilities = [Ability]()
         abilities.append(Ability(label: AbilityLabels.str.rawValue, score: 17))
         abilities.append(Ability(label: AbilityLabels.dex.rawValue, score: 15))

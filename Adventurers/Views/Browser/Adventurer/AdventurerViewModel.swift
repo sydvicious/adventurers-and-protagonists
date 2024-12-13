@@ -17,11 +17,10 @@ class AdventurerViewModel: AdventurerViewModelProtocol, ObservableObject {
 
     private var isNewCharacter = false
 
+    @MainActor
     init(selection: Adventurer, isReady: Bool = true, isNewCharacter: Bool = false) {
-        Task {@MainActor in
-            self.selection = selection
-            self.isReady = isReady
-            self.isNewCharacter = isNewCharacter
-        }
+        self.selection = selection
+        self.isReady = isReady
+        self.isNewCharacter = isNewCharacter
     }
 }

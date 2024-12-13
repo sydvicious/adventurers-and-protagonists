@@ -11,7 +11,8 @@ enum NameEditorFocus: Hashable {
     case name
 }
 
-struct NameEditor: View, WizardProtocol {
+@MainActor
+struct NameEditor: View, @preconcurrency WizardProtocol {
     @Binding var proto: Proto
 
     @Binding var isReady: Bool

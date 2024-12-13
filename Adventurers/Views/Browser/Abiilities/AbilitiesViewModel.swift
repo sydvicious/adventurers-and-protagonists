@@ -16,22 +16,18 @@ class AbilitiesViewModel: AbilitiesViewModelProtocol, ObservableObject {
 
     private var isNewCharacter: Bool = true
 
+    @MainActor
     init(abilities: [Ability] = []) {
-        Task {@MainActor in
-            self.abilities = abilities
-        }
+        self.abilities = abilities
     }
 
+    @MainActor
     init(adventurer: Adventurer) {
-        Task {@MainActor in
-            self.abilities = adventurer.abilities
-        }
+        self.abilities = adventurer.abilities
     }
 
+    @MainActor
     init(proto: Proto) {
-        Task {@MainActor in
-            self.abilities = Proto.abilities(from: proto.abilities)
-        }
+        self.abilities = Proto.abilities(from: proto.abilities)
     }
-
 }

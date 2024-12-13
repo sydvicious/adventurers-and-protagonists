@@ -7,10 +7,11 @@
 
 import SwiftUI
 
-struct AbilitiesChooser: View, WizardProtocol {
-    @Binding @MainActor var isShowing: Bool
-    @Binding @MainActor var isReady: Bool
-    @Binding @MainActor var proto: Proto
+@MainActor
+struct AbilitiesChooser: View, @preconcurrency WizardProtocol {
+    @Binding var isShowing: Bool
+    @Binding var isReady: Bool
+    @Binding var proto: Proto
 
     @ObservedObject var viewModel: AbilitiesChooserViewModel
 

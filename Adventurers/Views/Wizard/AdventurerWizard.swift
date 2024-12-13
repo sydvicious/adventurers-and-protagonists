@@ -116,10 +116,8 @@ struct AdventurerWizard: View {
 #Preview {
     @Previewable @State var wizardShowing = true
 
-    MainActor.assumeIsolated {
-        AdventurerWizard(wizardShowing: $wizardShowing, selection: nil)
-            .modelContainer(previewContainer)
-    }
+    AdventurerWizard(wizardShowing: $wizardShowing, selection: nil)
+        .modelContainer(previewContainer)
 }
 
 #Preview {
@@ -128,10 +126,8 @@ struct AdventurerWizard: View {
     let proto = Proto()
     proto.name = "Pendecar"
 
-    return MainActor.assumeIsolated {
-        AdventurerWizard(wizardShowing: $wizardShowing, proto: proto, selection: nil)
-            .modelContainer(previewContainer)
-    }
+    return AdventurerWizard(wizardShowing: $wizardShowing, proto: proto, selection: nil)
+        .modelContainer(previewContainer)
 }
 
 #Preview {
@@ -141,10 +137,8 @@ struct AdventurerWizard: View {
     proto.name = "Pendecar"
     proto.abilities = Proto.baseAbilities()
 
-    return MainActor.assumeIsolated {
-        AdventurerWizard(wizardShowing: $wizardShowing, proto: proto, selection: nil)
-            .modelContainer(previewContainer)
-    }
+    return AdventurerWizard(wizardShowing: $wizardShowing, proto: proto, selection: nil)
+        .modelContainer(previewContainer)
 }
 
 

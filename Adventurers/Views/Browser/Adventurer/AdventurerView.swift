@@ -62,8 +62,6 @@ struct AdventurerView: View {
 }
 
 #Preview {
-    return MainActor.assumeIsolated {
-        AdventurerView(selection: .preview)
-            .modelContainer(previewContainer)
-    }
+    AdventurerView(selection: .preview)
+        .modelContainer(previewContainer)
 }

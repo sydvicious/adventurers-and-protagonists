@@ -97,8 +97,6 @@ struct Browser: View {
 
 #Preview {
     UserDefaults.standard.set(true, forKey: "WelcomeScreenShown")
-    return MainActor.assumeIsolated {
-        Browser()
-            .modelContainer(previewContainer)
-    }
+    return Browser()
+        .modelContainer(previewContainer)
 }
