@@ -81,7 +81,7 @@
 				Wizard/Abilities/AbilitiesChooserViewModel.swift,
 				Wizard/AdventurerWizard.swift,
 				Wizard/Biography/NameEditor.swift,
-				Wizard/WizardProtocol.swift,
+				Wizard/WizardViewModel.swift,
 			);
 			target = 629E8D782A548E5B002CDCAF /* Adventurers */;
 		};

@@ -75,8 +75,9 @@ struct Browser: View {
         })
         #if os(iOS)
         .fullScreenCover(isPresented: $wizardShowing) {
-            AdventurerWizard(wizardShowing: $wizardShowing,
-                             selection: selection)
+            let wizardViewModel = WizardViewModel(proto: Proto(from: selection))
+            AdventurerWizard(wizardShowing: $wizardShowing)
+            .environmentObject(wizardViewModel)
         }
         #endif
     }
@@ -90,6 +91,13 @@ struct Browser: View {
         withAnimation {
             for index in offsets {
                 modelContext.delete(adventurers[index])
+                Task {
+                    do {
+                        try modelContext.save()
+                    } catch {
+                        fatalError("Could not save modelContext: \(error)")
+                    }
+                }
             }
         }
     }

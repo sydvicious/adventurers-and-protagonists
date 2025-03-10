@@ -12,12 +12,11 @@ enum NameEditorFocus: Hashable {
 }
 
 @MainActor
-struct NameEditor: View, @preconcurrency WizardProtocol {
-    @Binding var proto: Proto
-
+struct NameEditor: View {
+    @Binding var isPresented: Bool
     @Binding var isReady: Bool
-    @Binding var isShowing: Bool
-
+    @Binding var name: String
+        
     @FocusState private var focus: NameEditorFocus?
     @State private var newName: String = ""
 
@@ -73,19 +72,19 @@ struct NameEditor: View, @preconcurrency WizardProtocol {
             }
         }
         .onAppear {
-            newName = proto.name
+            newName = name
             updateIsReady()
         }
         .padding()
     }
 
     func cancel() {
-        isShowing = false
+        isPresented = false
     }
 
     func done() {
-        proto.name = newName.trimmingCharacters(in: .whitespacesAndNewlines)
-        isShowing = false
+        name = newName.trimmingCharacters(in: .whitespacesAndNewlines)
+        isPresented = false
     }
 
     func doneDisabled() -> Bool {
@@ -98,19 +97,17 @@ struct NameEditor: View, @preconcurrency WizardProtocol {
 }
 
 #Preview {
+    @Previewable @State var isPresented = true
     @Previewable @State var isReady = false
-    @Previewable @State var isShowing = true
-    @Previewable @State var proto = Proto()
-    proto.name = ""
+    @Previewable @State var name = ""
 
-    return NameEditor(proto: $proto, isReady: $isReady, isShowing: $isShowing)
+    NameEditor(isPresented: $isPresented, isReady: $isReady, name: $name)
 }
 
 #Preview {
-    @Previewable @State var isReady = true
-    @Previewable @State var isShowing = false
-    @Previewable @State var proto = Proto()
-    proto.name = "Pendecar"
+    @Previewable @State var isPresented = true
+    @Previewable @State var isReady = false
+    @Previewable @State var name = "Pendecar"
 
-    return NameEditor(proto: $proto, isReady: $isReady, isShowing: $isShowing)
+    NameEditor(isPresented: $isPresented, isReady: $isReady, name: $name)
 }

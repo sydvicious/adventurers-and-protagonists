@@ -45,13 +45,15 @@ struct AdventurerView: View {
         }
 #if os(iOS)
         .fullScreenCover(isPresented: $biographyWizardShowing) {
-            AdventurerWizard(wizardShowing: $biographyWizardShowing, 
-                             selection: selection)
+            let wizardViewModel = WizardViewModel(proto: Proto(from: selection))
+            AdventurerWizard(wizardShowing: $biographyWizardShowing)
+            .environmentObject(wizardViewModel)
         }
 #else
         .sheet(isPresented: $biographyWizardShowing) {
-            AdventurerWizard(wizardShowing: $biographyWizardShowing,
-                             selection: selection)
+            let wizardViewModel = WizardViewModel(proto: Proto(from: selection))
+            AdventurerWizard(wizardShowing: $biographyWizardShowing)
+            .environmentObject(wizardViewModel)
         }
 #endif
     }

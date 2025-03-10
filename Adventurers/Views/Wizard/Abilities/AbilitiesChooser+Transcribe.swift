@@ -34,4 +34,3 @@ extension AbilitiesChooser {
                             proto: $proto,
                             chooserType: .transcribe)
 }
-

@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-struct AbilitiesChooser: View, @preconcurrency WizardProtocol {
+struct AbilitiesChooser: View {
     @Binding var isShowing: Bool
     @Binding var isReady: Bool
     @Binding var proto: Proto

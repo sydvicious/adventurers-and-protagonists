@@ -19,14 +19,12 @@ class AbilitiesChooserViewModel: ObservableObject {
     @Published @MainActor var chooserType: AbilityChooserTypes = .intro
     @Published @MainActor var abilities: [ProtoAbility]
 
-#if DEBUG
     @MainActor
     init(chooserType: AbilityChooserTypes,
          abilities: [ProtoAbility] = []) {
         self.chooserType = chooserType
         self.abilities = abilities
     }
-#endif
 
     @MainActor
     init(abilities: [ProtoAbility] = []) {

@@ -13,68 +13,58 @@ struct AdventurerWizard: View {
 
     @Binding var wizardShowing: Bool
 
-    @State var proto = Proto()
-
-    @State private var doneDisabled = true
-    @State private var isReady = false
-
-    // biography wizard
-    @State private var biographyWizardShowing = false
-    @State private var biographyReady = false
-
-    // abilities wizard
-    @State private var abilitiesWizardShowing = false
-    @State private var abilitiesReady = false
-
-    var selection: Adventurer?
+    @EnvironmentObject var viewModel: WizardViewModel
 
     var body: some View {
         ScrollView {
             VStack {
                 HStack {
-                    Text(proto.name.isTrimmedStringEmpty() ? "Unnamed" : "\(proto.name)")
+                    Text(viewModel.proto.name.isTrimmedStringEmpty() ? "Unnamed" : "\(viewModel.proto.name)")
                     Spacer()
                     HStack {
                         Button(action: {
-                            biographyWizardShowing = true
+                            viewModel.biographyWizardShowing = true
                         }, label: {
                             Image(systemName: "pencil")
                                 .font(.caption)
                                 .imageScale(.large)
                         })
-                        ValidField(valid: $isReady)
+                        ValidField(valid: $viewModel.isReady)
                     }
                 }
-                if Proto.abilitiesReady(abilities: proto.abilities) {
-                    let abilites = Proto.abilities(from: self.proto.abilities)
+                if Proto.abilitiesReady(abilities: viewModel.proto.abilities) {
+                    let abilites = Proto.abilities(from: self.viewModel.proto.abilities)
                     AbilitiesView(viewModel: AbilitiesViewModel(abilities: abilites))
                 }
-                Button(Proto.abilitiesReady(abilities: proto.abilities) ? "Edit Abilities" : "Setup Abilities", action: {
-                    abilitiesWizardShowing = true
+                Button(Proto.abilitiesReady(abilities: viewModel.proto.abilities) ? "Edit Abilities" : "Setup Abilities", action: {
+                    viewModel.abilitiesWizardShowing = true
                 })
             }
-            .sheet(isPresented: $biographyWizardShowing, onDismiss: {
-                biographyWizardShowing = false
-                if proto.name.isTrimmedStringEmpty() {
+            .sheet(isPresented: $viewModel.biographyWizardShowing, onDismiss: {
+                viewModel.biographyWizardShowing = false
+                if viewModel.proto.name.isTrimmedStringEmpty() {
                     wizardShowing = false
                 }
                 updateDoneButton()
             }, content: {
-                NameEditor(proto: $proto, isReady: $isReady, isShowing: $biographyWizardShowing)
+                NameEditor(isPresented: $viewModel.biographyWizardShowing,
+                           isReady: $viewModel.biographyReady,
+                           name: $viewModel.proto.name)
+                    .environmentObject(viewModel)
                     .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
             })
-            .sheet(isPresented: $abilitiesWizardShowing, onDismiss: {
-                abilitiesWizardShowing = false
+            .sheet(isPresented: $viewModel.abilitiesWizardShowing, onDismiss: {
+                viewModel.abilitiesWizardShowing = false
                 updateDoneButton()
             }, content: {
-                AbilitiesChooser(isShowing: $abilitiesWizardShowing,
-                                 isReady: $abilitiesReady,
-                                 proto: $proto,
-                                 chooserType: Proto.abilitiesReady(abilities: proto.abilities) ? .transcribe : .intro)
+                AbilitiesChooser(isShowing: $viewModel.abilitiesWizardShowing,
+                                 isReady: $viewModel.abilitiesReady,
+                                 proto: $viewModel.proto,
+                                 chooserType: Proto.abilitiesReady(abilities: viewModel.proto.abilities) ? .transcribe : .intro)
             })
         }
-        .onChange(of: abilitiesWizardShowing) {
+        .onChange(of: viewModel.abilitiesWizardShowing) {
             updateDoneButton()
         }
         .padding()
@@ -82,20 +72,20 @@ struct AdventurerWizard: View {
         HStack {
             Button("Cancel", action: cancel)
             Button("Done", action: done)
-                .disabled(doneDisabled)
+                .disabled(viewModel.doneDisabled)
         }
         .navigationTitle("Create a new adventurer")
         .onAppear {
-            if proto.name.isEmpty {
-                biographyWizardShowing = true
+            if viewModel.proto.name.isEmpty {
+                viewModel.biographyWizardShowing = true
             }
             updateDoneButton()
         }
     }
 
     private func updateDoneButton() {
-        isReady = proto.isReady(usePoints: false)
-        doneDisabled = !isReady
+        viewModel.isReady = viewModel.proto.isReady(usePoints: false)
+        viewModel.doneDisabled = !viewModel.isReady
     }
 
     private func cancel() {
@@ -103,10 +93,17 @@ struct AdventurerWizard: View {
     }
 
     private func done() {
-        let adventurer = proto.adventurerFrom(usePoints: false)
+        let adventurer = viewModel.proto.adventurerFrom(usePoints: false)
         if let adventurer {
             withAnimation {
                 modelContext.insert(adventurer)
+                Task {
+                    do {
+                        try modelContext.save()
+                    } catch {
+                        fatalError("Could not save modelContext: \(error)")
+                    }
+                }
             }
         }
         wizardShowing = false
@@ -116,17 +113,19 @@ struct AdventurerWizard: View {
 #Preview {
     @Previewable @State var wizardShowing = true
 
-    AdventurerWizard(wizardShowing: $wizardShowing, selection: nil)
+    AdventurerWizard(wizardShowing: $wizardShowing)
         .modelContainer(previewContainer)
 }
 
 #Preview {
     @Previewable @State var wizardShowing = false
-
+    
     let proto = Proto()
     proto.name = "Pendecar"
+    let viewModel = WizardViewModel(proto: proto)
 
-    return AdventurerWizard(wizardShowing: $wizardShowing, proto: proto, selection: nil)
+    return AdventurerWizard(wizardShowing: $wizardShowing)
+        .environmentObject(viewModel)
         .modelContainer(previewContainer)
 }
 
@@ -136,8 +135,10 @@ struct AdventurerWizard: View {
     let proto = Proto()
     proto.name = "Pendecar"
     proto.abilities = Proto.baseAbilities()
+    let viewModel = WizardViewModel(proto: proto)
 
-    return AdventurerWizard(wizardShowing: $wizardShowing, proto: proto, selection: nil)
+    return AdventurerWizard(wizardShowing: $wizardShowing)
+        .environmentObject(viewModel)
         .modelContainer(previewContainer)
 }
 
