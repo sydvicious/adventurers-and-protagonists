@@ -24,7 +24,7 @@ struct AbilitiesView: View {
     }
 }
 
-#Preview {
+#Preview("Existing Abilities") {
     var debuggingText = "abilties accumulater: "
     var stagingAbilities: [Ability] = []
     let protoAbilities = Proto.baseAbilities()
@@ -37,7 +37,7 @@ struct AbilitiesView: View {
     return AbilitiesView(viewModel: viewModel)
 }
 
-#Preview {
+#Preview("From Scratch") {
     let viewModel = AbilitiesViewModel(abilities: [])
     AbilitiesView(viewModel: viewModel)
 }

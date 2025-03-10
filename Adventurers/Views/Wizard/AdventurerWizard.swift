@@ -110,14 +110,17 @@ struct AdventurerWizard: View {
     }
 }
 
-#Preview {
+#Preview("Nothing set") {
     @Previewable @State var wizardShowing = true
 
+    let viewModel = WizardViewModel(proto: Proto())
+    
     AdventurerWizard(wizardShowing: $wizardShowing)
+        .environmentObject(viewModel)
         .modelContainer(previewContainer)
 }
 
-#Preview {
+#Preview("Name") {
     @Previewable @State var wizardShowing = false
     
     let proto = Proto()
@@ -129,7 +132,7 @@ struct AdventurerWizard: View {
         .modelContainer(previewContainer)
 }
 
-#Preview {
+#Preview("Everything set") {
     @Previewable @State var wizardShowing = false
 
     let proto = Proto()
