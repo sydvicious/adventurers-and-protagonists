@@ -30,11 +30,9 @@ extension AbilitiesChooser {
             .padding(20)
             Spacer()
         }
+        .padding(20)
         .onAppear {
             rolls = newRolls()
-            setRolls(rolls)
-        }
-        .onChange(of: rolls) {
             setRolls(rolls)
         }
     }

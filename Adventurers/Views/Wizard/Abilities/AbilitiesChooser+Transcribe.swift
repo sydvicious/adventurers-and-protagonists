@@ -16,7 +16,9 @@ extension AbilitiesChooser {
             }
         }
         .onAppear {
-            self.viewModel.abilities = Proto.baseAbilities()
+            if self.viewModel.abilities.count == 0 {
+                self.viewModel.abilities = Proto.baseAbilities()
+            }
             self.checkDoneDisabled()
         }
     }
