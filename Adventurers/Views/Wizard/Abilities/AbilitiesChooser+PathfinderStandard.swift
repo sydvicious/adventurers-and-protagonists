@@ -15,10 +15,35 @@ extension AbilitiesChooser {
 
         VStack {
             Text("Use the handles on the right to drag the scores to place the scores with the abilities you want.")
-                .padding(10)
-            Grid {
+                .padding(.bottom, 10)
+
+            let columns = [
+                GridItem(.fixed(50), alignment: .leading),
+                GridItem(.flexible(), alignment: .trailing),
+                GridItem(.flexible(), spacing: 20, alignment: .leading),
+                GridItem(.flexible(), alignment: .leading)
+            ]
+            LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(rolls, id: \.self) { roll in
-                    GridDiceRollsRow(rollData: roll)
+                    Text("\(roll.label.rawValue)")
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                        .frame(minWidth: 100, maxWidth: .infinity, alignment: .leading)
+                        .border(Color.black, width: 2)
+                    Text("\(roll.value)").fontWeight(.bold)
+                    HStack {
+                        ForEach(0..<roll.rolls.count, id: \.self) { index in
+                            if let imageName = Dice.d6ImageName(roll.rolls[index]) {
+                                Image(imageName)
+                                    .resizable()
+                                    .aspectRatio(1, contentMode: .fit)
+                                    .frame(minWidth: 20, minHeight: 10)
+                                    .opacity(index == roll.minimumIndex ? 0.5 : 1.0)
+                            }
+                        }
+                    }
+                    Image(systemName: "line.3.horizontal")
+                        .foregroundColor(.gray)
                 }
             }
             Button(action: {
@@ -66,36 +91,6 @@ struct RollData: Equatable, Hashable {
     }
 }
 
-struct GridDiceRollsRow: View {
-    @State var rollData: RollData
-    
-    var body: some View {
-        GridRow {
-            Text("\(rollData.label.rawValue)")
-                .multilineTextAlignment(.leading)
-                .gridColumnAlignment(.leading)
-            Text("\(rollData.value)").fontWeight(.bold)
-                .multilineTextAlignment(.trailing)
-                .gridColumnAlignment(.trailing)
-            HStack {
-                ForEach(0..<rollData.rolls.count, id: \.self) { index in
-                    if let imageName = Dice.d6ImageName(rollData.rolls[index]) {
-                        Image(imageName)
-                            .resizable()
-                            .scaledToFit()
-                            .padding(2)
-                            .opacity(index == rollData.minimumIndex ? 0.5 : 1.0)
-                    }
-                }
-            }
-            .padding(2)
-            Image(systemName: "line.3.horizontal")
-                .foregroundColor(.gray)
-        }
-        .padding([.all], 2)
-    }
-}
-
 extension Proto {
     static public func abilities(from rolls: [RollData]) -> [ProtoAbility] {
         var protoAbilites: [ProtoAbility] = []
@@ -118,10 +113,3 @@ extension Proto {
                             chooserType: .roll4d6Best3)
 }
 
-#Preview("Ability Row") {
-    @Previewable @State var rollData: RollData = .init(label: .str)
-    
-    Grid {
-        GridDiceRollsRow(rollData: rollData)
-    }
-}
