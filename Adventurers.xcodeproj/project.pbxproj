@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		623491982A74AC6B00A38880 /* Ability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623491972A74AC6B00A38880 /* Ability.swift */; };
+		6241F8F62D7F4E8E00E894A5 /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6241F8F52D7F4E8900E894A5 /* Dice.swift */; };
 		626986112A549542004391FC /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986102A549542004391FC /* WelcomeScreen.swift */; };
 		626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986522A566DCE004391FC /* PreviewModelContainer.swift */; };
 		627D72312A6CF30700C950C5 /* Proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627D72302A6CF30700C950C5 /* Proto.swift */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		623491972A74AC6B00A38880 /* Ability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ability.swift; sourceTree = "<group>"; };
+		6241F8F52D7F4E8900E894A5 /* Dice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dice.swift; sourceTree = "<group>"; };
 		626986102A549542004391FC /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
 		626986522A566DCE004391FC /* PreviewModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewModelContainer.swift; sourceTree = "<group>"; };
 		627D72302A6CF30700C950C5 /* Proto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proto.swift; sourceTree = "<group>"; };
@@ -75,8 +77,8 @@
 				Wizard/Abilities/AbilitiesChooser.swift,
 				"Wizard/Abilities/AbilitiesChooser+EditScore.swift",
 				"Wizard/Abilities/AbilitiesChooser+Intro.swift",
+				"Wizard/Abilities/AbilitiesChooser+PathfinderStandard.swift",
 				"Wizard/Abilities/AbilitiesChooser+Points.swift",
-				"Wizard/Abilities/AbilitiesChooser+Roll4d6Best3.swift",
 				"Wizard/Abilities/AbilitiesChooser+Transcribe.swift",
 				Wizard/Abilities/AbilitiesChooserViewModel.swift,
 				Wizard/AdventurerWizard.swift,
@@ -129,6 +131,7 @@
 		627D72322A6CFC2D00C950C5 /* Miscellaneous */ = {
 			isa = PBXGroup;
 			children = (
+				6241F8F52D7F4E8900E894A5 /* Dice.swift */,
 				62DA2B182B0FA67800F05457 /* StringUtils.swift */,
 			);
 			path = Miscellaneous;
@@ -328,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				629E8D7F2A548E5B002CDCAF /* Adventurer.swift in Sources */,
+				6241F8F62D7F4E8E00E894A5 /* Dice.swift in Sources */,
 				62E5C04D2A5683690007FD7D /* SampleData.swift in Sources */,
 				627D72312A6CF30700C950C5 /* Proto.swift in Sources */,
 				62DA2B192B0FA67800F05457 /* StringUtils.swift in Sources */,

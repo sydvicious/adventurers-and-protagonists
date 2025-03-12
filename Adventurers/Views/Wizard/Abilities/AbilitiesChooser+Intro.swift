@@ -11,6 +11,9 @@ import SwiftUI
 extension AbilitiesChooser {
     @ViewBuilder func Intro() -> some View {
         VStack {
+            Text("Choose your method for generating your character.")
+                .padding()
+
             Button(action: {
                 viewModel.abilities = Proto.baseAbilities()
                 viewModel.chooserType = .transcribe
@@ -32,7 +35,9 @@ extension AbilitiesChooser {
                 Text("Use the point-based system")
             })
             .padding()
+            Spacer()
         }
+        .padding(10)
     }
 }
 

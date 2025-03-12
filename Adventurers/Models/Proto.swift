@@ -102,7 +102,6 @@ import Foundation
         let abilities: [Ability] = protoAbilities.map { Ability(label: $0.label, score: $0.score) }
         return abilities
     }
-
 }
 
 struct ProtoAbility: Identifiable {

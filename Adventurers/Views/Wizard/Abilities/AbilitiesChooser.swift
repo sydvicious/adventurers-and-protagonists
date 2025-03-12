@@ -30,24 +30,21 @@ struct AbilitiesChooser: View {
 
 
     var body: some View {
-        ScrollView {
-            VStack {
-                switch viewModel.chooserType {
-                case .intro:
-                    Text("Choose your method for generating your character.")
-                    Intro()
-                case .transcribe:
-                    Transcribe()
-                case .roll4d6Best3:
-                    Roll4d6Best3().disabled(true)
-                case .points:
-                    Points().disabled(true)
-                }
+        VStack {
+            switch viewModel.chooserType {
+            case .intro:
+                Intro()
+            case .transcribe:
+                Transcribe()
+            case .roll4d6Best3:
+                PathfinderStandard()
+                    .frame(maxHeight: .infinity)
+            case .points:
+                Points().disabled(true)
             }
-            .padding()
-            .navigationTitle("Set your adventurer's abilities")
         }
-        Spacer()
+        .frame(maxHeight: .infinity)
+        .navigationTitle("Set your adventurer's abilities")
         HStack {
             Button("Cancel", action: cancel)
             Button("Done", action: done)
