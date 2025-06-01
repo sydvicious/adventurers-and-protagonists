@@ -19,7 +19,7 @@ extension AbilitiesChooser {
             if self.viewModel.abilities.count == 0 {
                 self.viewModel.abilities = Proto.baseAbilities()
             }
-            self.checkDoneDisabled()
+            self.viewModel.checkDoneDisabled()
         }
     }
 }

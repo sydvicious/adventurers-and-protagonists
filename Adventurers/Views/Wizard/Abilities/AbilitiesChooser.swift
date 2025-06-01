@@ -15,17 +15,16 @@ struct AbilitiesChooser: View {
 
     @ObservedObject var viewModel: AbilitiesChooserViewModel
 
-    @State var doneDisabled: Bool
-
-        init(isShowing: Binding<Bool>,
-             isReady: Binding<Bool>,
-             proto: Binding<Proto>,
-             chooserType: AbilityChooserTypes = .intro) {
+    init(isShowing: Binding<Bool>,
+         isReady: Binding<Bool>,
+         proto: Binding<Proto>,
+         chooserType: AbilityChooserTypes = .intro) {
         self._isShowing = isShowing
         self._isReady = isReady
         self._proto = proto
-        self.viewModel = AbilitiesChooserViewModel(chooserType: chooserType, abilities: proto.wrappedValue.abilities)
-        self.doneDisabled = true
+        self.viewModel = AbilitiesChooserViewModel(
+            chooserType: chooserType,
+            abilities: proto.wrappedValue.abilities)
     }
 
 
@@ -38,6 +37,7 @@ struct AbilitiesChooser: View {
                 Transcribe()
             case .roll4d6Best3:
                 PathfinderStandard()
+                    .environmentObject(viewModel)
                     .frame(maxHeight: .infinity)
             case .points:
                 Points().disabled(true)
@@ -48,12 +48,8 @@ struct AbilitiesChooser: View {
         HStack {
             Button("Cancel", action: cancel)
             Button("Done", action: done)
-                .disabled(doneDisabled)
+                .disabled(viewModel.doneDisabled)
         }
-    }
-
-    func checkDoneDisabled() {
-        self.doneDisabled = !Proto.abilitiesReady(abilities: viewModel.abilities)
     }
 
     func cancel() {

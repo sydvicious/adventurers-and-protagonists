@@ -18,6 +18,7 @@ class AbilitiesChooserViewModel: ObservableObject {
 
     @Published @MainActor var chooserType: AbilityChooserTypes = .intro
     @Published @MainActor var abilities: [ProtoAbility]
+    @Published @MainActor var doneDisabled: Bool = true
 
     @MainActor
     init(chooserType: AbilityChooserTypes,
@@ -32,4 +33,8 @@ class AbilitiesChooserViewModel: ObservableObject {
         self.abilities = abilities
     }
 
+    @MainActor
+    func checkDoneDisabled() {
+        self.doneDisabled = !Proto.abilitiesReady(abilities: self.abilities)
+    }
 }
