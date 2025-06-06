@@ -7,20 +7,13 @@
 
 import SwiftUI
 
-protocol AdventurerViewModelProtocol {
+@MainActor
+class AdventurerViewModel: ObservableObject {
+    @Published var selection: Adventurer = Adventurer(name: "", abilities: [])
+    @Published var wizardShowing =  false
 
-}
-
-class AdventurerViewModel: AdventurerViewModelProtocol, ObservableObject {
-    @Published @MainActor var selection: Adventurer = Adventurer(name: "", abilities: [])
-    @Published @MainActor var isReady = true
-
-    private var isNewCharacter = false
-
-    @MainActor
-    init(selection: Adventurer, isReady: Bool = true, isNewCharacter: Bool = false) {
+    init(selection: Adventurer, isReady: Bool = true) {
         self.selection = selection
-        self.isReady = isReady
-        self.isNewCharacter = isNewCharacter
     }
 }
+

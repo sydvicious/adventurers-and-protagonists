@@ -10,56 +10,51 @@ import SwiftData
 
 @MainActor
 struct AdventurerView: View {
-    @State private var selection: Adventurer
-    @State private var creatingNewCharacter = false
-    @State private var biographyWizardShowing =  false
-
     @ObservedObject var viewModel: AdventurerViewModel
 
-    init(selection: Adventurer,
-         creatingNewCharacter: Bool = false,
-         biographyWizardShowing: Bool = false) {
-        self.selection = selection
-        self.creatingNewCharacter = creatingNewCharacter
-        self.biographyWizardShowing = biographyWizardShowing
+    init(selection: Adventurer) {
         self.viewModel = AdventurerViewModel(selection: selection)
     }
 
     var body: some View {
-        ScrollView(.vertical) {
-            VStack(alignment: .leading) {
-                Text(selection.name)
-                    .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
-
-                AbilitiesView(viewModel: AbilitiesViewModel(adventurer: selection))
+        NavigationView {
+            ScrollView(.vertical) {
+                AbilitiesView(viewModel: AbilitiesViewModel(adventurer: viewModel.selection))
+                .padding()
+                .frame(maxWidth: .infinity)
+                .navigationTitle(viewModel.selection.name)
+                #if os(iOS)
+                .navigationBarTitleDisplayMode(.inline)
+                #endif
             }
-            .padding()
-            .frame(maxWidth: .infinity)
-        }
-        .toolbar {
-            ToolbarItem {
-                Button(action: edit) {
-                    Label("Edit", systemImage: "pencil")
+            .toolbar {
+                ToolbarItem {
+                    Button(action: edit) {
+                        Label("Edit", systemImage: "pencil")
+                    }
                 }
             }
-        }
 #if os(iOS)
-        .fullScreenCover(isPresented: $biographyWizardShowing) {
-            let wizardViewModel = WizardViewModel(proto: Proto(from: selection))
-            AdventurerWizard(wizardShowing: $biographyWizardShowing)
-            .environmentObject(wizardViewModel)
-        }
+            .fullScreenCover(isPresented: $viewModel.wizardShowing) {
+                presentWizard()
+            }
 #else
-        .sheet(isPresented: $biographyWizardShowing) {
-            let wizardViewModel = WizardViewModel(proto: Proto(from: selection))
-            AdventurerWizard(wizardShowing: $biographyWizardShowing)
-            .environmentObject(wizardViewModel)
-        }
+            .sheet(isPresented: $viewModel.wizardShowing) {
+                presentWizard()
+            }
 #endif
+        }
     }
 
     func edit() {
-        biographyWizardShowing = true
+        viewModel.wizardShowing = true
+    }
+    
+    @ViewBuilder
+    func presentWizard() -> some View {
+        let wizardViewModel = WizardViewModel(proto: Proto(from: viewModel.selection))
+        AdventurerWizard(wizardShowing: $viewModel.wizardShowing)
+            .environmentObject(wizardViewModel)
     }
 }
 

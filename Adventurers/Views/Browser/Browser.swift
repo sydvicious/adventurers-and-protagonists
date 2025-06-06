@@ -8,6 +8,10 @@
 import SwiftUI
 import SwiftData
 
+// At some point, this needs a view model. At that point I will
+// have to mess with Combine. The upside is that I can write a true data
+// broker, and have one based on SwiftData, one based on sqlite, etc.
+
 struct Browser: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -20,7 +24,6 @@ struct Browser: View {
     // Sheets
     @State private var welcomeScreenShowing = false
     @State private var wizardShowing = false
-    @State private var creatingNewCharacter = false
 
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -66,7 +69,6 @@ struct Browser: View {
             let defaults = UserDefaults.standard
             welcomeScreenShowing = !defaults.bool(forKey: "WelcomeScreenShown")
             if self.adventurers.count == 0 {
-                creatingNewCharacter = true
                 welcomeScreenShowing = true
             }
         })
@@ -83,7 +85,6 @@ struct Browser: View {
     }
 
     private func addItem() {
-        creatingNewCharacter = true
         wizardShowing = true
     }
 
