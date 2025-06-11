@@ -8,7 +8,6 @@
 import Foundation
 import SwiftData
 
-@MainActor
 let previewContainer: ModelContainer = {
     let schema = Schema([
         Adventurer.self,

@@ -18,7 +18,6 @@ final class AdventurersTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    @MainActor
     func testExample() throws {
         let adventure = SampleData.adventurers[0]
         let proto = Proto(from: adventure)

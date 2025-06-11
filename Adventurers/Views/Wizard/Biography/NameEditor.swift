@@ -11,7 +11,6 @@ enum NameEditorFocus: Hashable {
     case name
 }
 
-@MainActor
 struct NameEditor: View {
     @Binding var isPresented: Bool
     @Binding var isReady: Bool

@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@MainActor
 class AdventurerViewModel: ObservableObject {
     @Published var selection: Adventurer = Adventurer(name: "", abilities: [])
     @Published var wizardShowing =  false

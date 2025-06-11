@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@MainActor
 extension AbilitiesChooser {
     @ViewBuilder func Intro() -> some View {
         VStack {

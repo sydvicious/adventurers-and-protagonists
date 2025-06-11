@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@MainActor
 struct AbilitiesView: View {
     @ObservedObject var viewModel: AbilitiesViewModel
 

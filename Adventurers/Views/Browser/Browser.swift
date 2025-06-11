@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  Browser.swift
 //  Adventurers
 //
 //  Created by Syd Polk on 7/4/23.
@@ -15,7 +15,10 @@ import SwiftData
 struct Browser: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    @Query(sort: [SortDescriptor(\Adventurer.name, comparator: .localized)]) var adventurers: [Adventurer]
+    @Query var rawAdventurers: [Adventurer]
+    var adventurers : [Adventurer] {
+        rawAdventurers.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
+    }
     
     @State private var columnVisibility =
         NavigationSplitViewVisibility.all
@@ -77,9 +80,12 @@ struct Browser: View {
         })
         #if os(iOS)
         .fullScreenCover(isPresented: $wizardShowing) {
-            let wizardViewModel = WizardViewModel(proto: Proto(from: selection))
-            AdventurerWizard(wizardShowing: $wizardShowing)
-            .environmentObject(wizardViewModel)
+            ZStack {
+                Color(.systemBackground).ignoresSafeArea()
+                let wizardViewModel = WizardViewModel(proto: Proto(from: selection))
+                AdventurerWizard(wizardShowing: $wizardShowing)
+                    .environmentObject(wizardViewModel)
+            }
         }
         #endif
     }

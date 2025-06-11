@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@MainActor
 extension AbilitiesChooser {
     
     @ViewBuilder func PathfinderStandard() -> some View {
