@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -63,7 +63,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		621C14352C2472A500A66C21 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		621C14352C2472A500A66C21 /* Exceptions for "Views" folder in "Adventurers" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Browser/Abiilities/AbilitiesView.swift,
@@ -72,6 +72,8 @@
 				Browser/Adventurer/AdventurerView.swift,
 				Browser/Adventurer/AdventurerViewModel.swift,
 				Browser/Browser.swift,
+				Browser/BrowserSplitView.swift,
+				Browser/BrowserViewModel.swift,
 				"Utility Views/ValidField.swift",
 				"Utility Views/ViewHeightModifier.swift",
 				Wizard/Abilities/AbilitiesChooser.swift,
@@ -90,30 +92,31 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		621C14172C24729A00A66C21 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (621C14352C2472A500A66C21 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
+		621C14172C24729A00A66C21 /* Views */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				621C14352C2472A500A66C21 /* Exceptions for "Views" folder in "Adventurers" target */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		629E8D762A548E5B002CDCAF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		629E8D8A2A548E5C002CDCAF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		629E8D942A548E5C002CDCAF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -213,8 +216,6 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			name = Adventurers;
 			productName = Adventurers;
 			productReference = 629E8D792A548E5B002CDCAF /* Adventurers.app */;
@@ -264,7 +265,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					629E8D782A548E5B002CDCAF = {
 						CreatedOnToolsVersion = 15.0;
@@ -280,7 +281,6 @@
 				};
 			};
 			buildConfigurationList = 629E8D742A548E5B002CDCAF /* Build configuration list for PBXProject "Adventurers" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -288,6 +288,7 @@
 				Base,
 			);
 			mainGroup = 629E8D702A548E5B002CDCAF;
+			preferredProjectObjectVersion = 90;
 			productRefGroup = 629E8D7A2A548E5B002CDCAF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -302,33 +303,26 @@
 /* Begin PBXResourcesBuildPhase section */
 		629E8D772A548E5B002CDCAF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				629E8D872A548E5C002CDCAF /* Preview Assets.xcassets in Resources */,
 				629E8D832A548E5C002CDCAF /* Assets.xcassets in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		629E8D8B2A548E5C002CDCAF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		629E8D952A548E5C002CDCAF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		629E8D752A548E5B002CDCAF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				629E8D7F2A548E5B002CDCAF /* Adventurer.swift in Sources */,
 				6241F8F62D7F4E8E00E894A5 /* Dice.swift in Sources */,
@@ -340,24 +334,19 @@
 				626986112A549542004391FC /* WelcomeScreen.swift in Sources */,
 				623491982A74AC6B00A38880 /* Ability.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		629E8D892A548E5C002CDCAF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				629E8D922A548E5C002CDCAF /* AdventurersTests.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		629E8D932A548E5C002CDCAF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				629E8D9E2A548E5C002CDCAF /* AdventurersUITestsLaunchTests.swift in Sources */,
 				629E8D9C2A548E5C002CDCAF /* AdventurersUITests.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -375,7 +364,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		629E8D9F2A548E5C002CDCAF /* Debug */ = {
+		629E8D9F2A548E5C002CDCAF /* Debug configuration for PBXProject "Adventurers" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -411,6 +400,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = R5PQPZARC5;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -432,12 +422,14 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
-		629E8DA02A548E5C002CDCAF /* Release */ = {
+		629E8DA02A548E5C002CDCAF /* Release configuration for PBXProject "Adventurers" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -473,6 +465,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = R5PQPZARC5;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -487,11 +480,13 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
-		629E8DA22A548E5C002CDCAF /* Debug */ = {
+		629E8DA22A548E5C002CDCAF /* Debug configuration for PBXNativeTarget "Adventurers" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -501,11 +496,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Adventurers/Preview Content\"";
-				DEVELOPMENT_TEAM = R5PQPZARC5;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Adventurers/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -517,23 +514,25 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.Adventurers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		629E8DA32A548E5C002CDCAF /* Release */ = {
+		629E8DA32A548E5C002CDCAF /* Release configuration for PBXNativeTarget "Adventurers" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -543,11 +542,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Adventurers/Preview Content\"";
-				DEVELOPMENT_TEAM = R5PQPZARC5;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Adventurers/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -559,30 +560,31 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.Adventurers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
-		629E8DA52A548E5C002CDCAF /* Debug */ = {
+		629E8DA52A548E5C002CDCAF /* Debug configuration for PBXNativeTarget "AdventurersTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = R5PQPZARC5;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
@@ -591,6 +593,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -598,14 +601,13 @@
 			};
 			name = Debug;
 		};
-		629E8DA62A548E5C002CDCAF /* Release */ = {
+		629E8DA62A548E5C002CDCAF /* Release configuration for PBXNativeTarget "AdventurersTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = R5PQPZARC5;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
@@ -614,6 +616,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -621,13 +624,12 @@
 			};
 			name = Release;
 		};
-		629E8DA82A548E5C002CDCAF /* Debug */ = {
+		629E8DA82A548E5C002CDCAF /* Debug configuration for PBXNativeTarget "AdventurersUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = R5PQPZARC5;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
@@ -636,6 +638,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -643,13 +646,12 @@
 			};
 			name = Debug;
 		};
-		629E8DA92A548E5C002CDCAF /* Release */ = {
+		629E8DA92A548E5C002CDCAF /* Release configuration for PBXNativeTarget "AdventurersUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = R5PQPZARC5;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
@@ -658,6 +660,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -671,37 +674,33 @@
 		629E8D742A548E5B002CDCAF /* Build configuration list for PBXProject "Adventurers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				629E8D9F2A548E5C002CDCAF /* Debug */,
-				629E8DA02A548E5C002CDCAF /* Release */,
+				629E8D9F2A548E5C002CDCAF /* Debug configuration for PBXProject "Adventurers" */,
+				629E8DA02A548E5C002CDCAF /* Release configuration for PBXProject "Adventurers" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		629E8DA12A548E5C002CDCAF /* Build configuration list for PBXNativeTarget "Adventurers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				629E8DA22A548E5C002CDCAF /* Debug */,
-				629E8DA32A548E5C002CDCAF /* Release */,
+				629E8DA22A548E5C002CDCAF /* Debug configuration for PBXNativeTarget "Adventurers" */,
+				629E8DA32A548E5C002CDCAF /* Release configuration for PBXNativeTarget "Adventurers" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		629E8DA42A548E5C002CDCAF /* Build configuration list for PBXNativeTarget "AdventurersTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				629E8DA52A548E5C002CDCAF /* Debug */,
-				629E8DA62A548E5C002CDCAF /* Release */,
+				629E8DA52A548E5C002CDCAF /* Debug configuration for PBXNativeTarget "AdventurersTests" */,
+				629E8DA62A548E5C002CDCAF /* Release configuration for PBXNativeTarget "AdventurersTests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		629E8DA72A548E5C002CDCAF /* Build configuration list for PBXNativeTarget "AdventurersUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				629E8DA82A548E5C002CDCAF /* Debug */,
-				629E8DA92A548E5C002CDCAF /* Release */,
+				629E8DA82A548E5C002CDCAF /* Debug configuration for PBXNativeTarget "AdventurersUITests" */,
+				629E8DA92A548E5C002CDCAF /* Release configuration for PBXNativeTarget "AdventurersUITests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */

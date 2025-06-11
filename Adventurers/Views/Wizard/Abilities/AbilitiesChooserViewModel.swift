@@ -16,17 +16,15 @@ enum AbilityChooserTypes: String, CaseIterable {
 
 class AbilitiesChooserViewModel: ObservableObject {
 
-    @Published @MainActor var chooserType: AbilityChooserTypes = .intro
-    @Published @MainActor var abilities: [ProtoAbility]
+    @Published var chooserType: AbilityChooserTypes = .intro
+    @Published var abilities: [ProtoAbility]
 
-    @MainActor
     init(chooserType: AbilityChooserTypes,
          abilities: [ProtoAbility] = []) {
         self.chooserType = chooserType
         self.abilities = abilities
     }
 
-    @MainActor
     init(abilities: [ProtoAbility] = []) {
         self.chooserType = .intro
         self.abilities = abilities

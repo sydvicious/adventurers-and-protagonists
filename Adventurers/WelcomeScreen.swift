@@ -26,7 +26,7 @@ struct WelcomeScreen: View {
                 Text("Let's go!")
             }
             Spacer()
-            Text("Copyright ©2023-2024 Syd Polk").multilineTextAlignment(.center)
+            Text("Copyright ©2023-2025 Syd Polk").multilineTextAlignment(.center)
         }
     }
 }
