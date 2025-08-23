@@ -87,6 +87,12 @@ struct Browser: View {
                     .environmentObject(wizardViewModel)
             }
         }
+        #else
+        .sheet(isPresented: $wizardShowing) {
+            let wizardViewModel = WizardViewModel(proto: Proto(from: selection))
+            AdventurerWizard(wizardShowing: $wizardShowing)
+                .environmentObject(wizardViewModel)
+        }
         #endif
     }
 
