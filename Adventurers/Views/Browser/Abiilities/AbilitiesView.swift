@@ -11,7 +11,7 @@ struct AbilitiesView: View {
     @ObservedObject var viewModel: AbilitiesViewModel
 
     var body: some View {
-        Grid {
+        Grid(alignment: .leading) {
             if (viewModel.abilities.count == 0) {
                 Text("No abilities! Is this thing on?")
             } else {
@@ -20,6 +20,7 @@ struct AbilitiesView: View {
                 }
             }
         }
+        .frame(minWidth: 300, maxWidth: .infinity, minHeight: 200, alignment: .leading)
     }
 }
 

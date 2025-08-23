@@ -42,18 +42,22 @@ struct Browser: View {
                 .onDelete(perform: deleteItems)
             }
             .toolbar {
-#if os(iOS)
+    #if os(iOS)
+                // iOS/iPadOS: right side of the nav bar
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+                    addButton
                 }
-#endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
+    #elseif os(macOS)
+                // macOS: put it in the actual toolbar (not the overflow)
+                ToolbarItem(placement: .primaryAction) {
+                    addButton
+                        .help("Add Item") // nice tooltip on macOS
                 }
+    #endif
             }
-            .navigationTitle("Adventurers")
+    #if os(macOS)
+            .frame(minWidth: 200)
+    #endif
             .onAppear {
                 if self.horizontalSizeClass == .regular && self.selection == nil && self.adventurers.count > 0 {
                     self.selection = self.adventurers[0]
@@ -62,12 +66,21 @@ struct Browser: View {
 
         } detail: {
             if let selection {
-                AdventurerView(selection: selection)
+                GeometryReader { proxy in
+                    Group {
+                        AdventurerView(selection: selection)
+                            .contentMargins(.horizontal, 0, for: .scrollContent)
+                            .navigationTitle(selection.name)
+                            .toolbarTitleDisplayMode(.inline)
+                    }
+                    .frame(width: proxy.size.width, height: proxy.size.height, alignment: .topLeading)
+                }
             } else {
                 Text("Please select an adventurer from the list or hit the + button to add a new one.")
             }
         }
         .navigationSplitViewStyle(.balanced)
+        .navigationTitle("Adventurers")
         .onAppear(perform: {
             let defaults = UserDefaults.standard
             welcomeScreenShowing = !defaults.bool(forKey: "WelcomeScreenShown")
@@ -88,8 +101,9 @@ struct Browser: View {
             }
         }
         #else
+        .toolbarTitleDisplayMode(.inline)                // saves space
         .sheet(isPresented: $wizardShowing) {
-            let wizardViewModel = WizardViewModel(proto: Proto(from: selection))
+            let wizardViewModel = WizardViewModel(proto: Proto())
             AdventurerWizard(wizardShowing: $wizardShowing)
                 .environmentObject(wizardViewModel)
         }
@@ -98,6 +112,19 @@ struct Browser: View {
 
     private func addItem() {
         wizardShowing = true
+    }
+    
+    // One button definition for both platforms
+    private var addButton: some View {
+        Button(action: addItem) {
+            Label("Add Item", systemImage: "plus")
+        }
+#if os(macOS)
+        .labelStyle(.iconOnly)   // show only the symbol, keep accessibility text
+        .controlSize(.small)     // smaller control = more likely to stay out of overflow
+#else
+        .labelStyle(.iconOnly)
+#endif
     }
 
     private func deleteItems(offsets: IndexSet) {

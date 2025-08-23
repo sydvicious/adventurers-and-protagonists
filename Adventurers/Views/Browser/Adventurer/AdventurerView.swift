@@ -16,13 +16,12 @@ struct AdventurerView: View {
     }
 
     var body: some View {
-        NavigationView {
             ScrollView(.vertical) {
                 AbilitiesView(viewModel: AbilitiesViewModel(adventurer: viewModel.selection))
                 .padding()
                 .frame(maxWidth: .infinity)
-                .navigationTitle(viewModel.selection.name)
                 #if os(iOS)
+                .navigationTitle(viewModel.selection.name)
                 .navigationBarTitleDisplayMode(.inline)
                 #endif
             }
@@ -42,7 +41,6 @@ struct AdventurerView: View {
                 presentWizard()
             }
 #endif
-        }
     }
 
     func edit() {

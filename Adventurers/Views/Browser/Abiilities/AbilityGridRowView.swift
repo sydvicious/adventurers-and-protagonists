@@ -23,15 +23,20 @@ struct AbilityGridRowView: View {
             Text(name ?? "<no name>")
                 .gridColumnAlignment(.leading)
                 .bold()
+                .frame(minWidth: 150, maxWidth: .infinity, alignment: .leading)
                 .padding([.trailing], 5)
             Text("\(baseScore)")
                 .gridColumnAlignment(.trailing)
+                .frame(minWidth: 40)
                 .padding([.trailing], 5)
                 .font(.system(.body, design: .monospaced))
             Text("\(modifierString)")
                 .gridColumnAlignment(.trailing)
                 .font(.system(.body, design: .monospaced))
-        }.padding([.all], 2)
+                .frame(minWidth: 40)
+                .padding([.trailing], 5)
+        }
+        .padding([.all], 2)
     }
 }
 

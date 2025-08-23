@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		623491982A74AC6B00A38880 /* Ability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623491972A74AC6B00A38880 /* Ability.swift */; };
 		6241F8F62D7F4E8E00E894A5 /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6241F8F52D7F4E8900E894A5 /* Dice.swift */; };
-		626986112A549542004391FC /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986102A549542004391FC /* WelcomeScreen.swift */; };
 		626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986522A566DCE004391FC /* PreviewModelContainer.swift */; };
 		627D72312A6CF30700C950C5 /* Proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627D72302A6CF30700C950C5 /* Proto.swift */; };
 		629E8D7D2A548E5B002CDCAF /* AdventurersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629E8D7C2A548E5B002CDCAF /* AdventurersApp.swift */; };
@@ -43,7 +42,6 @@
 /* Begin PBXFileReference section */
 		623491972A74AC6B00A38880 /* Ability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ability.swift; sourceTree = "<group>"; };
 		6241F8F52D7F4E8900E894A5 /* Dice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dice.swift; sourceTree = "<group>"; };
-		626986102A549542004391FC /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
 		626986522A566DCE004391FC /* PreviewModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewModelContainer.swift; sourceTree = "<group>"; };
 		627D72302A6CF30700C950C5 /* Proto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proto.swift; sourceTree = "<group>"; };
 		629E8D792A548E5B002CDCAF /* Adventurers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adventurers.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +72,7 @@
 				Browser/Browser.swift,
 				"Utility Views/ValidField.swift",
 				"Utility Views/ViewHeightModifier.swift",
+				WelcomeScreen.swift,
 				Wizard/Abilities/AbilitiesChooser.swift,
 				"Wizard/Abilities/AbilitiesChooser+EditScore.swift",
 				"Wizard/Abilities/AbilitiesChooser+Intro.swift",
@@ -165,7 +164,6 @@
 				627D72322A6CFC2D00C950C5 /* Miscellaneous */,
 				6269860F2A549528004391FC /* Models */,
 				629E8D7C2A548E5B002CDCAF /* AdventurersApp.swift */,
-				626986102A549542004391FC /* WelcomeScreen.swift */,
 				629E8D822A548E5C002CDCAF /* Assets.xcassets */,
 				629E8D842A548E5C002CDCAF /* Adventurers.entitlements */,
 				629E8D882A548E5C002CDCAF /* Info.plist */,
@@ -329,7 +327,6 @@
 				62DA2B192B0FA67800F05457 /* StringUtils.swift in Sources */,
 				629E8D7D2A548E5B002CDCAF /* AdventurersApp.swift in Sources */,
 				626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */,
-				626986112A549542004391FC /* WelcomeScreen.swift in Sources */,
 				623491982A74AC6B00A38880 /* Ability.swift in Sources */,
 			);
 		};
@@ -489,7 +486,7 @@
 		629E8DA22A548E5C002CDCAF /* Debug configuration for PBXNativeTarget "Adventurers" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = arm64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Adventurers/Adventurers.entitlements;
@@ -525,7 +522,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.Adventurers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = NO;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -572,7 +569,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.Adventurers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = NO;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -777,7 +774,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.Adventurers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = NO;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;

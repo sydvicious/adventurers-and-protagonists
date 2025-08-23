@@ -28,6 +28,7 @@ struct WelcomeScreen: View {
             Spacer()
             Text("Copyright ©2023-2025 Syd Polk").multilineTextAlignment(.center)
         }
+        .padding(40)
     }
 }
 
