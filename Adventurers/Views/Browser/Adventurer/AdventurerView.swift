@@ -10,6 +10,9 @@ import SwiftData
 
 struct AdventurerView: View {
     @ObservedObject var viewModel: AdventurerViewModel
+    
+    // Not useful in this view at this point, but needed for the browser view
+    @State var newItemID: PersistentIdentifier?
 
     init(selection: Adventurer) {
         self.viewModel = AdventurerViewModel(selection: selection)
@@ -50,7 +53,7 @@ struct AdventurerView: View {
     @ViewBuilder
     func presentWizard() -> some View {
         let wizardViewModel = WizardViewModel(proto: Proto(from: viewModel.selection))
-        AdventurerWizard(wizardShowing: $viewModel.wizardShowing)
+        AdventurerWizard(wizardShowing: $viewModel.wizardShowing, newItemID: $newItemID)
             .environmentObject(wizardViewModel)
     }
 }

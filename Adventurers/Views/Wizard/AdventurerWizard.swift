@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AdventurerWizard: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     @Binding var wizardShowing: Bool
+    @Binding var newItemID: PersistentIdentifier?
 
     @EnvironmentObject var viewModel: WizardViewModel
 
@@ -97,13 +99,12 @@ struct AdventurerWizard: View {
         if let adventurer {
             withAnimation {
                 modelContext.insert(adventurer)
-                Task {
-                    do {
-                        try modelContext.save()
-                    } catch {
-                        fatalError("Could not save modelContext: \(error)")
-                    }
+                do {
+                    try modelContext.save()
+                } catch {
+                    fatalError("Could not save modelContext: \(error)")
                 }
+                newItemID = adventurer.persistentModelID
             }
         }
         wizardShowing = false
@@ -112,35 +113,38 @@ struct AdventurerWizard: View {
 
 #Preview("Nothing set") {
     @Previewable @State var wizardShowing = true
+    @Previewable @State var newItemID: PersistentIdentifier? = nil
 
     let viewModel = WizardViewModel(proto: Proto())
     
-    AdventurerWizard(wizardShowing: $wizardShowing)
+    AdventurerWizard(wizardShowing: $wizardShowing, newItemID: $newItemID)
         .environmentObject(viewModel)
         .modelContainer(previewContainer)
 }
 
 #Preview("Name") {
     @Previewable @State var wizardShowing = false
-    
+    @Previewable @State var newItemID: PersistentIdentifier? = nil
+
     let proto = Proto()
     proto.name = "Pendecar"
     let viewModel = WizardViewModel(proto: proto)
 
-    return AdventurerWizard(wizardShowing: $wizardShowing)
+    return AdventurerWizard(wizardShowing: $wizardShowing, newItemID: $newItemID)
         .environmentObject(viewModel)
         .modelContainer(previewContainer)
 }
 
 #Preview("Everything set") {
     @Previewable @State var wizardShowing = false
+    @Previewable @State var newItemID: PersistentIdentifier? = nil
 
     let proto = Proto()
     proto.name = "Pendecar"
     proto.abilities = Proto.baseAbilities()
     let viewModel = WizardViewModel(proto: proto)
 
-    return AdventurerWizard(wizardShowing: $wizardShowing)
+    return AdventurerWizard(wizardShowing: $wizardShowing, newItemID: $newItemID)
         .environmentObject(viewModel)
         .modelContainer(previewContainer)
 }

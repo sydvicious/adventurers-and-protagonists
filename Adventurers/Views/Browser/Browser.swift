@@ -35,6 +35,7 @@ struct Browser: View {
 
     @State private var columnVisibility = NavigationSplitViewVisibility.all
     @State private var selection: PersistentIdentifier?
+    @State private var newItemID: PersistentIdentifier?
 
     // Sheets
     @State private var welcomeScreenShowing = false
@@ -79,6 +80,11 @@ struct Browser: View {
                     selection = newIDs.first
                 }
             }
+            .onChange(of: newItemID) { _, newID in
+                if let newID = newID {
+                    selection = newID
+                }
+            }
         } detail: {
             if let item = adventurerFromID(selection) {
                 GeometryReader { proxy in
@@ -111,7 +117,7 @@ struct Browser: View {
             ZStack {
                 Color(.systemBackground).ignoresSafeArea()
                 let wizardViewModel = WizardViewModel(proto: Proto())
-                AdventurerWizard(wizardShowing: $wizardShowing)
+                AdventurerWizard(wizardShowing: $wizardShowing, newItemID: $newItemID)
                     .environmentObject(wizardViewModel)
             }
         }
@@ -119,7 +125,7 @@ struct Browser: View {
         .toolbarTitleDisplayMode(.inline)                // saves space
         .sheet(isPresented: $wizardShowing) {
             let wizardViewModel = WizardViewModel(proto: Proto())
-            AdventurerWizard(wizardShowing: $wizardShowing)
+            AdventurerWizard(wizardShowing: $wizardShowing, newItemID: $newItemID)
                 .environmentObject(wizardViewModel)
         }
         #endif
