@@ -50,20 +50,47 @@ struct Browser: View {
                         Text(item.name)
                     }
                     .tag(id)
+#if os(macOS)
+                    .contextMenu {
+                        Button("Delete \(item.name)") {
+                            delete(ids: [id])
+                        }
+                    }
+#endif
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        Button(role: .destructive) {
+                            delete(ids: [id])
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
+
                 }
                 .onDelete(perform: deleteItems)
             }
+            .navigationTitle("Adventurers")
+#if os(macOS)
+            .listStyle(.sidebar)
+#endif
             .toolbar {
-#if os(iOS)
-                // iOS/iPadOS: right side of the nav bar
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    addButton
+#if os(macOS)
+                ToolbarItem(placement: .primaryAction) {
+                    deleteButton
+                        .help("Delete Adventurer")
                 }
-#elseif os(macOS)
-                // macOS: put it in the actual toolbar (not the overflow)
                 ToolbarItem(placement: .primaryAction) {
                     addButton
-                        .help("Add Item") // nice tooltip on macOS
+                        .help("Add Adventurer")
+                }
+#endif
+#if os(iOS)
+                if horizontalSizeClass == .regular {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        deleteButton
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    addButton
                 }
 #endif
             }
@@ -71,8 +98,8 @@ struct Browser: View {
             .frame(minWidth: 200)
 #endif
             .onAppear {
-                if horizontalSizeClass == .regular, selection == nil {
-                    selection = adventurers.first?.persistentModelID
+                if selection == nil {
+                    resetSelection()
                 }
             }
             .onChange(of: adventurers.map(\.persistentModelID)) { _, newIDs in
@@ -130,7 +157,7 @@ struct Browser: View {
         }
         #endif
     }
-
+    
     private func adventurerFromID(_ id: PersistentIdentifier?) -> Adventurer? {
         if let id, let item = (modelContext.model(for: id)) as? Adventurer {
             return item
@@ -161,17 +188,53 @@ struct Browser: View {
         .labelStyle(.iconOnly)
 #endif
     }
-
+    
+    private var deleteButton: some View {
+        Button(action: deleteSelection) {
+            Label("Delete Item", systemImage: "trash")
+        }
+#if os(macOS)
+        .labelStyle(.iconOnly)   // show only the symbol, keep accessibility text
+        .controlSize(.small)     // smaller control = more likely to stay out of overflow
+#else
+        .labelStyle(.iconOnly)
+#endif
+    }
+    
+    private func resetSelection() {
+        if horizontalSizeClass == .regular {
+            selection = adventurers.first?.persistentModelID
+        }
+    }
+    
+    private func delete(adventurer: Adventurer) {
+        if adventurer.persistentModelID == selection {
+            resetSelection()
+        }
+        modelContext.delete(adventurer)
+    }
+    
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                modelContext.delete(adventurers[index])
+                delete(adventurer: adventurers[index])
             }
-            do {
-                try modelContext.save()
-            } catch {
-                fatalError("Could not save modelContext: \(error)")
+        }
+    }
+    
+    private func delete(ids: [PersistentIdentifier]) {
+        withAnimation {
+            for id in ids {
+                if let adventurer = adventurerFromID(id) {
+                    delete(adventurer: adventurer)
+                }
             }
+        }
+    }
+    
+    private func deleteSelection() {
+        if let selectedID = selection {
+            delete(ids: [selectedID])
         }
     }
 }
