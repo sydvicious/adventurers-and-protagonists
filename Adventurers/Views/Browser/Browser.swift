@@ -15,13 +15,26 @@ import SwiftData
 struct Browser: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    @Query(sort: \Adventurer.name, order: .forward)
-    private var adventurers: [Adventurer]
+    
+    @Query private var rawAdventurers: [Adventurer]
+    private var adventurers: [Adventurer] {
+        rawAdventurers.sorted { lhs, rhs in
+            let result = lhs.name.compare(
+                rhs.name,
+                options: [.caseInsensitive, .diacriticInsensitive, .numeric], // <- key bits
+                range: nil,
+                locale: .current
+            )
+            if result == .orderedSame {
+                // tie-break to keep order stable when names equal ignoring case/diacritics
+                return lhs.uid.uuidString < rhs.uid.uuidString
+            }
+            return result == .orderedAscending
+        }
+    }
 
-    @State private var columnVisibility =
-        NavigationSplitViewVisibility.all
+    @State private var columnVisibility = NavigationSplitViewVisibility.all
     @State private var selection: PersistentIdentifier?
-    @State private var newAdventurer: Adventurer?
 
     // Sheets
     @State private var welcomeScreenShowing = false
@@ -31,13 +44,11 @@ struct Browser: View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
             List(selection: $selection) {
                 ForEach(adventurers) { item in
-                    NavigationLink {
-                        AdventurerView(selection: item)
+                    let id = item.persistentModelID
+                    NavigationLink(value: id) {
+                        Text(item.name)
                     }
-                    label: {
-                        Text("\(item.name)")
-                    }
-                    .tag(item.persistentModelID)
+                    .tag(id)
                 }
                 .onDelete(perform: deleteItems)
             }
@@ -63,7 +74,7 @@ struct Browser: View {
                     selection = adventurers.first?.persistentModelID
                 }
             }
-            .onChange(of: adventurers.map(\.persistentModelID)) { oldIDs, newIDs in
+            .onChange(of: adventurers.map(\.persistentModelID)) { _, newIDs in
                 if let sel = selection, !newIDs.contains(sel) {
                     selection = newIDs.first
                 }
@@ -83,23 +94,6 @@ struct Browser: View {
                 Text("Please select an adventurer from the list or hit the + button to add a new one.")
             }
         }
-        // Map IDs to a pushed detail (iPhone/compact). Sync selection on appear.
-        .navigationDestination(for: PersistentIdentifier.self) { id in
-            if let item = modelContext.model(for: id) as? Adventurer {
-                GeometryReader { proxy in
-                    Group {
-                        AdventurerView(selection: item)
-                            .contentMargins(.horizontal, 0, for: .scrollContent)
-                            .navigationTitle(item.name)
-                            .toolbarTitleDisplayMode(.inline)
-                    }
-                    .frame(width: proxy.size.width, height: proxy.size.height, alignment: .topLeading)
-                }
-                .onAppear {
-                    selection = id
-                }
-            }
-        }
         .navigationSplitViewStyle(.balanced)
         .navigationTitle("Adventurers")
         .onAppear(perform: {
@@ -116,7 +110,7 @@ struct Browser: View {
         .fullScreenCover(isPresented: $wizardShowing) {
             ZStack {
                 Color(.systemBackground).ignoresSafeArea()
-                let wizardViewModel = WizardViewModel(proto: Proto(from: selection))
+                let wizardViewModel = WizardViewModel(proto: Proto())
                 AdventurerWizard(wizardShowing: $wizardShowing)
                     .environmentObject(wizardViewModel)
             }
@@ -159,19 +153,13 @@ struct Browser: View {
         withAnimation {
             for index in offsets {
                 modelContext.delete(adventurers[index])
-                Task {
-                    do {
-                        try modelContext.save()
-                    } catch {
-                        fatalError("Could not save modelContext: \(error)")
-                    }
-                }
+            }
+            do {
+                try modelContext.save()
+            } catch {
+                fatalError("Could not save modelContext: \(error)")
             }
         }
-    }
-    
-    private func updateList() {
-        
     }
 }
 
