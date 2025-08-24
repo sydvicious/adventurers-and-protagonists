@@ -17,14 +17,14 @@ class AbilitiesViewModel: AbilitiesViewModelProtocol, ObservableObject {
     private var isNewCharacter: Bool = true
 
     init(abilities: [Ability] = []) {
-        self.abilities = abilities
+        self.abilities = Ability.sortedByLabel(abilities: abilities)
     }
 
     init(adventurer: Adventurer) {
-        self.abilities = adventurer.abilities
+        self.abilities = Ability.sortedByLabel(abilities: adventurer.abilities)
     }
 
     init(proto: Proto) {
-        self.abilities = Proto.abilities(from: proto.abilities)
+        self.abilities = Ability.sortedByLabel(abilities: Proto.abilities(from: proto.abilities))
     }
 }

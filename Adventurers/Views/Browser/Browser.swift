@@ -95,7 +95,7 @@ struct Browser: View {
             }
         }
         .navigationSplitViewStyle(.balanced)
-        .navigationTitle("Adventurers")
+        .navigationTitle(adventuterNameFromID(selection) ?? "Adventurers")
         .onAppear(perform: {
             let defaults = UserDefaults.standard
             welcomeScreenShowing = !defaults.bool(forKey: "WelcomeScreenShown")
@@ -128,6 +128,13 @@ struct Browser: View {
     private func adventurerFromID(_ id: PersistentIdentifier?) -> Adventurer? {
         if let id, let item = (modelContext.model(for: id)) as? Adventurer {
             return item
+        }
+        return nil
+    }
+    
+    private func adventuterNameFromID(_ id: PersistentIdentifier?) -> String? {
+        if let adventurer = adventurerFromID(id) {
+            return adventurer.name
         }
         return nil
     }

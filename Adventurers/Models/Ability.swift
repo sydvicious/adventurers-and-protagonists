@@ -19,8 +19,8 @@ enum AbilityLabels: String, CaseIterable {
 
 @Model
 final class Ability {
-    var label: String;
-    var score: Int;
+    var label: String
+    var score: Int
 
     init(label: String, score: Int) {
         self.label = label
@@ -40,5 +40,25 @@ final class Ability {
             return String(modifier)
         }
         return "+" + String(modifier)
+    }
+    
+    public static func sortedByLabel(abilities: [Ability]) -> [Ability] {
+        var sortedAbilities: [AbilityLabels:Ability] = [:]
+        
+        for ability in abilities {
+            if let label = AbilityLabels(rawValue: ability.label) {
+                sortedAbilities[label] = ability
+            }
+        }
+        
+        var abilitiesToReturn: [Ability] = []
+        
+        for label in AbilityLabels.allCases {
+            if let ability = sortedAbilities[label] {
+                abilitiesToReturn.append(ability)
+            }
+        }
+        
+        return abilitiesToReturn
     }
 }
