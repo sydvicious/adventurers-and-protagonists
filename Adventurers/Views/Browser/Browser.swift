@@ -15,14 +15,13 @@ import SwiftData
 struct Browser: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    @Query var rawAdventurers: [Adventurer]
-    var adventurers : [Adventurer] {
-        rawAdventurers.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
-    }
-    
+    @Query(sort: \Adventurer.name, order: .forward)
+    private var adventurers: [Adventurer]
+
     @State private var columnVisibility =
         NavigationSplitViewVisibility.all
-    @State private var selection: Adventurer?
+    @State private var selection: PersistentIdentifier?
+    @State private var newAdventurer: Adventurer?
 
     // Sheets
     @State private var welcomeScreenShowing = false
@@ -38,45 +37,67 @@ struct Browser: View {
                     label: {
                         Text("\(item.name)")
                     }
+                    .tag(item.persistentModelID)
                 }
                 .onDelete(perform: deleteItems)
             }
             .toolbar {
-    #if os(iOS)
+#if os(iOS)
                 // iOS/iPadOS: right side of the nav bar
                 ToolbarItem(placement: .navigationBarTrailing) {
                     addButton
                 }
-    #elseif os(macOS)
+#elseif os(macOS)
                 // macOS: put it in the actual toolbar (not the overflow)
                 ToolbarItem(placement: .primaryAction) {
                     addButton
                         .help("Add Item") // nice tooltip on macOS
                 }
-    #endif
+#endif
             }
-    #if os(macOS)
+#if os(macOS)
             .frame(minWidth: 200)
-    #endif
+#endif
             .onAppear {
-                if self.horizontalSizeClass == .regular && self.selection == nil && self.adventurers.count > 0 {
-                    self.selection = self.adventurers[0]
+                if horizontalSizeClass == .regular, selection == nil {
+                    selection = adventurers.first?.persistentModelID
                 }
             }
-
+            .onChange(of: adventurers.map(\.persistentModelID)) { oldIDs, newIDs in
+                if let sel = selection, !newIDs.contains(sel) {
+                    selection = newIDs.first
+                }
+            }
         } detail: {
-            if let selection {
+            if let item = adventurerFromID(selection) {
                 GeometryReader { proxy in
                     Group {
-                        AdventurerView(selection: selection)
+                        AdventurerView(selection: item)
                             .contentMargins(.horizontal, 0, for: .scrollContent)
-                            .navigationTitle(selection.name)
+                            .navigationTitle(item.name)
                             .toolbarTitleDisplayMode(.inline)
                     }
                     .frame(width: proxy.size.width, height: proxy.size.height, alignment: .topLeading)
                 }
             } else {
                 Text("Please select an adventurer from the list or hit the + button to add a new one.")
+            }
+        }
+        // Map IDs to a pushed detail (iPhone/compact). Sync selection on appear.
+        .navigationDestination(for: PersistentIdentifier.self) { id in
+            if let item = modelContext.model(for: id) as? Adventurer {
+                GeometryReader { proxy in
+                    Group {
+                        AdventurerView(selection: item)
+                            .contentMargins(.horizontal, 0, for: .scrollContent)
+                            .navigationTitle(item.name)
+                            .toolbarTitleDisplayMode(.inline)
+                    }
+                    .frame(width: proxy.size.width, height: proxy.size.height, alignment: .topLeading)
+                }
+                .onAppear {
+                    selection = id
+                }
             }
         }
         .navigationSplitViewStyle(.balanced)
@@ -110,6 +131,13 @@ struct Browser: View {
         #endif
     }
 
+    private func adventurerFromID(_ id: PersistentIdentifier?) -> Adventurer? {
+        if let id, let item = (modelContext.model(for: id)) as? Adventurer {
+            return item
+        }
+        return nil
+    }
+    
     private func addItem() {
         wizardShowing = true
     }
@@ -140,6 +168,10 @@ struct Browser: View {
                 }
             }
         }
+    }
+    
+    private func updateList() {
+        
     }
 }
 
