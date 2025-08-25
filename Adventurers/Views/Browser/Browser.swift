@@ -17,6 +17,12 @@ struct Browser: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
+    private let welcomeScreenShown: Bool
+    
+    init(welcomeScreenShown: Bool) {
+        self.welcomeScreenShown = welcomeScreenShown
+    }
+    
     @Query private var rawAdventurers: [Adventurer]
     private var adventurers: [Adventurer] {
         rawAdventurers.sorted { lhs, rhs in
@@ -137,10 +143,8 @@ struct Browser: View {
         .navigationSplitViewStyle(.balanced)
         .navigationTitle(adventuterNameFromID(selection) ?? "Adventurers")
         .onAppear(perform: {
-            let defaults = UserDefaults.standard
-            welcomeScreenShowing = !defaults.bool(forKey: "WelcomeScreenShown")
-            if self.adventurers.count == 0 {
-                welcomeScreenShowing = true
+            if !self.welcomeScreenShown && self.adventurers.count == 0 {
+                self.welcomeScreenShowing = true
             }
         })
         .sheet(isPresented: $welcomeScreenShowing, content:{
@@ -246,14 +250,23 @@ struct Browser: View {
     }
 }
 
+#Preview("Zero characters") {
+    return Browser(welcomeScreenShown: true)
+        .modelContainer(emptyContainer)
+}
+
+#Preview("Zero characters, no welcome") {
+    return Browser(welcomeScreenShown: false)
+        .modelContainer(emptyContainer)
+}
+
 #Preview("One character") {
-    UserDefaults.standard.set(true, forKey: "WelcomeScreenShown")
-    return Browser()
+    return Browser(welcomeScreenShown: true)
         .modelContainer(previewContainer)
 }
 
-#Preview("Zero characters") {
-    UserDefaults.standard.set(true, forKey: "WelcomeScreenShown")
-    return Browser()
-        .modelContainer(emptyContainer)
+#Preview("One character; no welcome") {
+    return Browser(welcomeScreenShown: false)
+        .modelContainer(previewContainer)
 }
+
