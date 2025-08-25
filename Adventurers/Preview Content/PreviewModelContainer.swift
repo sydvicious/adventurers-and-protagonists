@@ -3,7 +3,7 @@
 //  Adventurers
 //
 //  Created by Syd Polk on 7/5/23.
-//  Copyright ©2023 Syd Polk. All rights reserved.
+//  Copyright ©2023-2025 Syd Polk. All rights reserved.
 //
 
 import Foundation
@@ -21,6 +21,21 @@ let previewContainer: ModelContainer = {
         for adventurer in SampleData.adventurers {
             container.mainContext.insert(adventurer)
         }
+        return container
+    } catch {
+        fatalError("Failed to create preview container")
+    }
+}()
+
+let emptyContainer: ModelContainer = {
+    let schema = Schema([
+        Adventurer.self,
+        Ability.self,
+    ])
+    let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+    do {
+        let container = try ModelContainer(for: schema, configurations: [modelConfiguration])
+
         return container
     } catch {
         fatalError("Failed to create preview container")

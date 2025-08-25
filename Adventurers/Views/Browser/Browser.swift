@@ -44,30 +44,36 @@ struct Browser: View {
 
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
-            List(selection: $selection) {
-                ForEach(adventurers) { item in
-                    let id = item.persistentModelID
-                    NavigationLink(value: id) {
-                        Text(item.name)
-                    }
-                    .tag(id)
+            ZStack {
+                List(selection: $selection) {
+                    ForEach(adventurers) { item in
+                        let id = item.persistentModelID
+                        NavigationLink(value: id) {
+                            Text(item.name)
+                        }
+                        .tag(id)
 #if os(macOS)
-                    .contextMenu {
-                        Button("Delete \(item.name)") {
-                            delete(ids: [id])
+                        .contextMenu {
+                            Button("Delete \(item.name)") {
+                                delete(ids: [id])
+                            }
                         }
-                    }
 #endif
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        Button(role: .destructive) {
-                            delete(ids: [id])
-                        } label: {
-                            Label("Delete", systemImage: "trash")
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button(role: .destructive) {
+                                delete(ids: [id])
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
                         }
+                        
                     }
-
+                    .onDelete(perform: deleteItems)
                 }
-                .onDelete(perform: deleteItems)
+                if horizontalSizeClass == .compact && adventurers.isEmpty {
+                    Text("Use the + button in the upper right corner to create your first adventurer!")
+                        .padding(40)
+                }
             }
             .navigationTitle("Adventurers")
 #if os(macOS)
@@ -140,7 +146,7 @@ struct Browser: View {
         .sheet(isPresented: $welcomeScreenShowing, content:{
             WelcomeScreen(welcomeScreenShowing: $welcomeScreenShowing)
         })
-        #if os(iOS)
+#if os(iOS)
         .fullScreenCover(isPresented: $wizardShowing) {
             ZStack {
                 Color(.systemBackground).ignoresSafeArea()
@@ -149,14 +155,14 @@ struct Browser: View {
                     .environmentObject(wizardViewModel)
             }
         }
-        #else
+#else
         .toolbarTitleDisplayMode(.inline)                // saves space
         .sheet(isPresented: $wizardShowing) {
             let wizardViewModel = WizardViewModel(proto: Proto())
             AdventurerWizard(wizardShowing: $wizardShowing, newItemID: $newItemID)
                 .environmentObject(wizardViewModel)
         }
-        #endif
+#endif
     }
     
     private func adventurerFromID(_ id: PersistentIdentifier?) -> Adventurer? {
@@ -240,8 +246,14 @@ struct Browser: View {
     }
 }
 
-#Preview {
+#Preview("One character") {
     UserDefaults.standard.set(true, forKey: "WelcomeScreenShown")
     return Browser()
         .modelContainer(previewContainer)
+}
+
+#Preview("Zero characters") {
+    UserDefaults.standard.set(true, forKey: "WelcomeScreenShown")
+    return Browser()
+        .modelContainer(emptyContainer)
 }
