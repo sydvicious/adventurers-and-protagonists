@@ -3,6 +3,7 @@
 //  Adventurers
 //
 //  Created by Syd Polk on 3/10/25.
+//  Copyright ©2025 Syd Polk. All rights reserved.
 //
 
 import SwiftUI

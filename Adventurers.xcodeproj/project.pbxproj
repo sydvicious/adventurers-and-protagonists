@@ -73,16 +73,7 @@
 				"Utility Views/ValidField.swift",
 				"Utility Views/ViewHeightModifier.swift",
 				WelcomeScreen.swift,
-				Wizard/Abilities/AbilitiesChooser.swift,
-				"Wizard/Abilities/AbilitiesChooser+EditScore.swift",
-				"Wizard/Abilities/AbilitiesChooser+Intro.swift",
-				"Wizard/Abilities/AbilitiesChooser+PathfinderStandard.swift",
-				"Wizard/Abilities/AbilitiesChooser+Points.swift",
-				"Wizard/Abilities/AbilitiesChooser+Transcribe.swift",
-				Wizard/Abilities/AbilitiesChooserViewModel.swift,
-				Wizard/AdventurerWizard.swift,
-				Wizard/Biography/NameEditor.swift,
-				Wizard/WizardViewModel.swift,
+				Wizard/NewAdventurerWizard.swift,
 			);
 			target = 629E8D782A548E5B002CDCAF /* Adventurers */;
 		};
@@ -95,6 +86,11 @@
 				621C14352C2472A500A66C21 /* Exceptions for "Views" folder in "Adventurers" target */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		627D7D9A2E5C0BD7009AAF29 /* Archive */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Archive;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -160,6 +156,7 @@
 		629E8D7B2A548E5B002CDCAF /* Adventurers */ = {
 			isa = PBXGroup;
 			children = (
+				627D7D9A2E5C0BD7009AAF29 /* Archive */,
 				621C14172C24729A00A66C21 /* Views */,
 				627D72322A6CFC2D00C950C5 /* Miscellaneous */,
 				6269860F2A549528004391FC /* Models */,
@@ -211,6 +208,9 @@
 				629E8D772A548E5B002CDCAF /* Resources */,
 			);
 			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				627D7D9A2E5C0BD7009AAF29 /* Archive */,
 			);
 			name = Adventurers;
 			productName = Adventurers;
