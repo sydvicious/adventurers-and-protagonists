@@ -13,14 +13,18 @@ import SwiftData
 // have to mess with Combine. The upside is that I can write a true data
 // broker, and have one based on SwiftData, one based on sqlite, etc.
 
-struct Browser: View {
+#if os(iOS)
+struct IOSBrowser: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     private let welcomeScreenShown: Bool
+    private let viewModel: BrowserViewModel
     
-    init(welcomeScreenShown: Bool) {
+    init(welcomeScreenShown: Bool,
+         viewModel: BrowserViewModel) {
         self.welcomeScreenShown = welcomeScreenShown
+        self.viewModel = viewModel
     }
     
     @Query private var rawAdventurers: [Adventurer]
@@ -58,13 +62,6 @@ struct Browser: View {
                             Text(item.name)
                         }
                         .tag(id)
-#if os(macOS)
-                        .contextMenu {
-                            Button("Delete \(item.name)") {
-                                delete(ids: [id])
-                            }
-                        }
-#endif
                         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                             Button(role: .destructive) {
                                 delete(ids: [id])
@@ -82,21 +79,7 @@ struct Browser: View {
                 }
             }
             .navigationTitle("Adventurers")
-#if os(macOS)
-            .listStyle(.sidebar)
-#endif
             .toolbar {
-#if os(macOS)
-                ToolbarItem(placement: .primaryAction) {
-                    deleteButton
-                        .help("Delete Adventurer")
-                }
-                ToolbarItem(placement: .primaryAction) {
-                    addButton
-                        .help("Add Adventurer")
-                }
-#endif
-#if os(iOS)
                 if horizontalSizeClass == .regular {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         deleteButton
@@ -105,11 +88,7 @@ struct Browser: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     addButton
                 }
-#endif
             }
-#if os(macOS)
-            .frame(minWidth: 200)
-#endif
             .onAppear {
                 if selection == nil {
                     resetSelection()
@@ -126,7 +105,7 @@ struct Browser: View {
                 }
             }
         } detail: {
-            if let item = adventurerFromID(selection) {
+            if let item = viewModel.adventurerFromID(selection) {
                 GeometryReader { proxy in
                     Group {
                         AdventurerView(selection: item)
@@ -141,7 +120,6 @@ struct Browser: View {
             }
         }
         .navigationSplitViewStyle(.balanced)
-        .navigationTitle(adventuterNameFromID(selection) ?? "Adventurers")
         .onAppear(perform: {
             if !self.welcomeScreenShown && self.adventurers.count == 0 {
                 self.welcomeScreenShowing = true
@@ -150,7 +128,6 @@ struct Browser: View {
         .sheet(isPresented: $welcomeScreenShowing, content:{
             WelcomeScreen(welcomeScreenShowing: $welcomeScreenShowing)
         })
-#if os(iOS)
         .fullScreenCover(isPresented: $wizardShowing) {
             ZStack {
                 Color(.systemBackground).ignoresSafeArea()
@@ -159,30 +136,8 @@ struct Browser: View {
                     .environmentObject(wizardViewModel)
             }
         }
-#else
-        .toolbarTitleDisplayMode(.inline)                // saves space
-        .sheet(isPresented: $wizardShowing) {
-            let wizardViewModel = WizardViewModel(proto: Proto())
-            AdventurerWizard(wizardShowing: $wizardShowing, newItemID: $newItemID)
-                .environmentObject(wizardViewModel)
-        }
-#endif
     }
-    
-    private func adventurerFromID(_ id: PersistentIdentifier?) -> Adventurer? {
-        if let id, let item = (modelContext.model(for: id)) as? Adventurer {
-            return item
-        }
-        return nil
-    }
-    
-    private func adventuterNameFromID(_ id: PersistentIdentifier?) -> String? {
-        if let adventurer = adventurerFromID(id) {
-            return adventurer.name
-        }
-        return nil
-    }
-    
+
     private func addItem() {
         wizardShowing = true
     }
@@ -192,24 +147,14 @@ struct Browser: View {
         Button(action: addItem) {
             Label("Add Item", systemImage: "plus")
         }
-#if os(macOS)
-        .labelStyle(.iconOnly)   // show only the symbol, keep accessibility text
-        .controlSize(.small)     // smaller control = more likely to stay out of overflow
-#else
         .labelStyle(.iconOnly)
-#endif
     }
     
     private var deleteButton: some View {
         Button(action: deleteSelection) {
             Label("Delete Item", systemImage: "trash")
         }
-#if os(macOS)
-        .labelStyle(.iconOnly)   // show only the symbol, keep accessibility text
-        .controlSize(.small)     // smaller control = more likely to stay out of overflow
-#else
         .labelStyle(.iconOnly)
-#endif
     }
     
     private func resetSelection() {
@@ -236,7 +181,7 @@ struct Browser: View {
     private func delete(ids: [PersistentIdentifier]) {
         withAnimation {
             for id in ids {
-                if let adventurer = adventurerFromID(id) {
+                if let adventurer = viewModel.adventurerFromID(id) {
                     delete(adventurer: adventurer)
                 }
             }
@@ -251,22 +196,35 @@ struct Browser: View {
 }
 
 #Preview("Zero characters") {
-    return Browser(welcomeScreenShown: true)
+    let viewModel = BrowserViewModel(modelContext: emptyContainer.mainContext)
+    let welcomeScreenShown = true
+    
+    return IOSBrowser(welcomeScreenShown: welcomeScreenShown, viewModel: viewModel)
         .modelContainer(emptyContainer)
 }
 
 #Preview("Zero characters, no welcome") {
-    return Browser(welcomeScreenShown: false)
+    let viewModel = BrowserViewModel(modelContext: emptyContainer.mainContext)
+    let welcomeScreenShown = false
+    
+    return IOSBrowser(welcomeScreenShown: welcomeScreenShown, viewModel: viewModel)
         .modelContainer(emptyContainer)
 }
 
 #Preview("One character") {
-    return Browser(welcomeScreenShown: true)
+    let viewModel = BrowserViewModel(modelContext: previewContainer.mainContext)
+    let welcomeScreenShown = true
+    
+    return IOSBrowser(welcomeScreenShown: welcomeScreenShown, viewModel: viewModel)
         .modelContainer(previewContainer)
 }
 
 #Preview("One character; no welcome") {
-    return Browser(welcomeScreenShown: false)
+    let viewModel = BrowserViewModel(modelContext: previewContainer.mainContext)
+    let welcomeScreenShown = false
+    
+    return IOSBrowser(welcomeScreenShown: welcomeScreenShown, viewModel: viewModel)
         .modelContainer(previewContainer)
 }
+#endif
 

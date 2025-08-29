@@ -28,9 +28,14 @@ struct AdventurersApp: App {
     var body: some Scene {
         let defaults = UserDefaults.standard
         let welcomeScreenShown = !defaults.bool(forKey: "WelcomeScreenShown")
+        let browserViewModel = BrowserViewModel(modelContext: sharedModelContainer.mainContext)
 
         WindowGroup {
-            Browser(welcomeScreenShown: welcomeScreenShown)
+            #if os(iOS)
+            IOSBrowser(welcomeScreenShown: welcomeScreenShown, viewModel: browserViewModel)
+            #else
+            MacBrowser(welcomeScreenShown: welcomeScreenShown, viewModel: browserViewModel)
+            #endif
         }
         .modelContainer(sharedModelContainer)
     }

@@ -24,63 +24,66 @@ final class Adventurer  {
         self.abilities = abilities
     }
 
+    @MainActor
     func updateFromProto(_ proto: Proto) {
         updateName(proto)
         updateAbilities(proto)
     }
 
+    @MainActor
     private func updateName(_ proto: Proto) {
         if self.name != proto.name {
             self.name = proto.name
         }
     }
 
+    @MainActor
     private func updateAbilities (_ proto: Proto) {
-        struct Scores {
-            var stored: Int?
-            var proto: Int?
-        }
-        var scores: [String: Scores] = [:]
-        var newAbilities: [Ability] = []
-
-        AbilityLabels.allCases.forEach {
-            let score = Scores(stored: nil, proto: nil)
-            scores[$0.rawValue] = score
-        }
-
-        proto.abilities.forEach {
-            let label = $0.label
-            let protoScore = $0.score
-            var comparedScore = scores[label]
-            comparedScore?.proto = protoScore
-            scores[label] = comparedScore
-        }
-
-        self.abilities.forEach {
-            let label = $0.label
-            let storedScore = $0.score
-            var comparedScore = scores[label]
-            comparedScore?.stored = storedScore
-            scores[label] = comparedScore
-        }
-
-        var writeAbilities = false
-        scores.forEach { label, comparedScore in
-            if let protoScore = comparedScore.proto {
-                if let _ = comparedScore.stored {
-                    writeAbilities = true
-                }
-                newAbilities.append(Ability(label: label, score: protoScore))
+            struct Scores {
+                var stored: Int?
+                var proto: Int?
             }
-        }
-
-        if writeAbilities {
-            self.abilities = newAbilities
-        }
+            var scores: [String: Scores] = [:]
+            var newAbilities: [Ability] = []
+            
+            AbilityLabels.allCases.forEach {
+                let score = Scores(stored: nil, proto: nil)
+                scores[$0.rawValue] = score
+            }
+            
+            proto.abilities.forEach {
+                let label = $0.label
+                let protoScore = $0.score
+                var comparedScore = scores[label]
+                comparedScore?.proto = protoScore
+                scores[label] = comparedScore
+            }
+            
+            self.abilities.forEach {
+                let label = $0.label
+                let storedScore = $0.score
+                var comparedScore = scores[label]
+                comparedScore?.stored = storedScore
+                scores[label] = comparedScore
+            }
+            
+            var writeAbilities = false
+            scores.forEach { label, comparedScore in
+                if let protoScore = comparedScore.proto {
+                    if let _ = comparedScore.stored {
+                        writeAbilities = true
+                    }
+                    newAbilities.append(Ability(label: label, score: protoScore))
+                }
+            }
+            
+            if writeAbilities {
+                self.abilities = newAbilities
+            }
     }
 
     #if DEBUG
-    static let preview: Adventurer = {
+    @MainActor static let preview: Adventurer = {
         var abilities = [Ability]()
         abilities.append(Ability(label: AbilityLabels.str.rawValue, score: 17))
         abilities.append(Ability(label: AbilityLabels.dex.rawValue, score: 15))
