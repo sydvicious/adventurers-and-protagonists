@@ -43,7 +43,6 @@ struct UnspecifiedAbilitiesView: View {
         }
         .sheet(isPresented: $showingMethodSheet) {
             AbilityMethodSheetContainer(
-                title: viewModel.abilitiesGeneratedMethod.title,
                 viewModel: viewModel,
                 onCancel: { showingMethodSheet = false },
                 onDone: { showingMethodSheet = false }
@@ -57,4 +56,3 @@ struct UnspecifiedAbilitiesView: View {
 #Preview("Unspecified Abilities") {
     UnspecifiedAbilitiesView(viewModel: NewAdventurerWizardViewModel(proto: Proto()))
 }
-
