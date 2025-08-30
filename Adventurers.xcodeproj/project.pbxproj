@@ -75,7 +75,17 @@
 				"Utility Views/ValidField.swift",
 				"Utility Views/ViewHeightModifier.swift",
 				WelcomeScreen.swift,
+				Wizard/AbilitiesTab.swift,
+				Wizard/BiographyTab.swift,
+				Wizard/ClassTab.swift,
+				Wizard/CombatTab.swift,
+				Wizard/EquipmentTab.swift,
+				Wizard/FeatsTab.swift,
 				Wizard/NewAdventurerWizard.swift,
+				Wizard/NewAdventurerWizardViewModel.swift,
+				Wizard/RaceTab.swift,
+				Wizard/SkillsTab.swift,
+				Wizard/SpellsTab.swift,
 			);
 			target = 629E8D782A548E5B002CDCAF /* Adventurers */;
 		};
