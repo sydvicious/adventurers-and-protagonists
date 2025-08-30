@@ -21,6 +21,9 @@ final class NewAdventurerWizardViewModel: ObservableObject {
         didSet { recomputeIsReady() }
     }
 
+    // Selected method for generating abilities
+    @Published var abilitiesGeneratedMethod: AbilityGenerationMethod = .unspecified
+
     // Aggregate readiness used by the wizard's Done button
     @Published private(set) var isReady: Bool = false
 
@@ -43,4 +46,3 @@ final class NewAdventurerWizardViewModel: ObservableObject {
         self.isReady = proto.isReady(usePoints: usePoints)
     }
 }
-
