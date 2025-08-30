@@ -11,12 +11,36 @@ import SwiftUI
 @MainActor
 final class NewAdventurerWizardViewModel: ObservableObject {
 
-    // Required published properties
-    @Published var proto: Proto
-    @Published var isReady: Bool = false
+    // Domain model under construction
+    @Published var proto: Proto {
+        didSet { recomputeIsReady() }
+    }
+
+    // Whether to validate abilities using point totals
+    @Published var usePoints: Bool = false {
+        didSet { recomputeIsReady() }
+    }
+
+    // Aggregate readiness used by the wizard's Done button
+    @Published private(set) var isReady: Bool = false
+
+    // Completion flag for the wizard
     @Published var isDone: Bool = false
 
     init(proto: Proto) {
         self.proto = proto
+        recomputeIsReady()
+    }
+
+    // Call this when you mutate proto in a way that impacts readiness
+    func notifyProtoChanged() {
+        recomputeIsReady()
+    }
+
+    // MARK: - Aggregate readiness computation
+
+    private func recomputeIsReady() {
+        self.isReady = proto.isReady(usePoints: usePoints)
     }
 }
+

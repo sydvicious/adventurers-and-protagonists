@@ -39,7 +39,6 @@ import Foundation
         return abilities
     }
 
-
     public func isReady(usePoints: Bool) -> Bool {
 
         // check the name
@@ -80,7 +79,7 @@ import Foundation
         return protoAbilities
     }
 
-    static public func abilitiesReady(abilities: [ProtoAbility], 
+    static public func abilitiesReady(abilities: [ProtoAbility],
                                       usePoints: Bool = false,
                                       campaignType: CampaignTypes = .epicFantasy) -> Bool {
         guard abilities.count == 6  else {
@@ -163,3 +162,4 @@ enum CampaignTypes: Int {
     case highFantasy = 20
     case epicFantasy = 25
 }
+
