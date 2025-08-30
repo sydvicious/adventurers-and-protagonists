@@ -86,6 +86,7 @@
 				Wizard/RaceTab.swift,
 				Wizard/SkillsTab.swift,
 				Wizard/SpellsTab.swift,
+				Wizard/WelcomeTab.swift,
 			);
 			target = 629E8D782A548E5B002CDCAF /* Adventurers */;
 		};

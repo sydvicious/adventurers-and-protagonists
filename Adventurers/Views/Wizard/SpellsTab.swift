@@ -8,3 +8,7 @@ struct SpellsTab: View {
             .padding()
     }
 }
+
+#Preview("Spells Tab") {
+    SpellsTab(viewModel: NewAdventurerWizardViewModel(proto: Proto()))
+}

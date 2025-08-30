@@ -14,6 +14,7 @@ final class NewAdventurerWizardViewModel: ObservableObject {
     // Required published properties
     @Published var proto: Proto
     @Published var isReady: Bool = false
+    @Published var isDone: Bool = false
 
     init(proto: Proto) {
         self.proto = proto

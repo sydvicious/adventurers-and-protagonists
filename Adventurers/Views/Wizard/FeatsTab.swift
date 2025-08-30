@@ -8,3 +8,7 @@ struct FeatsTab: View {
             .padding()
     }
 }
+
+#Preview("Feats Tab") {
+    FeatsTab(viewModel: NewAdventurerWizardViewModel(proto: Proto()))
+}
