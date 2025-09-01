@@ -2,6 +2,13 @@ import SwiftUI
 
 struct TranscribeCharacterView: View {
     @ObservedObject var viewModel: NewAdventurerWizardViewModel
+    
+    init(viewModel: NewAdventurerWizardViewModel) {
+        self.viewModel = viewModel
+        if viewModel.proto.abilities.count == 0 {
+            self.viewModel.proto.abilities = Proto.baseAbilities()
+        }
+    }
 
     var body: some View {
         VStack {
@@ -17,9 +24,6 @@ struct TranscribeCharacterView: View {
                     }
                 }
                 .onAppear {
-                    if self.viewModel.proto.abilities.count == 0 {
-                        self.viewModel.proto.abilities = Proto.baseAbilities()
-                    }
                     self.viewModel.notifyProtoChanged()
                 }
 
