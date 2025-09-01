@@ -51,9 +51,11 @@ struct IOSBrowser: View {
     // Sheets
     @State private var welcomeScreenShowing = false
     @State private var wizardShowing = false
+    @State private var isShowingNewWizard = false
 
     var body: some View {
-        NavigationSplitView(columnVisibility: $columnVisibility) {
+        NavigationStack {
+            NavigationSplitView(columnVisibility: $columnVisibility) {
             ZStack {
                 List(selection: $selection) {
                     ForEach(adventurers) { item in
@@ -84,6 +86,9 @@ struct IOSBrowser: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         deleteButton
                     }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    lightningBoltButton
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     addButton
@@ -136,10 +141,18 @@ struct IOSBrowser: View {
                     .environmentObject(wizardViewModel)
             }
         }
+        .navigationDestination(isPresented: $isShowingNewWizard) {
+            NewAdventurerWizard()
+        }
+        }
     }
 
     private func addItem() {
         wizardShowing = true
+    }
+    
+    private func addNewWizardItem() {
+        isShowingNewWizard = true
     }
     
     // One button definition for both platforms
@@ -153,6 +166,13 @@ struct IOSBrowser: View {
     private var deleteButton: some View {
         Button(action: deleteSelection) {
             Label("Delete Item", systemImage: "trash")
+        }
+        .labelStyle(.iconOnly)
+    }
+    
+    private var lightningBoltButton: some View {
+        Button(action: addNewWizardItem) {
+            Label("New Wizard", systemImage: "bolt")
         }
         .labelStyle(.iconOnly)
     }
