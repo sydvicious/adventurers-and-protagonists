@@ -75,8 +75,10 @@
 				"Utility Views/ValidField.swift",
 				"Utility Views/ViewHeightModifier.swift",
 				WelcomeScreen.swift,
-				Wizard/AbilitiesTab.swift,
-				Wizard/AbilityMethodSheetContainer.swift,
+				Wizard/Abilities/AbilitiesTab.swift,
+				Wizard/Abilities/AbilityMethodContainer.swift,
+				Wizard/Abilities/TranscribeCharacterView.swift,
+				Wizard/Abilities/UnspecifiedAbilitiesView.swift,
 				Wizard/BiographyTab.swift,
 				Wizard/ClassicMethodView.swift,
 				Wizard/ClassTab.swift,
@@ -92,8 +94,6 @@
 				Wizard/SkillsTab.swift,
 				Wizard/SpellsTab.swift,
 				Wizard/StandardMethodView.swift,
-				Wizard/TranscribeCharacterView.swift,
-				Wizard/UnspecifiedAbilitiesView.swift,
 				Wizard/WelcomeTab.swift,
 			);
 			target = 629E8D782A548E5B002CDCAF /* Adventurers */;

@@ -2,7 +2,6 @@ import SwiftUI
 
 struct UnspecifiedAbilitiesView: View {
     @ObservedObject var viewModel: NewAdventurerWizardViewModel
-    @State private var showingMethodSheet = false
 
     @ViewBuilder
     private func methodContent(for method: AbilityGenerationMethod) -> some View {
@@ -29,30 +28,31 @@ struct UnspecifiedAbilitiesView: View {
             Text("Choose the method for generating your abilities.")
                 .font(.headline)
 
-            // Always show all choices; tapping sets the method and presents the sheet.
+            // Always show all choices; tapping navigates to the method's view.
             VStack(alignment: .center, spacing: 8) {
                 ForEach(AbilityGenerationMethod.displayCases) { method in
-                    Button(method.title) {
-                        viewModel.abilitiesGeneratedMethod = method
-                        showingMethodSheet = true
+                    NavigationLink(method.title) {
+                        AbilityMethodContainer(
+                            viewModel: viewModel,
+                            onCancel: {},
+                            onDone: {}
+                        ) {
+                            methodContent(for: method)
+                        }
+                        .onAppear {
+                            viewModel.abilitiesGeneratedMethod = method
+                        }
                     }
                 }
             }
             .buttonStyle(.bordered)
             .frame(maxWidth: .infinity, alignment: .center)
         }
-        .sheet(isPresented: $showingMethodSheet) {
-            AbilityMethodSheetContainer(
-                viewModel: viewModel,
-                onCancel: { showingMethodSheet = false },
-                onDone: { showingMethodSheet = false }
-            ) {
-                methodContent(for: viewModel.abilitiesGeneratedMethod)
-            }
-        }
     }
 }
 
 #Preview("Unspecified Abilities") {
-    UnspecifiedAbilitiesView(viewModel: NewAdventurerWizardViewModel(proto: Proto()))
+    NavigationStack {
+        UnspecifiedAbilitiesView(viewModel: NewAdventurerWizardViewModel(proto: Proto()))
+    }
 }

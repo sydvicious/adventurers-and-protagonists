@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct AbilityMethodSheetContainer<Content: View>: View {
+struct AbilityMethodContainer<Content: View>: View {
     let viewModel: NewAdventurerWizardViewModel
     let onCancel: () -> Void
     let onDone: () -> Void
@@ -39,16 +39,20 @@ struct AbilityMethodSheetContainer<Content: View>: View {
             .padding()
         }
         .frame(minWidth: 320, minHeight: 240)
+        .navigationTitle("Generate Abilities")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-#Preview("Ability Method Sheet Container") {
+#Preview("Ability Method Container") {
     let vm = NewAdventurerWizardViewModel(proto: Proto())
-    AbilityMethodSheetContainer(
-        viewModel: vm,
-        onCancel: {},
-        onDone: {}
-    ) {
-        StandardMethodView()
+    NavigationStack {
+        AbilityMethodContainer(
+            viewModel: vm,
+            onCancel: {},
+            onDone: {}
+        ) {
+            StandardMethodView()
+        }
     }
 }

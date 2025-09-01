@@ -40,5 +40,7 @@ struct AbilitiesTab: View {
 }
 
 #Preview("Abilities Tab") {
-    AbilitiesTab(viewModel: NewAdventurerWizardViewModel(proto: Proto()))
+    NavigationStack {
+        AbilitiesTab(viewModel: NewAdventurerWizardViewModel(proto: Proto()))
+    }
 }
