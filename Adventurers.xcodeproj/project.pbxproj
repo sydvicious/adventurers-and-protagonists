@@ -77,7 +77,6 @@
 				WelcomeScreen.swift,
 				Wizard/Abilities/AbilitiesTab.swift,
 				Wizard/Abilities/AbilityMethodContainer.swift,
-				Wizard/Abilities/TranscribeCharacterView.swift,
 				Wizard/Abilities/UnspecifiedAbilitiesView.swift,
 				Wizard/BiographyTab.swift,
 				Wizard/ClassicMethodView.swift,
@@ -94,6 +93,7 @@
 				Wizard/SkillsTab.swift,
 				Wizard/SpellsTab.swift,
 				Wizard/StandardMethodView.swift,
+				Wizard/TranscribeCharacterView.swift,
 				Wizard/WelcomeTab.swift,
 			);
 			target = 629E8D782A548E5B002CDCAF /* Adventurers */;

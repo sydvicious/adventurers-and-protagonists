@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct DicePoolMethodView: View {
+    @ObservedObject var viewModel: NewAdventurerWizardViewModel
     @State private var dicePoolText: String = ""
 
     var body: some View {
@@ -15,5 +16,5 @@ struct DicePoolMethodView: View {
 }
 
 #Preview {
-    DicePoolMethodView()
+    DicePoolMethodView(viewModel: NewAdventurerWizardViewModel(proto: Proto()))
 }

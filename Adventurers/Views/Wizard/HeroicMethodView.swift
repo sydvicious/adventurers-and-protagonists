@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct HeroicMethodView: View {
+    @ObservedObject var viewModel: NewAdventurerWizardViewModel
     @State private var heroicText: String = ""
 
     var body: some View {
@@ -15,5 +16,5 @@ struct HeroicMethodView: View {
 }
 
 #Preview {
-    HeroicMethodView()
+    HeroicMethodView(viewModel: NewAdventurerWizardViewModel(proto: Proto()))
 }

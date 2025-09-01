@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AbilityMethodContainer<Content: View>: View {
-    let viewModel: NewAdventurerWizardViewModel
+    @ObservedObject var viewModel: NewAdventurerWizardViewModel
     let onCancel: () -> Void
     let onDone: () -> Void
     @ViewBuilder let content: Content
@@ -39,8 +39,6 @@ struct AbilityMethodContainer<Content: View>: View {
             .padding()
         }
         .frame(minWidth: 320, minHeight: 240)
-        .navigationTitle("Generate Abilities")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -52,7 +50,7 @@ struct AbilityMethodContainer<Content: View>: View {
             onCancel: {},
             onDone: {}
         ) {
-            StandardMethodView()
+            TranscribeCharacterView(viewModel: NewAdventurerWizardViewModel(proto: Proto()))
         }
     }
 }

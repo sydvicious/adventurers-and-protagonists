@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct PurchaseMethodView: View {
+    @ObservedObject var viewModel: NewAdventurerWizardViewModel
     @State private var purchaseText: String = ""
 
     var body: some View {
@@ -15,5 +16,5 @@ struct PurchaseMethodView: View {
 }
 
 #Preview {
-    PurchaseMethodView()
+    PurchaseMethodView(viewModel: NewAdventurerWizardViewModel(proto: Proto()))
 }

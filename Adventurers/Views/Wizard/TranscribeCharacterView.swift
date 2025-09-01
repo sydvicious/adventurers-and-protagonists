@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct TranscribeCharacterView: View {
+    @ObservedObject var viewModel: NewAdventurerWizardViewModel
+
     var body: some View {
         VStack {
             Text("Transcribe Character")
@@ -19,5 +21,5 @@ struct TranscribeCharacterView: View {
 }
 
 #Preview {
-    TranscribeCharacterView()
+    TranscribeCharacterView(viewModel: NewAdventurerWizardViewModel(proto: Proto()))
 }

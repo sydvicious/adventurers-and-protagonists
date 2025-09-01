@@ -9,17 +9,17 @@ struct UnspecifiedAbilitiesView: View {
         case .unspecified:
             EmptyView()
         case .transcribeCharacter:
-            TranscribeCharacterView()
+            TranscribeCharacterView(viewModel: viewModel)
         case .standard4d6:
-            StandardMethodView()
+            StandardMethodView(viewModel: viewModel)
         case .classic3d6:
-            ClassicMethodView()
+            ClassicMethodView(viewModel: viewModel)
         case .heroic2d6Plus6:
-            HeroicMethodView()
+            HeroicMethodView(viewModel: viewModel)
         case .dicePool:
-            DicePoolMethodView()
+            DicePoolMethodView(viewModel: viewModel)
         case .purchase:
-            PurchaseMethodView()
+            PurchaseMethodView(viewModel: viewModel)
         }
     }
 
