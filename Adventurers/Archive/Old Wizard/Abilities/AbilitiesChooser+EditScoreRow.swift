@@ -12,9 +12,11 @@ struct AbilitiesChooserEditScoreRow: View {
     private var name: String?
     @Binding var baseScore: Int
 
-    private var modifierString: String = ""
+    private var modifierString: String {
+        Ability.modifierString(value: baseScore)
+    }
 
-    @ScaledMetric(relativeTo: .body) var width: CGFloat = 40
+    @ScaledMetric(relativeTo: .body) var width: CGFloat = 30
 
     static let monospaced = Font.system(.body, design: .monospaced)
     static let formatter: Formatter = {
@@ -28,7 +30,6 @@ struct AbilitiesChooserEditScoreRow: View {
     init(name: String, score: Binding<Int>) {
         self.name = name
         self._baseScore = score
-        self.modifierString = Ability.modifierString(value: score.wrappedValue)
     }
 
     var body: some View {
@@ -40,12 +41,18 @@ struct AbilitiesChooserEditScoreRow: View {
             TextField("10", 
                       value: $baseScore,
                       formatter: Self.formatter)
-                .frame(width: width, alignment: .trailing)
-                .gridColumnAlignment(.trailing)
                 .font(Self.monospaced)
+                .frame(width: width + 10, alignment: .trailing)
+                .gridColumnAlignment(.trailing)
                 .textFieldStyle(.roundedBorder)
                 .multilineTextAlignment(.trailing)
                 .padding([.trailing], 5)
+            Stepper(value: $baseScore, in: 3...25) {
+                EmptyView()
+            }
+            .labelsHidden()
+            .gridColumnAlignment(.trailing)
+            .padding([.trailing], 5)
             Text("\(modifierString)")
                 .gridColumnAlignment(.trailing)
                 .padding([.trailing], 5)
