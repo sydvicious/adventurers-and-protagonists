@@ -56,8 +56,10 @@ struct NewAdventurerWizard: View {
                     SpellsTab(viewModel: viewModel)
                         .tag(9)
                 }
+                #if os(iOS)
                 .tabViewStyle(.page)
                 .indexViewStyle(.page(backgroundDisplayMode: .always))
+                #endif
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
                 // Right navigation arrow
@@ -97,6 +99,6 @@ struct NewAdventurerWizard: View {
 
 // MARK: - Previews
 
-#Preview("New Adventurer Wizard") {
+#Preview("New Adventurer Wizard", traits: .fixedLayout(width: 1100, height: 800)) {
     NewAdventurerWizard()
 }

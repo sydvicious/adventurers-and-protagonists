@@ -196,7 +196,7 @@ struct MacBrowser: View {
     }
 }
 
-#Preview("Zero characters") {
+#Preview("Zero characters", traits: .fixedLayout(width: 1100, height: 800)) {
     let viewModel = BrowserViewModel(modelContext: emptyContainer.mainContext)
     let welcomeScreenShown = true
 
@@ -204,7 +204,7 @@ struct MacBrowser: View {
         .modelContainer(emptyContainer)
 }
 
-#Preview("Zero characters, no welcome") {
+#Preview("Zero characters, no welcome", traits: .fixedLayout(width: 1100, height: 800)) {
     let viewModel = BrowserViewModel(modelContext: emptyContainer.mainContext)
     let welcomeScreenShown = false
 
@@ -212,7 +212,7 @@ struct MacBrowser: View {
         .modelContainer(emptyContainer)
 }
 
-#Preview("One character") {
+#Preview("One character", traits: .fixedLayout(width: 1100, height: 800)) {
     let viewModel = BrowserViewModel(modelContext: previewContainer.mainContext)
     let welcomeScreenShown = true
 
@@ -220,7 +220,7 @@ struct MacBrowser: View {
         .modelContainer(previewContainer)
 }
 
-#Preview("One character; no welcome") {
+#Preview("One character; no welcome", traits: .fixedLayout(width: 1100, height: 800)) {
     let viewModel = BrowserViewModel(modelContext: previewContainer.mainContext)
     let welcomeScreenShown = false
     
