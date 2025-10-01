@@ -48,9 +48,18 @@ struct IOSBrowser: View {
         ZStack {
             List(selection: $selection) {
                 ForEach(adventurers) { item in
-                    AdventurerRow(item: item) { id in
-                        delete(ids: [id])
-                    }
+                    AdventurerRow(
+                        item: item,
+                        onSelect: { id in
+                            selection = id
+                            if horizontalSizeClass == .compact {
+                                columnVisibility = .all
+                            }
+                        },
+                        onDelete: { id in
+                            delete(ids: [id])
+                        }
+                    )
                 }
                 .onDelete(perform: deleteItems)
             }
@@ -105,6 +114,7 @@ struct IOSBrowser: View {
         }
     }
     .navigationSplitViewStyle(.balanced)
+    .animation(.default, value: columnVisibility)
     .onAppear(perform: {
         if !self.welcomeScreenShown && self.adventurers.count == 0 {
             self.welcomeScreenShowing = true
@@ -221,15 +231,16 @@ private extension View {
 
 private struct AdventurerRow: View {
     let item: Adventurer
+    let onSelect: (PersistentIdentifier) -> Void
     let onDelete: (PersistentIdentifier) -> Void
 
     var body: some View {
         let id = item.persistentModelID
-        NavigationLink(value: id) {
-            Text(item.name)
-        }
-        .tag(id)
-        .deletableSwipe(id: id, onDelete: onDelete)
+        Text(item.name)
+            .tag(id)
+            .contentShape(Rectangle())
+            .onTapGesture { onSelect(id) }
+            .deletableSwipe(id: id, onDelete: onDelete)
     }
 }
 
