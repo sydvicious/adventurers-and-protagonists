@@ -27,22 +27,12 @@ struct IOSBrowser: View {
         self.viewModel = viewModel
     }
     
-    @Query private var rawAdventurers: [Adventurer]
-    private var adventurers: [Adventurer] {
-        rawAdventurers.sorted { lhs, rhs in
-            let result = lhs.name.compare(
-                rhs.name,
-                options: [.caseInsensitive, .diacriticInsensitive, .numeric], // <- key bits
-                range: nil,
-                locale: .current
-            )
-            if result == .orderedSame {
-                // tie-break to keep order stable when names equal ignoring case/diacritics
-                return lhs.uid.uuidString < rhs.uid.uuidString
-            }
-            return result == .orderedAscending
-        }
-    }
+    @Query(
+        sort: [
+            SortDescriptor(\Adventurer.name, order: .forward),
+            SortDescriptor(\Adventurer.uid, order: .forward)
+        ]
+    ) private var adventurers: [Adventurer]
 
     @State private var columnVisibility = NavigationSplitViewVisibility.all
     @State private var selection: PersistentIdentifier?
@@ -54,97 +44,86 @@ struct IOSBrowser: View {
     @State private var isShowingNewWizard = false
 
     var body: some View {
-        NavigationStack {
-            NavigationSplitView(columnVisibility: $columnVisibility) {
-            ZStack {
-                List(selection: $selection) {
-                    ForEach(adventurers) { item in
-                        let id = item.persistentModelID
-                        NavigationLink(value: id) {
-                            Text(item.name)
-                        }
-                        .tag(id)
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                            Button(role: .destructive) {
-                                delete(ids: [id])
-                            } label: {
-                                Label("Delete", systemImage: "trash")
-                            }
-                        }
-                        
+        NavigationSplitView(columnVisibility: $columnVisibility) {
+        ZStack {
+            List(selection: $selection) {
+                ForEach(adventurers) { item in
+                    AdventurerRow(item: item) { id in
+                        delete(ids: [id])
                     }
-                    .onDelete(perform: deleteItems)
                 }
-                if horizontalSizeClass == .compact && adventurers.isEmpty {
-                    Text("Use the + button in the upper right corner to create your first adventurer!")
-                        .padding(40)
-                }
+                .onDelete(perform: deleteItems)
             }
-            .navigationTitle("Adventurers")
-            .toolbar {
-                if horizontalSizeClass == .regular {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        deleteButton
-                    }
-                }
+            if horizontalSizeClass == .compact && adventurers.isEmpty {
+                Text("Use the + button in the upper right corner to create your first adventurer!")
+                    .padding(40)
+            }
+        }
+        .navigationTitle("Adventurers")
+        .toolbar {
+            if horizontalSizeClass == .regular {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    lightningBoltButton
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    addButton
+                    deleteButton
                 }
             }
-            .onAppear {
-                if selection == nil {
-                    resetSelection()
-                }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                lightningBoltButton
             }
-            .onChange(of: adventurers.map(\.persistentModelID)) { _, newIDs in
-                if let sel = selection, !newIDs.contains(sel) {
-                    selection = newIDs.first
-                }
-            }
-            .onChange(of: newItemID) { _, newID in
-                if let newID = newID {
-                    selection = newID
-                }
-            }
-        } detail: {
-            if let item = viewModel.adventurerFromID(selection) {
-                GeometryReader { proxy in
-                    Group {
-                        AdventurerView(selection: item)
-                            .contentMargins(.horizontal, 0, for: .scrollContent)
-                            .navigationTitle(item.name)
-                            .toolbarTitleDisplayMode(.inline)
-                    }
-                    .frame(width: proxy.size.width, height: proxy.size.height, alignment: .topLeading)
-                }
-            } else {
-                Text("Please select an adventurer from the list or hit the + button to add a new one.")
+            ToolbarItem(placement: .navigationBarTrailing) {
+                addButton
             }
         }
-        .navigationSplitViewStyle(.balanced)
-        .onAppear(perform: {
-            if !self.welcomeScreenShown && self.adventurers.count == 0 {
-                self.welcomeScreenShowing = true
-            }
-        })
-        .sheet(isPresented: $welcomeScreenShowing, content:{
-            WelcomeScreen(welcomeScreenShowing: $welcomeScreenShowing)
-        })
-        .fullScreenCover(isPresented: $wizardShowing) {
-            ZStack {
-                Color(.systemBackground).ignoresSafeArea()
-                let wizardViewModel = WizardViewModel(proto: Proto())
-                AdventurerWizard(wizardShowing: $wizardShowing, newItemID: $newItemID)
-                    .environmentObject(wizardViewModel)
+        .onAppear {
+            resetSelection()
+        }
+        .onChange(of: horizontalSizeClass) { _, _ in
+            resetSelection()
+        }
+        .onChange(of: adventurers.map(\.persistentModelID)) { _, newIDs in
+            if let sel = selection, !newIDs.contains(sel) {
+                selection = newIDs.first
             }
         }
-        .navigationDestination(isPresented: $isShowingNewWizard) {
-            NewAdventurerWizard()
+        .onChange(of: newItemID) { _, newID in
+            if let newID = newID {
+                selection = newID
+            }
         }
+    } detail: {
+        if let item = viewModel.adventurerFromID(selection) {
+            GeometryReader { proxy in
+                Group {
+                    AdventurerView(selection: item)
+                        .contentMargins(.horizontal, 0, for: .scrollContent)
+                        .navigationTitle(item.name)
+                        .toolbarTitleDisplayMode(.inline)
+                }
+                .frame(width: proxy.size.width, height: proxy.size.height, alignment: .topLeading)
+            }
+        } else {
+            Text("Please select an adventurer from the list or hit the + button to add a new one.")
         }
+    }
+    .navigationSplitViewStyle(.balanced)
+    .onAppear(perform: {
+        if !self.welcomeScreenShown && self.adventurers.count == 0 {
+            self.welcomeScreenShowing = true
+        }
+    })
+    .sheet(isPresented: $welcomeScreenShowing, content:{
+        WelcomeScreen(welcomeScreenShowing: $welcomeScreenShowing)
+    })
+    .fullScreenCover(isPresented: $wizardShowing) {
+        ZStack {
+            Color(.systemBackground).ignoresSafeArea()
+            let wizardViewModel = WizardViewModel(proto: Proto())
+            AdventurerWizard(wizardShowing: $wizardShowing, newItemID: $newItemID)
+                .environmentObject(wizardViewModel)
+        }
+    }
+    .sheet(isPresented: $isShowingNewWizard) {
+        NewAdventurerWizard()
+    }
     }
 
     private func addItem() {
@@ -178,8 +157,12 @@ struct IOSBrowser: View {
     }
     
     private func resetSelection() {
-        if horizontalSizeClass == .regular {
+        if horizontalSizeClass == .compact {
+            selection = nil
+            columnVisibility = .automatic
+        } else {
             selection = adventurers.first?.persistentModelID
+            columnVisibility = .all
         }
     }
     
@@ -212,6 +195,41 @@ struct IOSBrowser: View {
         if let selectedID = selection {
             delete(ids: [selectedID])
         }
+    }
+}
+
+private struct DeleteSwipeModifier: ViewModifier {
+    let id: PersistentIdentifier
+    let onDelete: (PersistentIdentifier) -> Void
+
+    func body(content: Content) -> some View {
+        content.swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            Button(role: .destructive) {
+                onDelete(id)
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        }
+    }
+}
+
+private extension View {
+    func deletableSwipe(id: PersistentIdentifier, onDelete: @escaping (PersistentIdentifier) -> Void) -> some View {
+        self.modifier(DeleteSwipeModifier(id: id, onDelete: onDelete))
+    }
+}
+
+private struct AdventurerRow: View {
+    let item: Adventurer
+    let onDelete: (PersistentIdentifier) -> Void
+
+    var body: some View {
+        let id = item.persistentModelID
+        NavigationLink(value: id) {
+            Text(item.name)
+        }
+        .tag(id)
+        .deletableSwipe(id: id, onDelete: onDelete)
     }
 }
 
