@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bone Jarring — v1 mockups (basic-combatant character sheet)</title>
+<style>
+  :root{
+    --bg:#f2f2f7; --group:#ffffff; --group2:#ffffff; --sep:rgba(60,60,67,0.18);
+    --label:#000000; --label2:#3c3c43; --label3:#8e8e93; --muted:#6c6c70;
+    --accent:#007aff; --red:#ff3b30; --green:#34c759; --field:#ffffff;
+    --canvas:#e9e9ee;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#000000; --group:#1c1c1e; --group2:#2c2c2e; --sep:rgba(84,84,88,0.6);
+      --label:#ffffff; --label2:#ebebf5; --label3:#8e8e93; --muted:#98989f;
+      --accent:#0a84ff; --red:#ff453a; --green:#30d158; --field:#1c1c1e;
+      --canvas:#0a0a0b;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--canvas);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--label); -webkit-font-smoothing:antialiased; padding:28px 18px 48px;
+  }
+  h1{font-size:20px; font-weight:600; margin:0 0 4px; text-align:center;}
+  .sub{font-size:13px; color:var(--muted); text-align:center; margin:0 auto 26px; max-width:760px; line-height:1.5;}
+  .row{display:flex; gap:26px; justify-content:center; flex-wrap:wrap; align-items:flex-start;}
+  .phone-wrap{width:320px;}
+  .caption{text-align:center; font-size:12px; color:var(--muted); margin-bottom:8px;}
+  .phone{
+    height:680px; background:var(--bg); border-radius:34px; overflow:hidden;
+    border:1px solid var(--sep); display:flex; flex-direction:column; position:relative;
+  }
+  .statusbar{height:26px; display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--label3);}
+  .nav{
+    padding:4px 16px 10px; display:flex; align-items:center; justify-content:space-between;
+    border-bottom:0.5px solid var(--sep); background:var(--bg);
+  }
+  .nav .title{font-size:17px; font-weight:600;}
+  .nav .btn{font-size:16px; color:var(--accent); white-space:nowrap;}
+  .nav .lg{font-size:28px; font-weight:700; letter-spacing:-0.5px;}
+  .scroll{flex:1; overflow:auto; padding:14px 16px 20px;}
+  .grouphdr{font-size:12px; color:var(--label3); text-transform:uppercase; letter-spacing:0.4px; margin:18px 4px 6px;}
+  .grouphdr:first-child{margin-top:2px;}
+  .card{background:var(--group); border-radius:12px; overflow:hidden;}
+  .cell{display:flex; align-items:center; justify-content:space-between; padding:11px 14px; border-bottom:0.5px solid var(--sep);}
+  .cell:last-child{border-bottom:none;}
+  .cell .k{font-size:15px; color:var(--label);}
+  .cell .v{font-size:15px; color:var(--muted);}
+  .cell .v.strong{color:var(--label); font-variant-numeric:tabular-nums;}
+  .listrow{display:flex; flex-direction:column; padding:11px 14px; border-bottom:0.5px solid var(--sep);}
+  .listrow:last-child{border-bottom:none;}
+  .listrow .nm{font-size:16px;}
+  .listrow .meta{font-size:13px; color:var(--muted); margin-top:2px;}
+  .chev::after{content:"›"; color:var(--label3); font-size:20px; margin-left:8px;}
+
+  /* HP card */
+  .hp{background:var(--group); border-radius:12px; padding:14px;}
+  .hp .lbl{font-size:12px; color:var(--label3); text-transform:uppercase; letter-spacing:0.4px; display:flex; justify-content:space-between;}
+  .hp .mid{display:flex; align-items:center; gap:10px; margin-top:10px;}
+  .stepper{
+    width:42px; height:42px; border-radius:50%; border:none; background:var(--group2);
+    color:var(--accent); font-size:24px; line-height:1; cursor:default;
+  }
+  .hp .num{flex:1; text-align:center; font-variant-numeric:tabular-nums;}
+  .hp .num b{font-size:30px; font-weight:600;}
+  .hp .num span{font-size:16px; color:var(--label3);}
+  .bar{height:6px; border-radius:3px; background:var(--canvas); margin-top:12px; overflow:hidden;}
+  .bar>i{display:block; height:100%; background:var(--green); border-radius:3px;}
+
+  /* ability + defense grids */
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); }
+  .grid3>div{padding:12px 6px; text-align:center; border-right:0.5px solid var(--sep); border-bottom:0.5px solid var(--sep);}
+  .grid3>div:nth-child(3n){border-right:none;}
+  .grid3>div:nth-last-child(-n+3){border-bottom:none;}
+  .stat .big{font-size:20px; font-weight:600; font-variant-numeric:tabular-nums;}
+  .stat .cap{font-size:11px; color:var(--label3); text-transform:uppercase; letter-spacing:0.3px; margin-top:2px;}
+  .stat .sm{font-size:12px; color:var(--muted); margin-top:1px; font-variant-numeric:tabular-nums;}
+
+  .atk{display:flex; align-items:center; justify-content:space-between; padding:11px 14px; border-bottom:0.5px solid var(--sep);}
+  .atk:last-child{border-bottom:none;}
+  .atk .nm{font-size:15px;}
+  .atk .ln{font-size:12px; color:var(--muted); margin-top:2px; font-variant-numeric:tabular-nums;}
+  .atk .roll{font-size:13px; color:var(--accent); border:1px solid var(--accent); border-radius:8px; padding:5px 12px; white-space:nowrap;}
+
+  .field{display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:0.5px solid var(--sep);}
+  .field:last-child{border-bottom:none;}
+  .field .k{font-size:15px;}
+  .field .inp{font-size:15px; color:var(--label); background:transparent; text-align:right; min-width:90px; font-variant-numeric:tabular-nums;}
+  .field .inp.ph{color:var(--label3);}
+  .notes{font-size:14px; color:var(--muted); padding:12px 14px; line-height:1.5;}
+  .footnote{font-size:11px; color:var(--label3); margin:8px 4px 0; line-height:1.4;}
+  .legend{max-width:760px; margin:30px auto 0; font-size:12.5px; color:var(--muted); line-height:1.6;}
+  .legend b{color:var(--label);}
+</style>
+</head>
+<body>
+  <h1>Bone Jarring — v1 mockups</h1>
+  <p class="sub">Pathfinder 1e "basic combatant" character sheet — the first deliverable only.
+  Abilities, HP (incl. temp), AC, saves, weapons-as-attack-lines, BAB/CMB/CMD, initiative, speed, notes.
+  No skills, spells, conditions, equipment, avatar, or combat mode. Transcribe-only creation. Stock-iOS styling, light + dark.</p>
+
+  <div class="row">
+
+    <!-- SCREEN 1: Characters list -->
+    <div class="phone-wrap">
+      <div class="caption">Characters (list)</div>
+      <div class="phone">
+        <div class="statusbar">9:41</div>
+        <div class="nav"><span class="lg">Characters</span><span class="btn">+</span></div>
+        <div class="scroll">
+          <div class="card" style="margin-top:2px;">
+            <div class="listrow"><span class="nm">Thora Ironfist</span><span class="meta">Dwarf Fighter 5</span></div>
+            <div class="listrow"><span class="nm">Kale Quickfingers</span><span class="meta">Human Rogue 3</span></div>
+            <div class="listrow"><span class="nm">Sister Veil</span><span class="meta">Half-elf Cleric 4</span></div>
+            <div class="listrow"><span class="nm">Brakka</span><span class="meta">Half-orc Barbarian 6</span></div>
+          </div>
+          <p class="footnote">Tap a character to open the sheet. “+” starts the creation wizard (transcribe flavor in v1).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 2: Character sheet -->
+    <div class="phone-wrap">
+      <div class="caption">Character sheet (view)</div>
+      <div class="phone">
+        <div class="statusbar">9:41</div>
+        <div class="nav">
+          <span class="btn">‹ Characters</span>
+          <span class="btn">Edit</span>
+        </div>
+        <div class="scroll">
+          <div style="padding:2px 4px 4px;">
+            <div style="font-size:22px; font-weight:700;">Thora Ironfist</div>
+            <div style="font-size:13px; color:var(--muted); margin-top:2px;">Dwarf Fighter 5 · Lawful Good</div>
+          </div>
+
+          <div class="grouphdr">Hit points</div>
+          <div class="hp">
+            <div class="lbl"><span>Current / Max</span><span>Temp 0</span></div>
+            <div class="mid">
+              <button class="stepper" aria-label="Damage">−</button>
+              <div class="num"><b>44</b><span>&nbsp;/ 44</span></div>
+              <button class="stepper" aria-label="Heal">+</button>
+            </div>
+            <div class="bar"><i style="width:100%"></i></div>
+          </div>
+
+          <div class="grouphdr">Defenses</div>
+          <div class="card">
+            <div class="grid3">
+              <div class="stat"><div class="big">19</div><div class="cap">AC</div></div>
+              <div class="stat"><div class="big">11</div><div class="cap">Touch</div></div>
+              <div class="stat"><div class="big">18</div><div class="cap">Flat-footed</div></div>
+            </div>
+          </div>
+
+          <div class="grouphdr">Ability scores</div>
+          <div class="card">
+            <div class="grid3">
+              <div class="stat"><div class="cap">STR</div><div class="big">16</div><div class="sm">+3</div></div>
+              <div class="stat"><div class="cap">DEX</div><div class="big">12</div><div class="sm">+1</div></div>
+              <div class="stat"><div class="cap">CON</div><div class="big">16</div><div class="sm">+3</div></div>
+              <div class="stat"><div class="cap">INT</div><div class="big">10</div><div class="sm">+0</div></div>
+              <div class="stat"><div class="cap">WIS</div><div class="big">13</div><div class="sm">+1</div></div>
+              <div class="stat"><div class="cap">CHA</div><div class="big">8</div><div class="sm">−1</div></div>
+            </div>
+          </div>
+
+          <div class="grouphdr">Saving throws</div>
+          <div class="card">
+            <div class="cell"><span class="k">Fortitude</span><span class="v strong">+7</span></div>
+            <div class="cell"><span class="k">Reflex</span><span class="v strong">+2</span></div>
+            <div class="cell"><span class="k">Will</span><span class="v strong">+2</span></div>
+          </div>
+
+          <div class="grouphdr">Combat</div>
+          <div class="card">
+            <div class="cell"><span class="k">Base attack bonus</span><span class="v strong">+5</span></div>
+            <div class="cell"><span class="k">CMB</span><span class="v strong">+8</span></div>
+            <div class="cell"><span class="k">CMD</span><span class="v strong">19</span></div>
+            <div class="cell"><span class="k">Initiative</span><span class="v strong">+1</span></div>
+            <div class="cell"><span class="k">Speed</span><span class="v strong">20 ft</span></div>
+          </div>
+
+          <div class="grouphdr">Attacks</div>
+          <div class="card">
+            <div class="atk"><div><div class="nm">+1 Warhammer</div><div class="ln">+9 · 1d8+4 · ×3</div></div><span class="roll">Roll</span></div>
+            <div class="atk"><div><div class="nm">Throwing axe</div><div class="ln">+6 · 1d6+3 · ×2 · 10 ft</div></div><span class="roll">Roll</span></div>
+          </div>
+
+          <div class="grouphdr">Notes</div>
+          <div class="card"><div class="notes">Stonecunning; +2 vs. poison, spells, and SLAs. Hatred: +1 attack vs. orcs and goblinoids.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 3: Edit / transcribe -->
+    <div class="phone-wrap">
+      <div class="caption">Create / edit (transcribe)</div>
+      <div class="phone">
+        <div class="statusbar">9:41</div>
+        <div class="nav">
+          <span class="btn">Cancel</span>
+          <span class="title" style="font-size:16px;">New character</span>
+          <span class="btn" style="font-weight:600;">Save</span>
+        </div>
+        <div class="scroll">
+          <div class="grouphdr">Identity</div>
+          <div class="card">
+            <div class="field"><span class="k">Name</span><span class="inp">Thora Ironfist</span></div>
+            <div class="field"><span class="k">Ancestry</span><span class="inp">Dwarf</span></div>
+            <div class="field"><span class="k">Class &amp; level</span><span class="inp">Fighter 5</span></div>
+            <div class="field"><span class="k">Alignment</span><span class="inp">LG</span></div>
+          </div>
+
+          <div class="grouphdr">Ability scores</div>
+          <div class="card">
+            <div class="field"><span class="k">STR</span><span class="inp">16</span></div>
+            <div class="field"><span class="k">DEX</span><span class="inp">12</span></div>
+            <div class="field"><span class="k">CON</span><span class="inp">16</span></div>
+            <div class="field"><span class="k">INT</span><span class="inp">10</span></div>
+            <div class="field"><span class="k">WIS</span><span class="inp">13</span></div>
+            <div class="field"><span class="k">CHA</span><span class="inp">8</span></div>
+          </div>
+
+          <div class="grouphdr">Defense &amp; HP</div>
+          <div class="card">
+            <div class="field"><span class="k">Max HP</span><span class="inp">44</span></div>
+            <div class="field"><span class="k">AC / Touch / Flat</span><span class="inp">19 / 11 / 18</span></div>
+            <div class="field"><span class="k">Fort / Ref / Will</span><span class="inp">+7 / +2 / +2</span></div>
+          </div>
+
+          <div class="grouphdr">Combat</div>
+          <div class="card">
+            <div class="field"><span class="k">BAB</span><span class="inp">+5</span></div>
+            <div class="field"><span class="k">CMB / CMD</span><span class="inp">+8 / 19</span></div>
+            <div class="field"><span class="k">Initiative</span><span class="inp">+1</span></div>
+            <div class="field"><span class="k">Speed</span><span class="inp">20 ft</span></div>
+            <div class="field"><span class="k">Add attack…</span><span class="inp ph">name, +hit, dmg</span></div>
+          </div>
+          <p class="footnote">Transcribe flavor: values entered directly, minimal validation, no rules engine. The guided/rules-driven flavor comes later.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="legend">
+    <b>Scope reminder.</b> These are v1-accurate flow/layout sketches for the basic-combatant sheet only — not the eventual full app.
+    Deliberately absent (deferred): skills, spells, conditions, equipment/encumbrance, avatar, combat mode/HUD, sync, accounts.
+    <b>Styling intent:</b> stock Apple (grouped lists, system colors, Dynamic Type, light/dark) — these mockups approximate that, the real SwiftUI app should look native.
+    <b>Accessibility north star:</b> no meaning by color alone, calm/low-clutter, generous legibility. See vision.md §5a and §5c.
+  </p>
+</body>
+</html>

@@ -7,19 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		623491982A74AC6B00A38880 /* Ability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623491972A74AC6B00A38880 /* Ability.swift */; };
-		6241F8F62D7F4E8E00E894A5 /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6241F8F52D7F4E8900E894A5 /* Dice.swift */; };
-		626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626986522A566DCE004391FC /* PreviewModelContainer.swift */; };
-		627D72312A6CF30700C950C5 /* Proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627D72302A6CF30700C950C5 /* Proto.swift */; };
-		629E8D7D2A548E5B002CDCAF /* AdventurersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629E8D7C2A548E5B002CDCAF /* AdventurersApp.swift */; };
-		629E8D7F2A548E5B002CDCAF /* Adventurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629E8D7E2A548E5B002CDCAF /* Adventurer.swift */; };
-		629E8D832A548E5C002CDCAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 629E8D822A548E5C002CDCAF /* Assets.xcassets */; };
-		629E8D872A548E5C002CDCAF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 629E8D862A548E5C002CDCAF /* Preview Assets.xcassets */; };
-		629E8D922A548E5C002CDCAF /* AdventurersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629E8D912A548E5C002CDCAF /* AdventurersTests.swift */; };
-		629E8D9C2A548E5C002CDCAF /* AdventurersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629E8D9B2A548E5C002CDCAF /* AdventurersUITests.swift */; };
-		629E8D9E2A548E5C002CDCAF /* AdventurersUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629E8D9D2A548E5C002CDCAF /* AdventurersUITestsLaunchTests.swift */; };
-		62DA2B192B0FA67800F05457 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DA2B182B0FA67800F05457 /* StringUtils.swift */; };
-		62E5C04D2A5683690007FD7D /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E5C04C2A5683690007FD7D /* SampleData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,78 +27,38 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		623491972A74AC6B00A38880 /* Ability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ability.swift; sourceTree = "<group>"; };
-		6241F8F52D7F4E8900E894A5 /* Dice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dice.swift; sourceTree = "<group>"; };
-		626986522A566DCE004391FC /* PreviewModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewModelContainer.swift; sourceTree = "<group>"; };
-		627D72302A6CF30700C950C5 /* Proto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proto.swift; sourceTree = "<group>"; };
 		629E8D792A548E5B002CDCAF /* Adventurers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adventurers.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		629E8D7C2A548E5B002CDCAF /* AdventurersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventurersApp.swift; sourceTree = "<group>"; };
-		629E8D7E2A548E5B002CDCAF /* Adventurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adventurer.swift; sourceTree = "<group>"; };
-		629E8D822A548E5C002CDCAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		629E8D842A548E5C002CDCAF /* Adventurers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Adventurers.entitlements; sourceTree = "<group>"; };
-		629E8D862A548E5C002CDCAF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		629E8D882A548E5C002CDCAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		629E8D8D2A548E5C002CDCAF /* AdventurersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AdventurersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		629E8D912A548E5C002CDCAF /* AdventurersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventurersTests.swift; sourceTree = "<group>"; };
 		629E8D972A548E5C002CDCAF /* AdventurersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AdventurersUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		629E8D9B2A548E5C002CDCAF /* AdventurersUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventurersUITests.swift; sourceTree = "<group>"; };
-		629E8D9D2A548E5C002CDCAF /* AdventurersUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventurersUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		62DA2B182B0FA67800F05457 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
-		62E5C04C2A5683690007FD7D /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		621C14352C2472A500A66C21 /* Exceptions for "Views" folder in "Adventurers" target */ = {
+		62A77AC100000000000000C1 /* Exceptions for "Adventurers" folder in "Adventurers" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Browser/Abiilities/AbilitiesView.swift,
-				Browser/Abiilities/AbilitiesViewModel.swift,
-				Browser/Abiilities/AbilityGridRowView.swift,
-				Browser/Adventurer/AdventurerView.swift,
-				Browser/Adventurer/AdventurerViewModel.swift,
-				Browser/BrowserViewModel.swift,
-				Browser/IOSBrowser.swift,
-				Browser/MacBrowser.swift,
-				"Utility Views/ValidField.swift",
-				"Utility Views/ViewHeightModifier.swift",
-				WelcomeScreen.swift,
-				Wizard/Abilities/AbilitiesTab.swift,
-				Wizard/Abilities/AbilityMethodContainer.swift,
-				Wizard/Abilities/ClassicMethodView.swift,
-				Wizard/Abilities/DicePoolMethodView.swift,
-				Wizard/Abilities/HeroicMethodView.swift,
-				Wizard/Abilities/PurchaseMethodView.swift,
-				Wizard/Abilities/StandardMethodView.swift,
-				Wizard/Abilities/TranscribeCharacterView.swift,
-				Wizard/Abilities/UnspecifiedAbilitiesView.swift,
-				Wizard/BiographyTab.swift,
-				Wizard/ClassTab.swift,
-				Wizard/CombatTab.swift,
-				Wizard/EquipmentTab.swift,
-				Wizard/FeatsTab.swift,
-				Wizard/NewAdventurerWizard.swift,
-				Wizard/NewAdventurerWizardViewModel.swift,
-				Wizard/RaceTab.swift,
-				Wizard/SkillsTab.swift,
-				Wizard/SpellsTab.swift,
-				Wizard/WelcomeTab.swift,
+				Info.plist,
 			);
 			target = 629E8D782A548E5B002CDCAF /* Adventurers */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		621C14172C24729A00A66C21 /* Views */ = {
+		629E8D7B2A548E5B002CDCAF /* Adventurers */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				621C14352C2472A500A66C21 /* Exceptions for "Views" folder in "Adventurers" target */,
+				62A77AC100000000000000C1 /* Exceptions for "Adventurers" folder in "Adventurers" target */,
 			);
-			path = Views;
+			path = Adventurers;
 			sourceTree = "<group>";
 		};
-		627D7D9A2E5C0BD7009AAF29 /* Archive */ = {
+		629E8D902A548E5C002CDCAF /* AdventurersTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Archive;
+			path = AdventurersTests;
+			sourceTree = "<group>";
+		};
+		629E8D9A2A548E5C002CDCAF /* AdventurersUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = AdventurersUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -135,25 +82,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6269860F2A549528004391FC /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				623491972A74AC6B00A38880 /* Ability.swift */,
-				629E8D7E2A548E5B002CDCAF /* Adventurer.swift */,
-				627D72302A6CF30700C950C5 /* Proto.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		627D72322A6CFC2D00C950C5 /* Miscellaneous */ = {
-			isa = PBXGroup;
-			children = (
-				6241F8F52D7F4E8900E894A5 /* Dice.swift */,
-				62DA2B182B0FA67800F05457 /* StringUtils.swift */,
-			);
-			path = Miscellaneous;
-			sourceTree = "<group>";
-		};
 		629E8D702A548E5B002CDCAF = {
 			isa = PBXGroup;
 			children = (
@@ -174,49 +102,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		629E8D7B2A548E5B002CDCAF /* Adventurers */ = {
-			isa = PBXGroup;
-			children = (
-				627D7D9A2E5C0BD7009AAF29 /* Archive */,
-				621C14172C24729A00A66C21 /* Views */,
-				627D72322A6CFC2D00C950C5 /* Miscellaneous */,
-				6269860F2A549528004391FC /* Models */,
-				629E8D7C2A548E5B002CDCAF /* AdventurersApp.swift */,
-				629E8D822A548E5C002CDCAF /* Assets.xcassets */,
-				629E8D842A548E5C002CDCAF /* Adventurers.entitlements */,
-				629E8D882A548E5C002CDCAF /* Info.plist */,
-				629E8D852A548E5C002CDCAF /* Preview Content */,
-			);
-			path = Adventurers;
-			sourceTree = "<group>";
-		};
-		629E8D852A548E5C002CDCAF /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				626986522A566DCE004391FC /* PreviewModelContainer.swift */,
-				62E5C04C2A5683690007FD7D /* SampleData.swift */,
-				629E8D862A548E5C002CDCAF /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		629E8D902A548E5C002CDCAF /* AdventurersTests */ = {
-			isa = PBXGroup;
-			children = (
-				629E8D912A548E5C002CDCAF /* AdventurersTests.swift */,
-			);
-			path = AdventurersTests;
-			sourceTree = "<group>";
-		};
-		629E8D9A2A548E5C002CDCAF /* AdventurersUITests */ = {
-			isa = PBXGroup;
-			children = (
-				629E8D9B2A548E5C002CDCAF /* AdventurersUITests.swift */,
-				629E8D9D2A548E5C002CDCAF /* AdventurersUITestsLaunchTests.swift */,
-			);
-			path = AdventurersUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -231,7 +116,7 @@
 			buildRules = (
 			);
 			fileSystemSynchronizedGroups = (
-				627D7D9A2E5C0BD7009AAF29 /* Archive */,
+				629E8D7B2A548E5B002CDCAF /* Adventurers */,
 			);
 			name = Adventurers;
 			productName = Adventurers;
@@ -251,6 +136,9 @@
 			dependencies = (
 				629E8D8F2A548E5C002CDCAF /* PBXTargetDependency */,
 			);
+			fileSystemSynchronizedGroups = (
+				629E8D902A548E5C002CDCAF /* AdventurersTests */,
+			);
 			name = AdventurersTests;
 			productName = AdventurersTests;
 			productReference = 629E8D8D2A548E5C002CDCAF /* AdventurersTests.xctest */;
@@ -268,6 +156,9 @@
 			);
 			dependencies = (
 				629E8D992A548E5C002CDCAF /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				629E8D9A2A548E5C002CDCAF /* AdventurersUITests */,
 			);
 			name = AdventurersUITests;
 			productName = AdventurersUITests;
@@ -321,8 +212,6 @@
 		629E8D772A548E5B002CDCAF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
-				629E8D872A548E5C002CDCAF /* Preview Assets.xcassets in Resources */,
-				629E8D832A548E5C002CDCAF /* Assets.xcassets in Resources */,
 			);
 		};
 		629E8D8B2A548E5C002CDCAF /* Resources */ = {
@@ -341,27 +230,16 @@
 		629E8D752A548E5B002CDCAF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
-				629E8D7F2A548E5B002CDCAF /* Adventurer.swift in Sources */,
-				6241F8F62D7F4E8E00E894A5 /* Dice.swift in Sources */,
-				62E5C04D2A5683690007FD7D /* SampleData.swift in Sources */,
-				627D72312A6CF30700C950C5 /* Proto.swift in Sources */,
-				62DA2B192B0FA67800F05457 /* StringUtils.swift in Sources */,
-				629E8D7D2A548E5B002CDCAF /* AdventurersApp.swift in Sources */,
-				626986532A566DCE004391FC /* PreviewModelContainer.swift in Sources */,
-				623491982A74AC6B00A38880 /* Ability.swift in Sources */,
 			);
 		};
 		629E8D892A548E5C002CDCAF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
-				629E8D922A548E5C002CDCAF /* AdventurersTests.swift in Sources */,
 			);
 		};
 		629E8D932A548E5C002CDCAF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
-				629E8D9E2A548E5C002CDCAF /* AdventurersUITestsLaunchTests.swift in Sources */,
-				629E8D9C2A548E5C002CDCAF /* AdventurersUITests.swift in Sources */,
 			);
 		};
 /* End PBXSourcesBuildPhase section */
@@ -535,10 +413,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.Adventurers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -582,10 +460,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.Adventurers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -608,8 +486,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.AdventurersTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -631,8 +509,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.AdventurersTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -653,8 +531,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.AdventurersUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -675,8 +553,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.AdventurersUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -787,10 +665,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.Adventurers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -813,8 +691,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.AdventurersTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -835,8 +713,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sydpolk.adventurers.AdventurersUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

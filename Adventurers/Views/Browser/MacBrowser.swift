@@ -49,7 +49,7 @@ struct MacBrowser: View {
 
     // Sheets
     @State private var welcomeScreenShowing = false
-    @State private var wizardShowing = false
+    @State private var editorShowing = false
 
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -58,7 +58,14 @@ struct MacBrowser: View {
                     ForEach(adventurers) { item in
                         let id = item.persistentModelID
                         NavigationLink(value: id) {
-                            Text(item.name)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(item.name)
+                                if !item.lineage.isEmpty {
+                                    Text(item.lineage)
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
                         }
                         .tag(id)
                         .contextMenu {
@@ -132,15 +139,13 @@ struct MacBrowser: View {
             WelcomeScreen(welcomeScreenShowing: $welcomeScreenShowing)
         })
         .toolbarTitleDisplayMode(.inline)                // saves space
-        .sheet(isPresented: $wizardShowing) {
-            let wizardViewModel = WizardViewModel(proto: Proto())
-            AdventurerWizard(wizardShowing: $wizardShowing, newItemID: $newItemID)
-                .environmentObject(wizardViewModel)
+        .sheet(isPresented: $editorShowing) {
+            CharacterEditorView(onSaved: { id in newItemID = id })
         }
     }
-    
+
     private func addItem() {
-        wizardShowing = true
+        editorShowing = true
     }
     
     // One button definition for both platforms

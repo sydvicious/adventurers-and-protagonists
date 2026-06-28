@@ -13,6 +13,7 @@ let previewContainer: ModelContainer = {
     let schema = Schema([
         Adventurer.self,
         Ability.self,
+        Attack.self,
     ])
     let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
     do {
@@ -31,6 +32,7 @@ let emptyContainer: ModelContainer = {
     let schema = Schema([
         Adventurer.self,
         Ability.self,
+        Attack.self,
     ])
     let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
     do {

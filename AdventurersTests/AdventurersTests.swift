@@ -8,7 +8,7 @@
 @testable import Adventurers
 import XCTest
 
-final class AdventurersTests: XCTestCase {
+nonisolated final class AdventurersTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -18,6 +18,7 @@ final class AdventurersTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    @MainActor
     func testExample() throws {
         let adventure = SampleData.adventurers[0]
         let proto = Proto(from: adventure)

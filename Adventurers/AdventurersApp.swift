@@ -14,7 +14,8 @@ struct AdventurersApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Adventurer.self,
-            Ability.self
+            Ability.self,
+            Attack.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

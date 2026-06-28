@@ -40,7 +40,7 @@ struct IOSBrowser: View {
 
     // Sheets
     @State private var welcomeScreenShowing = false
-    @State private var wizardShowing = false
+    @State private var editorShowing = false
     @State private var isShowingNewWizard = false
 
     var body: some View {
@@ -123,13 +123,8 @@ struct IOSBrowser: View {
     .sheet(isPresented: $welcomeScreenShowing, content:{
         WelcomeScreen(welcomeScreenShowing: $welcomeScreenShowing)
     })
-    .fullScreenCover(isPresented: $wizardShowing) {
-        ZStack {
-            Color(.systemBackground).ignoresSafeArea()
-            let wizardViewModel = WizardViewModel(proto: Proto())
-            AdventurerWizard(wizardShowing: $wizardShowing, newItemID: $newItemID)
-                .environmentObject(wizardViewModel)
-        }
+    .sheet(isPresented: $editorShowing) {
+        CharacterEditorView(onSaved: { id in newItemID = id })
     }
     .sheet(isPresented: $isShowingNewWizard) {
         NewAdventurerWizard()
@@ -137,7 +132,7 @@ struct IOSBrowser: View {
     }
 
     private func addItem() {
-        wizardShowing = true
+        editorShowing = true
     }
     
     private func addNewWizardItem() {
@@ -236,11 +231,18 @@ private struct AdventurerRow: View {
 
     var body: some View {
         let id = item.persistentModelID
-        Text(item.name)
-            .tag(id)
-            .contentShape(Rectangle())
-            .onTapGesture { onSelect(id) }
-            .deletableSwipe(id: id, onDelete: onDelete)
+        VStack(alignment: .leading, spacing: 2) {
+            Text(item.name)
+            if !item.lineage.isEmpty {
+                Text(item.lineage)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .tag(id)
+        .contentShape(Rectangle())
+        .onTapGesture { onSelect(id) }
+        .deletableSwipe(id: id, onDelete: onDelete)
     }
 }
 
