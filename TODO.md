@@ -43,6 +43,11 @@ character-sheet product truly shippable (internal order TBD):
 - [ ] Settle the hardest at-the-table UI question early: keeping the active turn +
       initiative list readable/operable at arm's length (feeds Phase 2).
 
+## Mac platform (after the first build is complete)
+- [ ] Convert the Mac app to a **document-based app**. Keep a panel/sidebar listing the
+      characters, but opening a character opens it in its own **new window** — so Mac users
+      can view several characters at once. Makes the app feel more Mac-like.
+
 ## Technical foundations (bake in early, per vision §4)
 - [ ] Spike CloudKit early (the main technical risk; only new piece of the stack).
       Schema is already kept CloudKit-legal.
