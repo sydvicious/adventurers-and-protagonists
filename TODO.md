@@ -3,6 +3,9 @@
 Working backlog. The authoritative vision and rationale live in `vision.md`;
 this is the actionable list. Roughly ordered: near-term first, then by roadmap phase.
 
+## Bug Fixes
+- [ ] On iPad and Mac, the left hand list view should not have the title of the app. Keep it on iPhone.
+
 ## Phase 1 — standalone character sheet (in progress)
 
 The basic-combatant sheet + transcribe editor are done. Remaining to make the
