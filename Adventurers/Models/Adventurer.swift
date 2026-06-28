@@ -66,6 +66,21 @@ final class Adventurer  {
         attacks.sorted { $0.sortOrder < $1.sortOrder }
     }
 
+    /// The attack used by the quick / Apple Watch "roll held weapon" action: the
+    /// one flagged as held, falling back to the first attack so there's always
+    /// something to roll when the character has any attacks.
+    var heldWeapon: Attack? {
+        sortedAttacks.first { $0.isHeldWeapon } ?? sortedAttacks.first
+    }
+
+    /// Marks one attack as the held weapon and clears the flag on the rest, so at
+    /// most one attack is ever held.
+    func setHeldWeapon(_ attack: Attack) {
+        for candidate in attacks {
+            candidate.isHeldWeapon = (candidate === attack)
+        }
+    }
+
     /// "Dwarf Fighter 5" — used as the list subtitle. Empty if nothing entered.
     var lineage: String {
         [ancestry, classAndLevel]
@@ -169,7 +184,7 @@ final class Adventurer  {
         adventurer.speed = 20
         adventurer.notes = "Stonecunning; +2 vs. poison, spells, and SLAs. Hatred: +1 attack vs. orcs and goblinoids."
         adventurer.attacks = [
-            Attack(name: "+1 Warhammer", toHit: 9, damage: "1d8+4", critMultiplier: 3, range: 0, sortOrder: 0),
+            Attack(name: "+1 Warhammer", toHit: 9, damage: "1d8+4", critMultiplier: 3, range: 0, sortOrder: 0, isHeldWeapon: true),
             Attack(name: "Throwing axe", toHit: 6, damage: "1d6+3", critMultiplier: 2, range: 10, sortOrder: 1),
         ]
         return adventurer

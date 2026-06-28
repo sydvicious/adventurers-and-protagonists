@@ -7,6 +7,14 @@ and this project aims to adhere to [Semantic Versioning](https://semver.org/spec
 
 ## [Unreleased]
 
+### Added
+- **Held weapon** — `Attack.isHeldWeapon` flag plus `Adventurer.heldWeapon` and
+  `Adventurer.setHeldWeapon(_:)`, marking the single attack to be rolled by the quick /
+  Apple Watch "roll held weapon" action (falls back to the first attack when none is
+  flagged). Data-model groundwork for the future Apple Watch combat companion; the flag
+  round-trips through the character editor. Editor UI to choose the held weapon is still
+  to come.
+
 ## [0.1] - 2026-06-28
 
 Phase 1 of the roadmap (see `vision.md`): the standalone, offline, transcribe-only

@@ -59,6 +59,46 @@ nonisolated final class AdventurerTests: XCTestCase {
     }
 
     @MainActor
+    func testHeldWeaponPrefersFlagged() {
+        let adventurer = makeAdventurer()
+        adventurer.attacks = [
+            Attack(name: "Hammer", sortOrder: 0),
+            Attack(name: "Axe", sortOrder: 1, isHeldWeapon: true),
+        ]
+        XCTAssertEqual(adventurer.heldWeapon?.name, "Axe")
+    }
+
+    @MainActor
+    func testHeldWeaponFallsBackToFirst() {
+        let adventurer = makeAdventurer()
+        adventurer.attacks = [
+            Attack(name: "Second", sortOrder: 1),
+            Attack(name: "First", sortOrder: 0),
+        ]
+        XCTAssertEqual(adventurer.heldWeapon?.name, "First")
+    }
+
+    @MainActor
+    func testHeldWeaponNilWhenNoAttacks() {
+        XCTAssertNil(makeAdventurer().heldWeapon)
+    }
+
+    @MainActor
+    func testSetHeldWeaponClearsOthers() {
+        let adventurer = makeAdventurer()
+        let hammer = Attack(name: "Hammer", sortOrder: 0, isHeldWeapon: true)
+        let axe = Attack(name: "Axe", sortOrder: 1)
+        adventurer.attacks = [hammer, axe]
+
+        adventurer.setHeldWeapon(axe)
+
+        XCTAssertFalse(hammer.isHeldWeapon)
+        XCTAssertTrue(axe.isHeldWeapon)
+        XCTAssertEqual(adventurer.attacks.filter(\.isHeldWeapon).count, 1)
+        XCTAssertEqual(adventurer.heldWeapon?.name, "Axe")
+    }
+
+    @MainActor
     func testSortedAttacksOrdersBySortOrder() {
         let adventurer = makeAdventurer()
         adventurer.attacks = [

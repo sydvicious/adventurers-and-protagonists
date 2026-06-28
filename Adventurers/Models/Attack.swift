@@ -26,6 +26,10 @@ final class Attack {
     var range: Int = 0
     /// Preserves the order the player entered attacks in.
     var sortOrder: Int = 0
+    /// Marks the character's held weapon — the one rolled by the quick/Apple Watch
+    /// "roll held weapon" action. At most one attack per character should be held
+    /// (maintained by `Adventurer.setHeldWeapon(_:)`).
+    var isHeldWeapon: Bool = false
 
     // Optional inverse back-reference keeps the schema CloudKit-legal.
     var adventurer: Adventurer?
@@ -35,13 +39,15 @@ final class Attack {
          damage: String = "",
          critMultiplier: Int = 2,
          range: Int = 0,
-         sortOrder: Int = 0) {
+         sortOrder: Int = 0,
+         isHeldWeapon: Bool = false) {
         self.name = name
         self.toHit = toHit
         self.damage = damage
         self.critMultiplier = critMultiplier
         self.range = range
         self.sortOrder = sortOrder
+        self.isHeldWeapon = isHeldWeapon
     }
 
     /// The compact "+9 · 1d8+4 · ×3 · 10 ft" line shown under the attack name.

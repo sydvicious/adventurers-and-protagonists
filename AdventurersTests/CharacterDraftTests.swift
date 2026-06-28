@@ -162,4 +162,22 @@ nonisolated final class CharacterDraftTests: XCTestCase {
         XCTAssertEqual(adventurer.sortedAttacks.first?.name, "Axe")
         XCTAssertEqual(adventurer.sortedAttacks.first?.sortOrder, 0)   // reindexed from 1 → 0
     }
+
+    @MainActor
+    func testApplyPreservesHeldWeaponFlag() throws {
+        let context = try makeContext()
+        let adventurer = Adventurer(name: "Thora", abilities: [])
+        adventurer.attacks = [
+            Attack(name: "Hammer", sortOrder: 0),
+            Attack(name: "Axe", sortOrder: 1, isHeldWeapon: true),
+        ]
+        context.insert(adventurer)
+
+        // Round-trip through the editor draft and back; the held flag should survive.
+        let draft = CharacterDraft(from: adventurer)
+        draft.apply(to: adventurer, in: context)
+
+        XCTAssertEqual(adventurer.heldWeapon?.name, "Axe")
+        XCTAssertEqual(adventurer.attacks.filter(\.isHeldWeapon).count, 1)
+    }
 }

@@ -22,6 +22,26 @@ character-sheet product truly shippable (internal order TBD):
       with graceful fallback on unsupported hardware)
 - [ ] Print / PDF export (paper-optimized layout reusing the sheet components)
 
+### Combat mode — player-side HUD (vision §5c)
+A distinct, screen-taking-over mode on the character sheet (NOT the Phase 2 GM combat
+tracker). Deferred from the first v1 sheet; build after the core sheet. Several pieces
+depend on the subsystems above (Cast → spells, Use item → equipment, Use skill → skills).
+- [ ] Enter via a "Roll initiative" button (standalone); auto-triggered over sync when
+      campaign-attached. Exit when combat ends / "End combat".
+- [ ] Focused HUD: HP −/＋, defenses (AC/touch/flat-footed), attacks with a roll affordance
+- [ ] Active effects with round counters (mirrors the GM tracker's spell durations, player side)
+- [ ] Class resources as spend-counters (smite pips, lay on hands uses, spell slots)
+- [ ] Action bar — Attack · Cast · Use item · Use skill (+ room for Feat/Ability/Other),
+      each opening a focused picker as a bottom sheet → choose → execute
+- [ ] Casting a duration spell spends the slot AND auto-creates a tracked active effect with
+      a round counter; "Use item" decrements the consumable and applies its effect
+- [ ] Action economy: start by just exposing the action buttons (optional quiet standard/
+      move/swift hint); full economy tracking/enforcement is a later feature
+- [ ] Apple Watch combat companion (later phase): out-of-combat shows name + avatar +
+      "Roll initiative"; in-combat shows HP (Digital Crown) + the held-weapon attack.
+      (Data-model readiness done: `Attack.isHeldWeapon` + `Adventurer.heldWeapon`/
+      `setHeldWeapon(_:)`. Still TODO: editor UI to choose the held weapon.)
+
 ### Near-term polish / housekeeping
 - [ ] Seed a couple of sample characters for on-device testing
 - [ ] Decide temp-HP behavior on the sheet (currently steppers adjust current HP only;
