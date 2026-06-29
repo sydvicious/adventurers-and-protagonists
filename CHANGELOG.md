@@ -7,6 +7,8 @@ and this project aims to adhere to [Semantic Versioning](https://semver.org/spec
 
 ## [Unreleased]
 
+## [0.2] - 2026-06-28
+
 ### Added
 - **Combat mode** — a distinct player-side HUD living in the character's **Combat tab**
   (vision §5c; separate from the future GM combat tracker). The tab shows a "Roll

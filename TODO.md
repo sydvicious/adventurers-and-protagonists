@@ -5,6 +5,7 @@ this is the actionable list. Roughly ordered: near-term first, then by roadmap p
 
 ## Bug Fixes
 - [ ] On iPad and Mac, the left hand list view should not have the title of the app. Keep it on iPhone.
+- [ ] Bring back the "End Combat" and "End My Turn" buttons (missing from the Combat HUD).
 
 ## Phase 1 — standalone character sheet (in progress)
 
