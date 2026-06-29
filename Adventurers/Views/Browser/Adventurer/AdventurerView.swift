@@ -16,34 +16,31 @@ struct AdventurerView: View {
     @Bindable var adventurer: Adventurer
 
     @State private var editorShowing = false
-    @State private var rollResult: AttackRollResult?
+    @State private var contentWidth: CGFloat = 0
 
     init(selection: Adventurer) {
         self.adventurer = selection
     }
 
     var body: some View {
-        Form {
-            headerSection
-            hitPointsSection
-            defensesSection
-            abilitiesSection
-            savesSection
-            combatSection
-            if !adventurer.attacks.isEmpty {
-                attacksSection
+        ScrollView {
+            Group {
+                if isWide {
+                    wideLayout
+                } else {
+                    narrowLayout
+                }
             }
-            if !adventurer.notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                notesSection
-            }
+            .padding()
+            .frame(maxWidth: .infinity)
         }
-        .formStyle(.grouped)
+        .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { contentWidth = $0 }
         #if os(iOS)
         .navigationTitle(adventurer.name)
         .navigationBarTitleDisplayMode(.inline)
         #endif
         .toolbar {
-            ToolbarItem {
+            ToolbarItem(placement: .primaryAction) {
                 Button(action: { editorShowing = true }) {
                     Label("Edit", systemImage: "pencil")
                 }
@@ -52,25 +49,73 @@ struct AdventurerView: View {
         .sheet(isPresented: $editorShowing) {
             CharacterEditorView(editing: adventurer)
         }
-        .alert("Attack roll", isPresented: rollAlertBinding, presenting: rollResult) { _ in
-            Button("OK", role: .cancel) { rollResult = nil }
-        } message: { result in
-            Text(result.message)
+    }
+
+    // MARK: - Layout
+
+    /// Switch to two columns once the detail is wide enough (iPad / Mac); iPhone stays
+    /// single-column.
+    private var isWide: Bool { contentWidth >= 700 }
+
+    private var hasNotes: Bool {
+        !adventurer.notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    @ViewBuilder
+    private var narrowLayout: some View {
+        VStack(spacing: 16) {
+            headerSection
+            hitPointsSection
+            defensesSection
+            abilitiesSection
+            savesSection
+            combatSection
+            if hasNotes { notesSection }
+        }
+    }
+
+    /// Header and the six-across ability grid span the full width; everything else flows
+    /// into two columns.
+    @ViewBuilder
+    private var wideLayout: some View {
+        VStack(spacing: 16) {
+            headerSection
+            abilitiesSection
+            HStack(alignment: .top, spacing: 16) {
+                VStack(spacing: 16) {
+                    hitPointsSection
+                    defensesSection
+                    savesSection
+                }
+                VStack(spacing: 16) {
+                    combatSection
+                    if hasNotes { notesSection }
+                }
+            }
         }
     }
 
     // MARK: - Header
 
     private var headerSection: some View {
-        Section {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(adventurer.name)
-                    .font(.title2.bold())
-                if !adventurer.headerSubtitle.isEmpty {
-                    Text(adventurer.headerSubtitle)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+        GroupBox {
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(adventurer.name)
+                        .font(.title2.bold())
+                    if !adventurer.headerSubtitle.isEmpty {
+                        Text(adventurer.headerSubtitle)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
                 }
+                Spacer()
+                Button {
+                    editorShowing = true
+                } label: {
+                    Label("Edit", systemImage: "pencil")
+                }
+                .buttonStyle(.bordered)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -79,71 +124,13 @@ struct AdventurerView: View {
     // MARK: - Hit points
 
     private var hitPointsSection: some View {
-        Section("Hit points") {
-            VStack(spacing: 12) {
-                HStack {
-                    Text("Current / Max")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                    Text("Temp \(adventurer.tempHP)")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-
-                HStack(spacing: 16) {
-                    hpStepButton(systemImage: "minus", label: "Damage", action: applyDamage)
-                    VStack(spacing: 0) {
-                        Text("\(adventurer.currentHP)")
-                            .font(.system(.largeTitle, design: .rounded).weight(.semibold))
-                            .monospacedDigit()
-                        Text("/ \(adventurer.maxHP)")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                            .monospacedDigit()
-                    }
-                    .frame(maxWidth: .infinity)
-                    hpStepButton(systemImage: "plus", label: "Heal", action: applyHeal)
-                }
-
-                ProgressView(value: hpFraction)
-                    .tint(.green)
-
-                Stepper("Temp HP: \(adventurer.tempHP)", value: $adventurer.tempHP, in: 0...999)
-                    .font(.caption)
-            }
-            .padding(.vertical, 4)
-        }
-    }
-
-    private func hpStepButton(systemImage: String, label: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Image(systemName: systemImage)
-                .font(.title2)
-                .frame(width: 44, height: 44)
-        }
-        .buttonStyle(.bordered)
-        .buttonBorderShape(.circle)
-        .accessibilityLabel(label)
-    }
-
-    private var hpFraction: Double {
-        guard adventurer.maxHP > 0 else { return 0 }
-        return min(1, max(0, Double(adventurer.currentHP) / Double(adventurer.maxHP)))
-    }
-
-    private func applyDamage() {
-        adventurer.currentHP = max(0, adventurer.currentHP - 1)
-    }
-
-    private func applyHeal() {
-        adventurer.currentHP = min(adventurer.maxHP, adventurer.currentHP + 1)
+        HitPointsPanel(adventurer: adventurer)
     }
 
     // MARK: - Defenses
 
     private var defensesSection: some View {
-        Section("Defenses") {
+        CollapsiblePanel("Defenses") {
             StatGrid(stats: [
                 StatGrid.Stat(caption: "AC", value: "\(adventurer.armorClass)"),
                 StatGrid.Stat(caption: "Touch", value: "\(adventurer.touchAC)"),
@@ -155,13 +142,23 @@ struct AdventurerView: View {
     // MARK: - Ability scores
 
     private var abilitiesSection: some View {
-        Section("Ability scores") {
-            StatGrid(stats: Ability.sortedByLabel(abilities: adventurer.abilities).map { ability in
-                StatGrid.Stat(
-                    caption: Self.abbreviation(for: ability.label),
-                    value: "\(ability.score)",
-                    detail: Ability.modifierString(value: ability.score))
-            })
+        CollapsiblePanel("Ability Scores") {
+            ColumnGrid(items: Ability.sortedByLabel(abilities: adventurer.abilities)) { ability in
+                VStack(spacing: 2) {
+                    Text(Self.abbreviation(for: ability.label))
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                    Text("\(ability.score)")
+                        .font(.title3.weight(.semibold))
+                        .monospacedDigit()
+                    Text(Ability.modifierString(value: ability.score))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .monospacedDigit()
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 4)
+            }
         }
     }
 
@@ -172,22 +169,26 @@ struct AdventurerView: View {
     // MARK: - Saving throws
 
     private var savesSection: some View {
-        Section("Saving throws") {
-            statRow("Fortitude", Attack.signed(adventurer.fortitude))
-            statRow("Reflex", Attack.signed(adventurer.reflex))
-            statRow("Will", Attack.signed(adventurer.will))
+        CollapsiblePanel("Saving Throws") {
+            VStack(spacing: 8) {
+                statRow("Fortitude", Attack.signed(adventurer.fortitude))
+                statRow("Reflex", Attack.signed(adventurer.reflex))
+                statRow("Will", Attack.signed(adventurer.will))
+            }
         }
     }
 
     // MARK: - Combat
 
     private var combatSection: some View {
-        Section("Combat") {
-            statRow("Base attack bonus", Attack.signed(adventurer.baseAttackBonus))
-            statRow("CMB", Attack.signed(adventurer.cmb))
-            statRow("CMD", "\(adventurer.cmd)")
-            statRow("Initiative", Attack.signed(adventurer.initiativeBonus))
-            statRow("Speed", "\(adventurer.speed) ft")
+        CollapsiblePanel("Combat") {
+            VStack(spacing: 8) {
+                statRow("Base attack bonus", Attack.signed(adventurer.baseAttackBonus))
+                statRow("CMB", Attack.signed(adventurer.cmb))
+                statRow("CMD", "\(adventurer.cmd)")
+                statRow("Initiative", Attack.signed(adventurer.initiativeBonus))
+                statRow("Speed", "\(adventurer.speed) ft")
+            }
         }
     }
 
@@ -197,72 +198,18 @@ struct AdventurerView: View {
         }
     }
 
-    // MARK: - Attacks
-
-    private var attacksSection: some View {
-        Section("Attacks") {
-            ForEach(adventurer.sortedAttacks) { attack in
-                HStack {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(attack.name.isEmpty ? "Attack" : attack.name)
-                        Text(attack.summaryLine)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .monospacedDigit()
-                    }
-                    Spacer()
-                    Button("Roll") { roll(attack) }
-                        .buttonStyle(.bordered)
-                        .buttonBorderShape(.capsule)
-                }
-            }
-        }
-    }
-
-    private func roll(_ attack: Attack) {
-        let d20 = Dice.rawRoll(dieType: 20)
-        rollResult = AttackRollResult(
-            attackName: attack.name.isEmpty ? "Attack" : attack.name,
-            d20: d20,
-            toHit: attack.toHit,
-            damage: attack.damage)
-    }
-
-    private var rollAlertBinding: Binding<Bool> {
-        Binding(get: { rollResult != nil }, set: { if !$0 { rollResult = nil } })
-    }
-
     // MARK: - Notes
 
     private var notesSection: some View {
-        Section("Notes") {
+        CollapsiblePanel("Notes") {
             Text(adventurer.notes)
                 .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
 
 // MARK: - Supporting types
-
-/// The result of rolling one attack's d20 to-hit, shown in an alert.
-struct AttackRollResult: Identifiable {
-    let id = UUID()
-    let attackName: String
-    let d20: Int
-    let toHit: Int
-    let damage: String
-
-    var total: Int { d20 + toHit }
-
-    var message: String {
-        var text = "\(attackName)\nd20: \(d20)  \(Attack.signed(toHit))  =  \(total) to hit"
-        let trimmedDamage = damage.trimmingCharacters(in: .whitespaces)
-        if !trimmedDamage.isEmpty {
-            text += "\nDamage: \(trimmedDamage)"
-        }
-        return text
-    }
-}
 
 /// A reflowing grid of captioned stat cells (used for defenses and ability
 /// scores). Uses an adaptive column layout so it collapses gracefully at large

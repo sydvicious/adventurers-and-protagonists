@@ -37,19 +37,50 @@ nonisolated final class AttackTests: XCTestCase {
     }
 
     @MainActor
-    func testAttackRollResultTotalAndMessage() {
-        let result = AttackRollResult(attackName: "Axe", d20: 15, toHit: 6, damage: "1d6+3")
-        XCTAssertEqual(result.total, 21)
-        XCTAssertTrue(result.message.contains("Axe"))
-        XCTAssertTrue(result.message.contains("d20: 15"))
-        XCTAssertTrue(result.message.contains("+6"))
-        XCTAssertTrue(result.message.contains("21 to hit"), result.message)
-        XCTAssertTrue(result.message.contains("Damage: 1d6+3"))
+    func testSummaryLineShowsWiderThreatRange() {
+        let rapier = Attack(name: "Rapier", toHit: 5, damage: "1d6", critMultiplier: 2, threatRange: 18)
+        XCTAssertEqual(rapier.summaryLine, "+5 · 1d6 · 18–20/×2")
     }
 
     @MainActor
-    func testAttackRollResultMessageOmitsBlankDamage() {
-        let result = AttackRollResult(attackName: "Unarmed", d20: 3, toHit: 2, damage: "")
-        XCTAssertFalse(result.message.contains("Damage:"))
+    func testDisplayNameDefaultsForBlank() {
+        XCTAssertEqual(Attack(name: "").displayName, "Attack")
+        XCTAssertEqual(Attack(name: "Bow").displayName, "Bow")
+    }
+
+    @MainActor
+    func testWeaponRollHasToHitAndDamageLines() {
+        // threatRange 21 can never be hit, so only to-hit + damage appear.
+        let result = Attack(name: "Bow", toHit: 6, damage: "1d8", threatRange: 21).weaponRoll()
+        XCTAssertEqual(result.title, "Bow")
+        XCTAssertEqual(result.lines.map(\.label), ["To hit", "Damage"])
+    }
+
+    @MainActor
+    func testWeaponRollOmitsDamageLineWhenBlank() {
+        let result = Attack(name: "Shove", toHit: 2, damage: "", threatRange: 21).weaponRoll()
+        XCTAssertEqual(result.lines.map(\.label), ["To hit"])
+    }
+
+    @MainActor
+    func testWeaponRollHandLabelPrefixesTitle() {
+        let result = Attack(name: "Axe", toHit: 4, threatRange: 21).weaponRoll(handLabel: "Off-Hand")
+        XCTAssertEqual(result.title, "Off-Hand — Axe")
+    }
+
+    @MainActor
+    func testWeaponRollCritThreatLineOrderAndHighlight() {
+        // threatRange 1 always threatens: order is to-hit, crit confirm, crit damage, damage.
+        let result = Attack(name: "Scythe", toHit: 6, damage: "2d4", critMultiplier: 4, threatRange: 1).weaponRoll()
+        XCTAssertEqual(result.lines.map(\.label),
+                       ["To hit", "Crit threat — confirm", "Crit damage (×4)", "Damage"])
+        XCTAssertTrue(result.lines[0].highlighted)   // to-hit total shown in red
+    }
+
+    @MainActor
+    func testWeaponRollNoCritWhenThreatImpossible() {
+        let result = Attack(name: "Club", toHit: 6, damage: "1d6", threatRange: 21).weaponRoll()
+        XCTAssertEqual(result.lines.map(\.label), ["To hit", "Damage"])
+        XCTAssertFalse(result.lines.contains { $0.label.contains("Crit") })
     }
 }

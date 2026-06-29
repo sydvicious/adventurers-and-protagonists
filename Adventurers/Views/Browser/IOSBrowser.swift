@@ -38,6 +38,10 @@ struct IOSBrowser: View {
     @State private var selection: PersistentIdentifier?
     @State private var newItemID: PersistentIdentifier?
 
+    // Persists which character was on screen so relaunch returns to it (by stable uid).
+    @AppStorage("selectedAdventurerUID") private var selectedAdventurerUID: String = ""
+    @State private var didRestoreSelection = false
+
     // Sheets
     @State private var welcomeScreenShowing = false
     @State private var editorShowing = false
@@ -83,15 +87,19 @@ struct IOSBrowser: View {
             }
         }
         .onAppear {
-            resetSelection()
+            restoreSelectionIfNeeded()
         }
         .onChange(of: horizontalSizeClass) { _, _ in
             resetSelection()
         }
         .onChange(of: adventurers.map(\.persistentModelID)) { _, newIDs in
+            restoreSelectionIfNeeded()
             if let sel = selection, !newIDs.contains(sel) {
                 selection = newIDs.first
             }
+        }
+        .onChange(of: selection) { _, newValue in
+            persistSelection(newValue)
         }
         .onChange(of: newItemID) { _, newID in
             if let newID = newID {
@@ -100,15 +108,8 @@ struct IOSBrowser: View {
         }
     } detail: {
         if let item = viewModel.adventurerFromID(selection) {
-            GeometryReader { proxy in
-                Group {
-                    AdventurerView(selection: item)
-                        .contentMargins(.horizontal, 0, for: .scrollContent)
-                        .navigationTitle(item.name)
-                        .toolbarTitleDisplayMode(.inline)
-                }
-                .frame(width: proxy.size.width, height: proxy.size.height, alignment: .topLeading)
-            }
+            CharacterTabsView(adventurer: item)
+                .id(item.persistentModelID)
         } else {
             Text("Please select an adventurer from the list or hit the + button to add a new one.")
         }
@@ -168,6 +169,30 @@ struct IOSBrowser: View {
         } else {
             selection = adventurers.first?.persistentModelID
             columnVisibility = .all
+        }
+    }
+
+    /// On first launch, reselect the character that was on screen last time (by uid);
+    /// otherwise fall back to the default selection.
+    private func restoreSelectionIfNeeded() {
+        guard !didRestoreSelection, !adventurers.isEmpty else { return }
+        didRestoreSelection = true
+        if !selectedAdventurerUID.isEmpty,
+           let match = adventurers.first(where: { $0.uid.uuidString == selectedAdventurerUID }) {
+            selection = match.persistentModelID
+            if horizontalSizeClass != .compact {
+                columnVisibility = .all
+            }
+        } else {
+            resetSelection()
+        }
+    }
+
+    private func persistSelection(_ id: PersistentIdentifier?) {
+        if let id, let adventurer = viewModel.adventurerFromID(id) {
+            selectedAdventurerUID = adventurer.uid.uuidString
+        } else {
+            selectedAdventurerUID = ""
         }
     }
     

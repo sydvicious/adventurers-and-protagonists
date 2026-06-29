@@ -24,11 +24,28 @@ character-sheet product truly shippable (internal order TBD):
 
 ### Combat mode — player-side HUD (vision §5c)
 A distinct, screen-taking-over mode on the character sheet (NOT the Phase 2 GM combat
-tracker). Deferred from the first v1 sheet; build after the core sheet. Several pieces
-depend on the subsystems above (Cast → spells, Use item → equipment, Use skill → skills).
-- [ ] Enter via a "Roll initiative" button (standalone); auto-triggered over sync when
-      campaign-attached. Exit when combat ends / "End combat".
-- [ ] Focused HUD: HP −/＋, defenses (AC/touch/flat-footed), attacks with a roll affordance
+tracker). v1 is implemented (`CombatModeView`); the items below depend on the subsystems
+above (Cast → spells, Use item → equipment, Use skill → skills) or on later phases.
+- [x] Combat lives in the character's **Combat tab** (Overview / Combat / Other tab bar,
+      vision §5c). "Roll Initiative" starts it; switching tabs keeps the session running;
+      "End combat" ends it; Round / End my turn / End combat in the nav bar.
+      (Campaign-attached auto-entry over sync is still TODO — Phase 4.)
+- [ ] Flesh out the **Other** tab into Biography / Equipment / Skills / Spells / Journal as
+      those subsystems land, and split into their own tabs per vision §5c (Overview ·
+      Combat · Skills · Spells · More).
+- [x] Focused HUD: HP panel showing **max − damage = current** (current is big, red at ≤0;
+      damage may exceed max), temp, defenses, saving-throw and ability-check rolls (natural
+      1/20 highlights the total red), and a **To Hit** panel combining flanking/situational
+      modifiers with **Primary Hand** / **Off-Hand** weapon pickers + roll buttons.
+- [x] One roll → a result sheet: bold totals over compositions, in order to-hit · (on a
+      natural threat) crit confirm · crit damage · normal damage; the to-hit total turns red
+      on a threat. Crit damage multiplies the whole expression (not just the dice, per PF1e).
+      Modifiers: Flanking (+2) for attacks + a generic situational modifier for all d20
+      rolls. (No 5e advantage/disadvantage. No separate combat Attacks panel — hands cover it.)
+- [ ] Hand weapon pickers currently list the character's attacks as a stand-in; switch them
+      to real equipped weapons once the equipment/inventory system exists.
+- [x] "End my turn" action that advances a per-session round counter (future hooks: tick
+      effect durations, and notify the GM when campaign-attached)
 - [ ] Active effects with round counters (mirrors the GM tracker's spell durations, player side)
 - [ ] Class resources as spend-counters (smite pips, lay on hands uses, spell slots)
 - [ ] Action bar — Attack · Cast · Use item · Use skill (+ room for Feat/Ability/Other),
@@ -75,6 +92,16 @@ depend on the subsystems above (Cast → spells, Use item → equipment, Use ski
       number/dice formatting (ship English-only, stay i18n-ready).
 - [ ] RTL correctness: use leading/trailing everywhere; test with the RTL pseudolanguage.
 - [ ] Semantic color/token layer (neutral-first) so theming later is a token swap.
+
+## Search & indexing (investigate)
+Feature area to scope out — most valuable once a character holds more content (skills,
+spells, equipment, notes).
+- [ ] Search within a character — find a spell/feat/item/skill/attack/note across the
+      sheet's tabs and jump to it. Decide scope (single character vs. across all characters)
+      and UX (a search field that filters the dashboard / drills into the right tab).
+- [ ] Spotlight index (CoreSpotlight) — index characters (name, ancestry/class, and key
+      content) so system search finds them and deep-links into the app. Keep the index in
+      sync on create/edit/delete; mind privacy (what's worth exposing to system search).
 
 ## Phase 2 — combat tracker (the index-card shuffle)
 - [ ] Add combatants (PCs + monsters) to one encounter

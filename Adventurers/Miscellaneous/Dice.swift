@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Dice {
+nonisolated class Dice {
     static func rawRoll(dieType: Int) -> Int {
         return Int(arc4random_uniform(UInt32(dieType)) + 1)
     }

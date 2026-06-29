@@ -22,6 +22,9 @@ final class Attack {
     var damage: String = ""
     /// Critical multiplier (the "×3" / "×2"). Defaults to the d20 norm of ×2.
     var critMultiplier: Int = 2
+    /// Lowest natural d20 that threatens a critical (PF1e threat range). 20 means only a
+    /// natural 20 threatens; 19 means 19–20; 18 means 18–20.
+    var threatRange: Int = 20
     /// Range increment in feet for thrown/ranged attacks. 0 means melee.
     var range: Int = 0
     /// Preserves the order the player entered attacks in.
@@ -38,6 +41,7 @@ final class Attack {
          toHit: Int = 0,
          damage: String = "",
          critMultiplier: Int = 2,
+         threatRange: Int = 20,
          range: Int = 0,
          sortOrder: Int = 0,
          isHeldWeapon: Bool = false) {
@@ -45,6 +49,7 @@ final class Attack {
         self.toHit = toHit
         self.damage = damage
         self.critMultiplier = critMultiplier
+        self.threatRange = threatRange
         self.range = range
         self.sortOrder = sortOrder
         self.isHeldWeapon = isHeldWeapon
@@ -56,7 +61,12 @@ final class Attack {
         if !damage.trimmingCharacters(in: .whitespaces).isEmpty {
             parts.append(damage)
         }
-        parts.append("×\(critMultiplier)")
+        // Show the threat range only when wider than a natural 20 (e.g. "19–20/×2").
+        if threatRange < 20 {
+            parts.append("\(threatRange)–20/×\(critMultiplier)")
+        } else {
+            parts.append("×\(critMultiplier)")
+        }
         if range > 0 {
             parts.append("\(range) ft")
         }

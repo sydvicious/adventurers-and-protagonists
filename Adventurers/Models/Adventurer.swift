@@ -81,6 +81,19 @@ final class Adventurer  {
         }
     }
 
+    /// Rolls initiative: a d20 plus the initiative modifier. Used to enter combat mode.
+    func rollInitiative() -> Int {
+        Dice.rawRoll(dieType: 20) + initiativeBonus
+    }
+
+    /// Damage taken (max − current). Setting it adjusts current HP: damage may exceed max,
+    /// taking current HP to 0 or below; healing (lower damage) can't push current above max.
+    /// (Temp-HP absorption is not yet modeled — the temp pool is tracked separately.)
+    var damageTaken: Int {
+        get { max(0, maxHP - currentHP) }
+        set { currentHP = maxHP - max(0, newValue) }
+    }
+
     /// "Dwarf Fighter 5" — used as the list subtitle. Empty if nothing entered.
     var lineage: String {
         [ancestry, classAndLevel]

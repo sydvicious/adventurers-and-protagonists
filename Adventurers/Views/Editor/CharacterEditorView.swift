@@ -9,9 +9,10 @@
 import SwiftUI
 import SwiftData
 
-/// The Phase-1 transcribe editor: a single grouped form for creating or editing
-/// a basic-combatant character. Values are entered directly with minimal
-/// validation — no rules engine. Used for both the "+" (create) and "Edit" paths.
+/// The Phase-1 transcribe editor: enter a basic-combatant character's values directly,
+/// with minimal validation and no rules engine. Used for both the "+" (create) and
+/// "Edit" paths. iOS uses a single-column grouped `Form`; macOS uses a scrollable
+/// two-column layout with an explicit Cancel/Save bar (Cancel is also bound to Esc).
 struct CharacterEditorView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
@@ -31,30 +32,50 @@ struct CharacterEditorView: View {
         _draft = State(initialValue: CharacterDraft(from: editing))
     }
 
+    private var title: String { draft.isNew ? "New Character" : "Edit Character" }
+
+    private let footnote = "Transcribe flavor: values are entered directly, with minimal validation and no rules engine. The guided, rules-driven flavor comes later."
+
     var body: some View {
+        #if os(macOS)
+        macBody
+        #else
+        iosBody
+        #endif
+    }
+
+    // MARK: - iOS
+
+    #if !os(macOS)
+    private var iosBody: some View {
         NavigationStack {
             Form {
-                identitySection
-                abilitiesSection
-                hitPointsSection
-                defensesSection
-                savesSection
-                combatSection
-                attacksSection
-                notesSection
+                Section("Identity") { identityFields }
+                Section("Ability scores") { abilityFields }
+                Section("Hit points") { hitPointsFields }
+                Section("Defenses") { defenseFields }
+                Section("Saving throws") { saveFields }
+                Section("Combat") { combatFields }
+                Section("Attacks") {
+                    ForEach($draft.attacks) { $attack in
+                        AttackEditorRow(attack: $attack)
+                    }
+                    .onDelete { draft.attacks.remove(atOffsets: $0) }
+                    addAttackButton
+                }
+                Section("Notes") { notesField }
 
-                Text("Transcribe flavor: values are entered directly, with minimal validation and no rules engine. The guided, rules-driven flavor comes later.")
+                Text(footnote)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .listRowBackground(Color.clear)
             }
-            .navigationTitle(draft.isNew ? "New Character" : "Edit Character")
-            #if os(iOS)
+            .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
-            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel", role: .cancel) { dismiss() }
+                        .keyboardShortcut(.cancelAction)
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save", action: save)
@@ -63,78 +84,148 @@ struct CharacterEditorView: View {
             }
         }
     }
+    #endif
 
-    // MARK: - Sections
+    // MARK: - macOS
 
-    private var identitySection: some View {
-        Section("Identity") {
-            TextField("Name", text: $draft.name)
-            TextField("Ancestry", text: $draft.ancestry)
-            TextField("Class & level", text: $draft.classAndLevel)
-            TextField("Alignment", text: $draft.alignment)
-        }
-    }
-
-    private var abilitiesSection: some View {
-        Section("Ability scores") {
-            ForEach($draft.abilities) { $ability in
-                IntFieldRow(label: ability.label, value: $ability.score, range: 1...60)
+    #if os(macOS)
+    private var macBody: some View {
+        VStack(spacing: 0) {
+            HStack {
+                Text(title).font(.title3.bold())
+                Spacer()
             }
+            .padding()
+
+            Divider()
+
+            ScrollView {
+                HStack(alignment: .top, spacing: 16) {
+                    VStack(spacing: 16) {
+                        macGroup("Identity") { identityFields }
+                        macGroup("Ability scores") { abilityFields }
+                        macGroup("Notes") { notesField }
+                    }
+                    VStack(spacing: 16) {
+                        macGroup("Hit points") { hitPointsFields }
+                        macGroup("Defenses") { defenseFields }
+                        macGroup("Saving throws") { saveFields }
+                        macGroup("Combat") { combatFields }
+                        macGroup("Attacks") { macAttacksContent }
+                    }
+                }
+                .padding()
+
+                Text(footnote)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding([.horizontal, .bottom])
+            }
+
+            Divider()
+
+            HStack {
+                Button("Cancel", role: .cancel) { dismiss() }
+                    .keyboardShortcut(.cancelAction)
+                Spacer()
+                Button("Save", action: save)
+                    .keyboardShortcut(.defaultAction)
+                    .disabled(!draft.canSave)
+            }
+            .padding()
+        }
+        .frame(minWidth: 700, idealWidth: 840, minHeight: 520, idealHeight: 680)
+    }
+
+    private func macGroup<Content: View>(_ title: String,
+                                         @ViewBuilder _ content: () -> Content) -> some View {
+        GroupBox(title) {
+            VStack(alignment: .leading, spacing: 8) {
+                content()
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(4)
         }
     }
 
-    private var hitPointsSection: some View {
-        Section("Hit points") {
-            IntFieldRow(label: "Max HP", value: $draft.maxHP, range: 0...9999)
-        }
-    }
-
-    private var defensesSection: some View {
-        Section("Defenses") {
-            IntFieldRow(label: "AC", value: $draft.armorClass, range: 0...99)
-            IntFieldRow(label: "Touch", value: $draft.touchAC, range: 0...99)
-            IntFieldRow(label: "Flat-footed", value: $draft.flatFootedAC, range: 0...99)
-        }
-    }
-
-    private var savesSection: some View {
-        Section("Saving throws") {
-            IntFieldRow(label: "Fortitude", value: $draft.fortitude)
-            IntFieldRow(label: "Reflex", value: $draft.reflex)
-            IntFieldRow(label: "Will", value: $draft.will)
-        }
-    }
-
-    private var combatSection: some View {
-        Section("Combat") {
-            IntFieldRow(label: "Base attack bonus", value: $draft.baseAttackBonus)
-            IntFieldRow(label: "CMB", value: $draft.cmb)
-            IntFieldRow(label: "CMD", value: $draft.cmd, range: 0...99)
-            IntFieldRow(label: "Initiative", value: $draft.initiativeBonus)
-            IntFieldRow(label: "Speed (ft)", value: $draft.speed, range: 0...999)
-        }
-    }
-
-    private var attacksSection: some View {
-        Section("Attacks") {
-            ForEach($draft.attacks) { $attack in
+    @ViewBuilder
+    private var macAttacksContent: some View {
+        ForEach($draft.attacks) { $attack in
+            VStack(spacing: 6) {
                 AttackEditorRow(attack: $attack)
+                HStack {
+                    Spacer()
+                    Button(role: .destructive) {
+                        draft.attacks.removeAll { $0.id == attack.id }
+                    } label: {
+                        Label("Remove", systemImage: "trash")
+                    }
+                    .buttonStyle(.borderless)
+                }
             }
-            .onDelete { offsets in
-                draft.attacks.remove(atOffsets: offsets)
-            }
-            Button {
-                draft.addAttack()
-            } label: {
-                Label("Add attack", systemImage: "plus.circle.fill")
-            }
+            Divider()
+        }
+        addAttackButton
+    }
+    #endif
+
+    // MARK: - Shared field builders (no Section/GroupBox wrapper)
+
+    @ViewBuilder
+    private var identityFields: some View {
+        TextField("Name", text: $draft.name)
+        TextField("Ancestry", text: $draft.ancestry)
+        TextField("Class & level", text: $draft.classAndLevel)
+        TextField("Alignment", text: $draft.alignment)
+    }
+
+    @ViewBuilder
+    private var abilityFields: some View {
+        ForEach($draft.abilities) { $ability in
+            IntFieldRow(label: ability.label, value: $ability.score, range: 1...60)
         }
     }
 
-    private var notesSection: some View {
-        Section("Notes") {
-            TextField("Notes", text: $draft.notes, axis: .vertical)
-                .lineLimit(3...8)
+    @ViewBuilder
+    private var hitPointsFields: some View {
+        IntFieldRow(label: "Max HP", value: $draft.maxHP, range: 0...9999)
+    }
+
+    @ViewBuilder
+    private var defenseFields: some View {
+        IntFieldRow(label: "AC", value: $draft.armorClass, range: 0...99)
+        IntFieldRow(label: "Touch", value: $draft.touchAC, range: 0...99)
+        IntFieldRow(label: "Flat-footed", value: $draft.flatFootedAC, range: 0...99)
+    }
+
+    @ViewBuilder
+    private var saveFields: some View {
+        IntFieldRow(label: "Fortitude", value: $draft.fortitude)
+        IntFieldRow(label: "Reflex", value: $draft.reflex)
+        IntFieldRow(label: "Will", value: $draft.will)
+    }
+
+    @ViewBuilder
+    private var combatFields: some View {
+        IntFieldRow(label: "Base attack bonus", value: $draft.baseAttackBonus)
+        IntFieldRow(label: "CMB", value: $draft.cmb)
+        IntFieldRow(label: "CMD", value: $draft.cmd, range: 0...99)
+        IntFieldRow(label: "Initiative", value: $draft.initiativeBonus)
+        IntFieldRow(label: "Speed (ft)", value: $draft.speed, range: 0...999)
+    }
+
+    @ViewBuilder
+    private var notesField: some View {
+        TextField("Notes", text: $draft.notes, axis: .vertical)
+            .lineLimit(3...8)
+    }
+
+    private var addAttackButton: some View {
+        Button {
+            draft.addAttack()
+        } label: {
+            Label("Add attack", systemImage: "plus.circle.fill")
         }
     }
 
@@ -168,6 +259,7 @@ private struct AttackEditorRow: View {
                     .multilineTextAlignment(.trailing)
             }
             IntFieldRow(label: "Crit ×", value: $attack.critMultiplier, range: 2...10)
+            IntFieldRow(label: "Crit threat (nat ≥)", value: $attack.threatRange, range: 2...20)
             IntFieldRow(label: "Range (ft)", value: $attack.range, range: 0...999)
         }
         .padding(.vertical, 4)

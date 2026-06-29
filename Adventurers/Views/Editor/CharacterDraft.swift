@@ -132,6 +132,7 @@ final class CharacterDraft {
                    toHit: draft.toHit,
                    damage: draft.damage.trimmingCharacters(in: .whitespaces),
                    critMultiplier: draft.critMultiplier,
+                   threatRange: draft.threatRange,
                    range: draft.range,
                    sortOrder: index,
                    isHeldWeapon: draft.isHeldWeapon)
@@ -156,6 +157,7 @@ struct AttackDraft: Identifiable {
     var toHit = 0
     var damage = ""
     var critMultiplier = 2
+    var threatRange = 20
     var range = 0
     var isHeldWeapon = false
 
@@ -166,6 +168,7 @@ struct AttackDraft: Identifiable {
         toHit = attack.toHit
         damage = attack.damage
         critMultiplier = attack.critMultiplier
+        threatRange = attack.threatRange
         range = attack.range
         isHeldWeapon = attack.isHeldWeapon
     }

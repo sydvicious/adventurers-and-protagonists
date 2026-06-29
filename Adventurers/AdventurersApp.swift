@@ -11,6 +11,8 @@ import SwiftData
 
 @main
 struct AdventurersApp: App {
+    @State private var combatStore = CombatSessionStore()
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Adventurer.self,
@@ -32,13 +34,16 @@ struct AdventurersApp: App {
         let browserViewModel = BrowserViewModel(modelContext: sharedModelContainer.mainContext)
 
         return WindowGroup {
-            #if os(iOS)
-            IOSBrowser(welcomeScreenShown: welcomeScreenShown, viewModel: browserViewModel)
-            #else
-            // Enforce a minimum content size for the window on macOS
-            MacBrowser(welcomeScreenShown: welcomeScreenShown, viewModel: browserViewModel)
-                .frame(minWidth: 600, minHeight: 400)
-            #endif
+            Group {
+                #if os(iOS)
+                IOSBrowser(welcomeScreenShown: welcomeScreenShown, viewModel: browserViewModel)
+                #else
+                // Enforce a minimum content size for the window on macOS
+                MacBrowser(welcomeScreenShown: welcomeScreenShown, viewModel: browserViewModel)
+                    .frame(minWidth: 600, minHeight: 400)
+                #endif
+            }
+            .environment(combatStore)
         }
         #if os(macOS)
         // Set a sensible default window size for macOS
